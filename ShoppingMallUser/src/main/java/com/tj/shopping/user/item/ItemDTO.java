@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class item_dao {
+public class ItemDTO {
 
 	private int pidx;
 	private String cbcate_code;

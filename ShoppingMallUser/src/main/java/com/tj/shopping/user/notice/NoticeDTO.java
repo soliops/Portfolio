@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class notice_dao {
+public class NoticeDTO {
 	private String idx;
 	private String notice_print;
 	private String notice_title;

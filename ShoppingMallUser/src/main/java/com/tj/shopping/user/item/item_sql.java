@@ -10,15 +10,15 @@ import org.springframework.stereotype.Service;
 
 @Service("it")
 public class item_sql {
-	item_dao ido = null;
-
-	@Resource(name="sqlTemp")
-	private SqlSessionTemplate session;
-	
-	public item_dao list_select (int num){
-		ido = new item_dao();
-		ido.setPidx(num);
-		item_dao list = session.selectOne("sql.item_sel",ido);
-		return list;
-	}
+//	ItemDTO ido = null;
+//
+//	@Resource(name="sqlTemp")
+//	private SqlSessionTemplate session;
+//	
+//	public ItemDTO list_select (int num){
+//		ido = new ItemDTO();
+//		ido.setPidx(num);
+//		ItemDTO list = session.selectOne("sql.item_sel",ido);
+//		return list;
+//	}
 }

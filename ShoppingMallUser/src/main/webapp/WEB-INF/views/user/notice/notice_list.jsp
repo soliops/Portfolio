@@ -4,8 +4,8 @@
     pageEncoding="UTF-8"%>
 <%
 String url = request.getContextPath();
-List<notice_dao> list = (List<notice_dao>)request.getAttribute("notice_list");
-List<notice_dao> notice_list = (List<notice_dao>)request.getAttribute("notice_list_limit");
+List<NoticeDTO> list = (List<NoticeDTO>)request.getAttribute("notice_list");
+List<NoticeDTO> notice_list = (List<NoticeDTO>)request.getAttribute("notice_list_limit");
 ArrayList<Object> page_data = (ArrayList<Object>)request.getAttribute("page_data");
 int total = (int)page_data.get(3);
 int startpage = (int)page_data.get(1);

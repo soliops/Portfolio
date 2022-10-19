@@ -4,8 +4,8 @@
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% 
-item_dao list = (item_dao)request.getAttribute("list");
+<%
+ItemDTO list = (ItemDTO)request.getAttribute("list");
 String url = request.getRealPath("");
 %>
 <div class="detail_title_area">

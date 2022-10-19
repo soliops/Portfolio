@@ -1,4 +1,4 @@
-package com.tj.shopping.user;
+package com.tj.shopping.user.index;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,14 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class index {
+public class IndexController {
 	
 	@RequestMapping(value= {"/","/index","/index.do","/index.html"})
-	public String home(Model m, HttpServletRequest req) {
-		String idx = "123";
-		
-		m.addAttribute("i",idx);
-		System.out.println(idx);
+	public String IndexPage(Model m, HttpServletRequest req) {
 		
 		return "user/index/index";
 	}
