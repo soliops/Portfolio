@@ -1,11 +1,16 @@
 package com.tj.shopping.user.cs;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
-public class cs_dao {
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class CSDTO {
 	private String fidx;
 	private String fcategory;
 	private String fname;

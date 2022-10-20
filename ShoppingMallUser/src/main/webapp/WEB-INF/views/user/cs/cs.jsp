@@ -4,7 +4,7 @@
 <%-- <%=request.getRequestURL() %><!--web 절대 경로 -->     --%>
 <%-- <%=request.getContextPath() %> <!-- 해당 파일에 디렉토리 --> --%>
 <%
-String url = request.getContextPath();
+// String url = request.getContextPath();
 %>
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"  xmlns:fb="http://ogp.me/ns/fb#"  xmlns:og="http://ogp.me/ns#">
@@ -63,15 +63,15 @@ String url = request.getContextPath();
 
 <div id="wrap">
 <div id="layout_wrap" class="layout_wrap">
-    <%@ include file="./top.html" %>   
+    <%@ include file="../index/top.html" %>   
 </div>
 		
 <div class="resp_wrap display_wrap">
-    <%@ include file="./cs_info.jsp" %>       
+    <%@ include file="cs_info.jsp" %>       
 </div>
 
 <div id="layout_footer" class="layout_footer">
-    <%@ include file="./footer.html" %>   
+    <%@ include file="../index/footer.html" %>   
 </div>
 
 </div>

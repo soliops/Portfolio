@@ -58,15 +58,15 @@
 
 <div id="wrap">
 <div id="layout_wrap" class="layout_wrap">
-    <%@ include file="./top.html" %>  
+    <%@ include file="../index/top.html" %>  
 </div>
 <form name="item_form" id="item_form">
 <div class="resp_wrap display_wrap">
-    <%@ include file="./item_view.jsp" %>
+    <%@ include file="item_view.jsp" %>
 </div>
 </form>
 <div id="layout_footer" class="layout_footer">
-    <%@ include file="./footer.html" %>
+    <%@ include file="../index/footer.html" %>
 </div>
 
 </div>

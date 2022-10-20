@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-@Repository("cs_session")
+//@Repository("cs_session")
 public class cs_sql {
 //	Map<String,Object> map = null;
 //	ArrayList<Object> pg =null;

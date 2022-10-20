@@ -58,7 +58,7 @@
 
 <div id="wrap">
 <div id="layout_wrap" class="layout_wrap">
-    <%@ include file="./top.html" %>
+    <%@ include file="../index/top.html" %>
 </div>
 		
 <div class="resp_wrap display_wrap">
@@ -66,7 +66,7 @@
 </div>
 
 <div id="layout_footer" class="layout_footer">
-    <%@ include file="./footer.html" %>
+    <%@ include file="../index/footer.html" %>
 </div>
 
 </div>

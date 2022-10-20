@@ -9,10 +9,10 @@
 <bean id="dataSource"
 class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 <property name="driverClassName">
-<value>org.mariadb.jdbc.Driver</value>
+<value>com.mysql.jdbc.Driver</value>
 </property>
 <property name="url">
-<value>jdbc:mariadb://umj7-009.cafe24.com:3306/opete95?useUnicode=yes&amp;serverTimezone=UTC;characterEncoding=UTF-8;</value>
+<value>jdbc:mysql://umj7-009.cafe24.com:3306/opete95?serverTimezone=UTC</value>
 </property>
 <property name="username">
 <value>opete95</value>
@@ -21,4 +21,18 @@ class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 <value>soli5857!@</value>
 </property>
 </bean>		
+
+<bean id="sqlSessionFactory"
+class="org.mybatis.spring.SqlSessionFactoryBean">
+<property name="dataSource" ref="dataSource" />
+</bean>
+<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+<property name="basePackage" value="com.tj.shopping"></property>
+</bean>
+
+<bean id="transactionManager"
+class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+<property name="dataSource" ref="dataSource" />
+</bean>
+<tx:annotation-driven />
 </beans>

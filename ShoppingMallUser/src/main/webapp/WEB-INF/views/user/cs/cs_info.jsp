@@ -1,9 +1,11 @@
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--     <%=request.getRequestURL()%> --%>
 <%
-ArrayList<Map<String,String>> data = (ArrayList<Map<String,String>>)request.getAttribute("data");
+String url = request.getContextPath();
+// ArrayList<Map<String,String>> data = (ArrayList<Map<String,String>>)request.getAttribute("data");
 // out.print(data.get(0).get("fcategory"));
 %>    
 <meta charset="utf-8">
@@ -11,11 +13,11 @@ ArrayList<Map<String,String>> data = (ArrayList<Map<String,String>>)request.getA
     <div class="subpage_wrap">
         <div id="subpageLNB" class="subpage_lnb">
 <div id="boardLnbCommon">
-    <h2 class="title1"><a href="<%=url%>/cs.do" designElement="text" >CS CENTER</a></h3>
+    <h2 class="title1"><a href="<%=url%>/cs" designElement="text" >CS CENTER</a></h3>
     <ul class="lnb_sub">
-        <li ><a href="<%=url%>/notice.do" designElement="text">공지사항</a></li>
-        <li ><a href="<%=url%>/cs.do" designElement="text">자주 묻는 질문</a></li>
-        <li ><a href="<%=url%>/cs.do?cate=3" designElement="text">상품문의</a></li>
+        <li ><a href="<%=url%>/notice" designElement="text">공지사항</a></li>
+        <li ><a href="<%=url%>/cs" designElement="text">자주 묻는 질문</a></li>
+        <li ><a href="<%=url%>/cs?cate=3" designElement="text">상품문의</a></li>
         <li ><a href="#" designElement="text"><b>상품후기</b></a></li>
     </ul>
 </div>
@@ -53,33 +55,45 @@ $(function() {
             
             <!-- 반복사용 필요 -->	
             <%
-            int w=0;
-            while(w<data.size()){
+//             int w=0;
+//             while(w<data.size()){
             %>
+            <z:forEach items="${list}">
             <ul class="faq_new v2">
                 <li>
                     <div class="question">
-                        <p class="subject pointer boad_faqview_btn" board_seq="<%=data.get(w).get("fidx")%>"> <span class="cat">
-			[<%=data.get(w).get("fcategory")%>] 
+                        <p class="subject pointer boad_faqview_btn" 
+                        board_seq="
+<%--                         ${list.CSDTO.fidx} --%>
+<%--                         <%=data.get(w).get("fidx")%> --%>
+                        "> <span class="cat">
+<%--                          ${list.CSDTO.fcategory} --%>
+<%-- 			[<%=data.get(w).get("fcategory")%>]  --%>
                         </span>
-				<%=data.get(w).get("f_qtext")%>
+<%-- 				<%=data.get(w).get("f_qtext")%> --%>
                            </p>
                         <p class="add_info">
-                            <span class="hide">번호:  <%=w+1 %></span>
+                            <span class="hide">번호:  
+<%--                             <%=w+1 %> --%>
+                            </span>
                         </p>
                     </div>
-                 <div id="faqcontent_<%=data.get(w).get("fidx")%>" class="answer hide">								
+                 <div id="faqcontent_
+<%--                  <%=data.get(w).get("fidx")%> --%>
+                 " class="answer hide">								
                         <p style="box-sizing: inherit;">
 <!--                         ${f_atext} -->
-					<%=data.get(w).get("f_atext")%>
+<%-- 					<%=data.get(w).get("f_atext")%> --%>
                         </p>
                     </div>
                 </li>
             </ul>
+            </z:forEach>
             <!-- 반복사용 끝 -->
             <%
-            w++;
-            };%>
+//             w++;
+//             };
+            %>
             <script type="text/javascript">
             // FAQ 게시글 보기
             $('.boad_faqview_btn').on('click', function() { 

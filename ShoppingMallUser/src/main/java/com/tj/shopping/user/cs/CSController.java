@@ -1,26 +1,41 @@
 package com.tj.shopping.user.cs;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 public class CSController {
-//	
-//	@Autowired
-//	BasicDataSource dataSource;
-//	
-//	@RequestMapping("/cs.do")
+	
+	@Autowired
+	private CSService csService;
+	
+	@RequestMapping(value="cs",method=RequestMethod.GET)
+	public String CSPage(
+//			CSDTO dto,
+			@RequestParam(name="cate",defaultValue = "") String cate,
+			Model model
+			) {		 
+		List<CSDTO> list =null;
+		System.out.println(cate);
+		if(cate.equals("") || cate==null) {
+			list = csService.getList();
+		
+		}else {
+			list = csService.selectList(cate);
+		}
+			System.out.println(list);
+			model.addAttribute("list",list);
+		return "user/cs/cs";
+	}
 //	public String page(HttpServletRequest req, Model m) throws Exception {
 //		String cate = req.getParameter("cate");
 //		Connection ct = dataSource.getConnection();
