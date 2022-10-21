@@ -62,7 +62,7 @@
 </div>
 		
 <div class="resp_wrap display_wrap">
-    <%@ include file="./company_info.html" %>
+    <%@ include file="company_info.jsf" %>
 </div>
 
 <div id="layout_footer" class="layout_footer">

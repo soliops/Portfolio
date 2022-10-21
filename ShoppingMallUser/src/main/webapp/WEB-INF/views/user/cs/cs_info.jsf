@@ -54,46 +54,28 @@ $(function() {
             </div>
             
             <!-- 반복사용 필요 -->	
-            <%
-//             int w=0;
-//             while(w<data.size()){
-            %>
-            <z:forEach items="${list}">
+            <z:forEach var="CSDTO" items="${list}" varStatus="status">
             <ul class="faq_new v2">
                 <li>
                     <div class="question">
                         <p class="subject pointer boad_faqview_btn" 
-                        board_seq="
-<%--                         ${list.CSDTO.fidx} --%>
-<%--                         <%=data.get(w).get("fidx")%> --%>
-                        "> <span class="cat">
-<%--                          ${list.CSDTO.fcategory} --%>
-<%-- 			[<%=data.get(w).get("fcategory")%>]  --%>
-                        </span>
-<%-- 				<%=data.get(w).get("f_qtext")%> --%>
-                           </p>
+                        board_seq="${CSDTO.fidx}"> <span class="cat">${CSDTO.fcategory}</span>
+                        ${CSDTO.f_qtext}</p>
                         <p class="add_info">
                             <span class="hide">번호:  
-<%--                             <%=w+1 %> --%>
+                            ${status.count}
                             </span>
                         </p>
                     </div>
-                 <div id="faqcontent_
-<%--                  <%=data.get(w).get("fidx")%> --%>
-                 " class="answer hide">								
+                 <div id="faqcontent_${CSDTO.fidx}" class="answer hide">								
                         <p style="box-sizing: inherit;">
-<!--                         ${f_atext} -->
-<%-- 					<%=data.get(w).get("f_atext")%> --%>
+						${CSDTO.f_atext}
                         </p>
                     </div>
                 </li>
             </ul>
             </z:forEach>
             <!-- 반복사용 끝 -->
-            <%
-//             w++;
-//             };
-            %>
             <script type="text/javascript">
             // FAQ 게시글 보기
             $('.boad_faqview_btn').on('click', function() { 
@@ -106,7 +88,4 @@ $(function() {
     </div>
     <script type="text/javascript" src="./js/cscenter_ui.js"></script><!-- 고객센터 ui 공통 -->
 
-</div>
-        
-        </div>
 </div>

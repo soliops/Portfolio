@@ -65,7 +65,7 @@ background-color:#ffffff;}
 </div>
 
 <div class="resp_wrap display_wrap">
-    <%@ include file="./collection.jsp" %>
+    <%@ include file="./collection.jsf" %>
 </div>
 <br/>
 <br/>

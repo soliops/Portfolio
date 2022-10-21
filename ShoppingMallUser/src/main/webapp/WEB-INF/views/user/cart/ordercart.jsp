@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"  xmlns:fb="http://ogp.me/ns/fb#"  xmlns:og="http://ogp.me/ns#">
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/fb/website#">
@@ -55,15 +57,15 @@
 
 <div id="wrap">
 <div id="layout_wrap" class="layout_wrap">
-    <!--상단 영역 top.html-->    
+   <%@ include file="../index/top.html" %>      
 </div>
 		
 <div class="resp_wrap display_wrap">
-    <!--회원가입 영역 login.html-->
+    <%@ include file="cart.jsf" %>  
 </div>
 
 <div id="layout_footer" class="layout_footer">
-    <!--회사소개 영역 footer.html-->
+   <%@ include file="../index/footer.html" %> 
 </div>
 
 </div>

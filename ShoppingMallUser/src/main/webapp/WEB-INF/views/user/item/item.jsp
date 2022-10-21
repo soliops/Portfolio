@@ -62,7 +62,7 @@
 </div>
 <form name="item_form" id="item_form">
 <div class="resp_wrap display_wrap">
-    <%@ include file="item_view.jsp" %>
+    <%@ include file="item_view.jsf" %>
 </div>
 </form>
 <div id="layout_footer" class="layout_footer">

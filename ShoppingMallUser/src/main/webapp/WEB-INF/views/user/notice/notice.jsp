@@ -65,7 +65,7 @@
 </div>
 <form name="frm" id="frm">
 <div class="resp_wrap display_wrap">
-    <%@ include file="notice_list.jsp" %>     
+    <%@ include file="notice_list.jsf" %>     
 </div>
 </form>
 <div id="layout_footer" class="layout_footer">

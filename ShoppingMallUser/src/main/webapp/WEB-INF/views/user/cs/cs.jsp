@@ -67,7 +67,7 @@
 </div>
 		
 <div class="resp_wrap display_wrap">
-    <%@ include file="cs_info.jsp" %>       
+    <%@ include file="cs_info.jsf" %>       
 </div>
 
 <div id="layout_footer" class="layout_footer">

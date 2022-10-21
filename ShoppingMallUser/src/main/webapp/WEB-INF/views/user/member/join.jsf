@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <div class="title_container">
 	<h2><span designElement="text" textIndex="1">회원정보 입력</span></h2>
 </div>
