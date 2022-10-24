@@ -73,12 +73,12 @@
 			<ul >
 				<li class="th "><p designElement="text" textIndex="22" >주소</p></li>
 				<li class="td">
-					<input type="hidden" name="maddress" id="maddress" value=""/>
+					<input type="hidden" value=""/>
 					<input type="tel" name="mpost" id="mpost" value="" class="size_zip_all" readonly />
-					<button type="button" id="search_post" class="btn_resp size_b color4"><span designElement="text" textIndex="23" >주소찾기</span></button>
+					<button type="button" id="" class="btn_resp size_b color4"><span designElement="text" textIndex="23" >주소찾기</span></button>
 					<div class="address_area">
-						<input type="text" name="maddress1" id="maddress1" value="" class="address size_full " readonly />
-						<input type="text" name="maddress1" id="maddress1"  value="" class="address_street size_full hide" readonly />
+						<input type="text"name="maddress1" id="maddress1" value="" class="address size_full " readonly />
+						<input type="text" id="maddress1"  value="" class="address_street size_full hide" readonly />
 					</div>
 					<div class="address_area">
 						<input type="text" name="maddress2" id="maddress2"value="" class="size_full" placeholder="나머지 주소를 입력해 주세요."/>
@@ -135,7 +135,9 @@
 	<!-- ------- //회원가입 입력폼 ------- -->
 
 	<div id="btn_register" class="btn_area_c">
-		<input type="button" onclick="write_fin();" value="입력 완료" class="btn_resp size_c color2 Wmax">
+		<button type="submit" onclick="write_fin();" class="btn_resp size_c color2 Wmax">
+		<span designElement="text">입력 완료</span>
+		</button>
 	</div>
 </div>
 </form>

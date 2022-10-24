@@ -18,6 +18,6 @@ public class MemberDTO {
 	private String mpost;
 	private String maddress1;
 	private String maddress2;
-	
-	
+	private String mindate;
+	private String moutdate;
 }

@@ -19,6 +19,7 @@ function allcheck(){
 	var passcheck = frm.mpassword.value.match(code3);
 	var nameck = /[^a-zA-Z가-힣]/g;
 	frm.memail.value = frm.memail.value+"@"+frm.memail2.value;
+	alert(frm.memail.value);
 	var emailck =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
 	var telck = /[^0-9]/;
 	var telck2 = /[^0-9]\d{2,3}/;
