@@ -4,6 +4,51 @@
 <%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script>
+$(function (){
+	$("#buy_btn").click(function(){ //모바일용 구매하기 버튼
+		if(confirm("비회원으로 구매 진행하시겠습니까?")){
+			alert("테스트");
+			frm.method="POST";
+			frm.enctype="application/x-www-form-urlencoded";
+			frm.action="./order";
+			frm.submit();
+		}
+		
+	});
+	$("#buy_btn2").click(function(){ //PC용 구매하기 버튼
+		if(confirm("비회원으로 구매 진행하시겠습니까?")){
+			frm.method="POST";
+			frm.enctype="application/x-www-form-urlencoded";
+			frm.action="./order";
+			frm.submit();
+		}		
+	});
+	$("#buy_basket").click(function(){ //장바구니 버튼
+		
+	});
+	//상품수량 변경
+	$("#product_ea").click(function(){
+		var $ori = $("#price").val();
+		var $ea = $(this).val();
+		var $total = $ori*$ea;
+		$("#total_goods_price").text($total.toLocaleString());
+		$("#total").val($total);
+	});
+});
+function price_cal(){					
+	var detail_price = '${list.product_disprice}';
+	var num = document.getElementById("product_ea").value;
+	var total_price = num * detail_price;
+	document.getElementById("total_goods_price").innerText = total_price.toLocaleString();
+	}
+</script>
+<form name="frm" id="frm">
+<input type="hidden" name="product_nm" value="${list.product_name}">
+<input type="hidden" name="product_nm" value="${list.product_addexplain}">
+<input type="hidden" name="price" id="price" value="${list.product_disprice}">
+<input type="hidden" name="point" id="point" vlaue="71280">
+<input type="hidden" name="total" id="total" vlaue="7128000">
 <div class="detail_title_area">
 	<h3 class="name" >${list.product_name}</h3>
 	<p class="summary">	${list.product_addexplain}<span class="detail_icons">
@@ -118,10 +163,9 @@
 				<li class="goods_spec_saving_benefit">
 					<ul class="detail_spec_table">
 						<li class="th"><span designElement="text" textIndex="44" >적립혜택</span></li>
-						<li>
+						<li >
 							<span designElement="text" textIndex="45" >구매</span>
-<%-- 							<%int point = (int)Math.ceil(Integer.parseInt(list.getProduct_disprice())*0.01); %> --%>
-							<fm:formatNumber value="${list.product_disprice*0.01}"/>&#x20a9;
+							<span name="buy_point1" id="buy_point1"><fm:formatNumber value="${list.product_disprice*0.01}"/></span>&#x20a9;
 
 						</li>
 					</ul>
@@ -140,10 +184,6 @@
 
 							<ul class="detail_spec_table sub">
 								<li>
-									<select class="M" name="shipping_method" onchange="view_delivery_cost();" style="display:none">
-										<option value='21' selected grp_seq="1" nation="korea" prepay_info="all" shipping_set_code="direct_delivery" >직접배송(<span class="prepay_info_area prepay_info_delivery">주문 시 결제</span>/<span class="prepay_info_area prepay_info_postpaid">착불</span>)</option>
-									</select>
-									<script>$(function(){view_delivery_cost()});</script>
 									<span>직접배송(<span class="gray_06"><span class="prepay_info_area prepay_info_delivery">주문 시 결제</span>/<span class="prepay_info_area prepay_info_postpaid">착불</span></span>)</span>
 									<input type="hidden" name="shipping_prepay_info" id="shipping_prepay_info" value="" alt="선/착불정보" />
 									<input type="hidden" name="shipping_store_seq" id="shipping_store_seq" value="" alt="수령매장정보" />
@@ -169,7 +209,6 @@
 										</div>
 									</div>
 									<input type="hidden" name="hop_select_date" id="hop_select_date" value="" />
-									<script>view_delivery_cost();</script>
 								</li>
 							</ul>
 
@@ -255,7 +294,7 @@
 					<li>
 						<ul class="basic_btn_area">
 	
-							<li><button type="button" id="buy_btn" class="btn_resp size_c color2"><span designElement="text" textIndex="99" >구매하기</span></button></li>
+							<li><button type="button" id="buy_btn" class="btn_resp size_c color2"><span designElement="text" >구매하기</span></button></li>
 						</ul>
 					</li>
 
@@ -279,7 +318,7 @@
 		<tr class="optionTr">
 			<td colspan="2">
 				<span class="optionTitle hide">수량</span>
-				<select id="product_num" onchange="price_cal();">
+				<select id="product_ea" name="product_ea" onchange="price_cal();">
 				<z:forEach var="size" begin="1" end="${list.product_stock}">
 				<option value="${size}">${size}</option>
 				</z:forEach>
@@ -316,22 +355,14 @@
 					</tr>
 					</table>
 				</div>
-				<script>
-				function price_cal(){					
-				var detail_price = '${list.product_disprice}';
-				var num = document.getElementById("product_num").value;
-				var total_price = num * detail_price;
-				document.getElementById("total_goods_price").innerText = total_price.toLocaleString();
-				}
-				</script>
 				<!-- 총 상품 금액 표기 끝-->
 
 				<div class="goods_buttons_area">
 					<ul class="goods_buttons_section">
 						<li>
 							<ul class="basic_btn_area">
-								<li><button type="button" class="btn_resp size_extra2 NpayNo"><span designElement="text" textIndex="107" >장바구니</span></button></li>
-								<li><button type="button" class="btn_resp size_extra2 color2 NpayNo"><span designElement="text" textIndex="109" >구매하기</span></button></li>
+								<li><button type="button" id="buy_basket" class="btn_resp size_extra2 NpayNo"><span designElement="text">장바구니</span></button></li>
+								<li><button type="button" id="buy_btn2" class="btn_resp size_extra2 color2 NpayNo"><span designElement="text">구매하기</span></button></li>
 							</ul>
 						</li>
 					</ul>
@@ -536,3 +567,4 @@
 			</div>
 
 		</div>
+</form>

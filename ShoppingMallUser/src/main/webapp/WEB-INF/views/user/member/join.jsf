@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>    
+<form name="frm" id="frm" enctype="application/x-www-form-urlencoded">
 <div class="title_container">
 	<h2><span designElement="text" textIndex="1">회원정보 입력</span></h2>
 </div>
 <div class="mypage_greeting Pb30">
 	<span class="pilsu_icon"></span> <span designElement="text" textIndex="2">항목은 <span class="pointcolor">필수 입력</span> 항목입니다.</span>
 </div>
-
-
 <div class="resp_member_join_wrap">
  <div id="formMemberArea" class="resp_member_join">
 	<input type="hidden" name="kid_agree" value=""/>
@@ -15,71 +15,73 @@
 			<ul class="required">
 				<li class="th "><p designElement="text" textIndex="8" >아이디</p></li>
 				<li class="td">
-						<input type="text" id="userid" autocapitalize="off" value="" class="eng_only" placeholder="공백 없는 영문/숫자 포함 6~20자" />
-						<p id="id_info" class="guide_text"></p>
+						<input type="text" name="mid" id="mid" autocapitalize="off" value="" class="eng_only" placeholder="공백 없는 영문/숫자 포함 6~20자" />
+						<p name="id_info" id="id_info" class="guide_text"></p>
 				</li>
 			</ul>
 				<ul class="required">
 					<li class="th "><p designElement="text" textIndex="11" >비밀번호</p></li>
 					<li class="td">
-						<input type="password" value="" class="eng_only class_check_password_validation" />
+						<input type="password" name="mpassword" id="mpassword" value="" class="eng_only class_check_password_validation" />
 					</li>
 				</ul>
 				<ul class="required">
 					<li class="th "><p designElement="text" textIndex="12" >비밀번호 확인</p></li>
 					<li class="td">
-						<input type="password" value="" class="eng_only" />
+						<input type="password" name="mpassword2" id="mpassword2" value="" class="eng_only" />
 					</li>
 				</ul>
 				<ul class="required">
 					<li class="th"><p designElement="text" textIndex="13" >이름</p></li>
 					<li class="td">
-						<input type="text" value=""  />
+						<input type="text" name="mname" id="mname" value=""  />
 					</li>
 				</ul>
 			<ul class="required">
 				<li class="th "><p designElement="text" textIndex="14" >이메일</p></li>
 				<li class="td">
-					<input type="email" value="" class="size_mail1" /> @
-					<input type="email" value="" class="size_mail2" />
-					<select id="find_email">
-						<option value="">직접입력</option>
-							<option value="naver.com">naver.com</option>
-							<option value="nate.com">nate.com</option>
-							<option value="dreamwiz.com">dreamwiz.com</option>
-							<option value="yahoo.co.kr">yahoo.co.kr</option>
-							<option value="empal.com">empal.com</option>
-							<option value="unitel.co.kr">unitel.co.kr</option>
-							<option value="gmail.com">gmail.com</option>
-							<option value="korea.com">korea.com</option>
-							<option value="chol.com">chol.com</option>
-							<option value="paran.com">paran.com</option>
-							<option value="freechal.com">freechal.com</option>
-							<option value="hanmail.net">hanmail.net</option>
-							<option value="hotmail.com">hotmail.com</option>
+					<input type="hidden" name="memail" id="memail" value="">
+					<input type="email" name="memail1" id="memail1" value="" class="size_mail1" /> @
+					<input type="email" name="memail2" id="memail2" value=""class="size_mail2" />
+					<select name="find_email" id="find_email" onchange="email3();">
+						<option name="memail3" value="" >직접입력</option>
+							<option name="memail3" value="naver.com">naver.com</option>
+							<option name="memail3" value="nate.com">nate.com</option>
+							<option name="memail3" value="dreamwiz.com">dreamwiz.com</option>
+							<option name="memail3" value="yahoo.co.kr">yahoo.co.kr</option>
+							<option name="memail3" value="empal.com">empal.com</option>
+							<option name="memail3" value="unitel.co.kr" >unitel.co.kr</option>
+							<option name="memail3" value="gmail.com" >gmail.com</option>
+							<option name="memail3" value="korea.com" >korea.com</option>
+							<option name="memail3" value="chol.com" >chol.com</option>
+							<option name="memail3" value="paran.com">paran.com</option>
+							<option name="memail3" value="freechal.com">freechal.com</option>
+							<option name="memail3" value="hanmail.net" >hanmail.net</option>
+							<option name="memail3" value="hotmail.com" >hotmail.com</option>
 					</select>
 				</li>
 			</ul>
 			<ul class="required">
 				<li class="th "><p designElement="text" textIndex="16" >휴대폰번호</p></li>
 				<li class="td">
-					<input type="tel" value="" class="size_phone" maxlength="4"  /> -
-					<input type="tel" value="" class="size_phone" maxlength="4"  /> -
-					<input type="tel" value="" class="size_phone" maxlength="4"  />
+					<input type="hidden" name="mtel" id="mtel" value="">
+					<input type="tel" name="mtel1" id="mtel1" value="" class="size_phone" maxlength="3"  /> -
+					<input type="tel" name="mtel2" id="mtel2" value="" class="size_phone" maxlength="4"  /> -
+					<input type="tel" name="mtel3" id="mtel3" value="" class="size_phone" maxlength="4"  />
 				</li>
 			</ul>
 			<ul >
 				<li class="th "><p designElement="text" textIndex="22" >주소</p></li>
 				<li class="td">
-					<input type="hidden" value=""/>
-					<input type="tel" value="" class="size_zip_all" readonly />
-					<button type="button" class="btn_resp size_b color4"><span designElement="text" textIndex="23" >주소찾기</span></button>
+					<input type="hidden" name="maddress" id="maddress" value=""/>
+					<input type="tel" name="mpost" id="mpost" value="" class="size_zip_all" readonly />
+					<button type="button" id="search_post" class="btn_resp size_b color4"><span designElement="text" textIndex="23" >주소찾기</span></button>
 					<div class="address_area">
-						<input type="text" value="" class="address size_full " readonly />
-						<input type="text" value="" class="address_street size_full hide" readonly />
+						<input type="text" name="maddress1" id="maddress1" value="" class="address size_full " readonly />
+						<input type="text" name="maddress1" id="maddress1"  value="" class="address_street size_full hide" readonly />
 					</div>
 					<div class="address_area">
-						<input type="text" value="" class="size_full" />
+						<input type="text" name="maddress2" id="maddress2"value="" class="size_full" placeholder="나머지 주소를 입력해 주세요."/>
 					</div>
 					<p id="address_view" style="padding-top:5px; display:none;"></p>
 				</li>
@@ -133,8 +135,7 @@
 	<!-- ------- //회원가입 입력폼 ------- -->
 
 	<div id="btn_register" class="btn_area_c">
-		<button type="submit" class="btn_resp size_c color2 Wmax">
-		<span designElement="text">입력 완료</span>
-		</button>
+		<input type="button" onclick="write_fin();" value="입력 완료" class="btn_resp size_c color2 Wmax">
 	</div>
 </div>
+</form>

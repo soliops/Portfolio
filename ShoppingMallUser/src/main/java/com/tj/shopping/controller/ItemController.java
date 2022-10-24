@@ -25,6 +25,7 @@ public class ItemController {
 			Model model,
 			HttpServletRequest req
 			) {
+		
 		ItemDTO list = itemService.getItem(num);
 		model.addAttribute("list",list);
 		return "user/item/item";

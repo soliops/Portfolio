@@ -17,11 +17,4 @@ public class NoticeDTO {
 	private String notice_file;
 	private String notice_text;
 	private String notice_date;
-	private Integer startpage;
-	private Integer pageview;
-//	private Integer count;
-//	private String page;
-//	private String cate;
-//	private String search;
-//	private String p_check;
 }

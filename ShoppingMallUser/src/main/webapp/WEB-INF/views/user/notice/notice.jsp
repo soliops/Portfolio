@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-// String url = request.getContextPath();
-%>    
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko"  xmlns:fb="http://ogp.me/ns/fb#"  xmlns:og="http://ogp.me/ns#">
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/fb/website#">
@@ -49,7 +46,7 @@
 <script src="./js/slick.min.js"></script>
 <script src="./js/jquery.event.swipe.js"></script>
 <script src="./js/swiper.js"></script>
-<script src="./js/notice_list.js?v=1"></script>
+<script src="./js/notice_list.js?v=2"></script>
 <body>
 <style>
         #layout_body { background-color:#ffffff; }
@@ -65,7 +62,7 @@
 </div>
 <form name="frm" id="frm">
 <div class="resp_wrap display_wrap">
-<%--     <%@ include file="notice_list.jsf" %>      --%>
+    <%@ include file="notice_list.jsf" %>     
 </div>
 </form>
 <div id="layout_footer" class="layout_footer">

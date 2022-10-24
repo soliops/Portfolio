@@ -5,8 +5,6 @@
 <%--     <%=request.getRequestURL()%> --%>
 <%
 String url = request.getContextPath();
-// ArrayList<Map<String,String>> data = (ArrayList<Map<String,String>>)request.getAttribute("data");
-// out.print(data.get(0).get("fcategory"));
 %>    
 <meta charset="utf-8">
 <div id="boardlayout" >
@@ -40,12 +38,12 @@ $(function() {
 
             <!-- -->
             <div class="cs_top2 mycs_fcont_margin">
-                <a class="menu2" href="<%=url%>/cs.do?cate=1" designElement="text"><span class="area"><span class="text2">배송문의</span></span></a>
-                <a class="menu3" href="<%=url%>/cs.do?cate=2" designElement="text"><span class="area"><span class="text2">반품/교환문의</span></span></a>
-                <a class="menu1" href="<%=url%>/cs.do?cate=3" designElement="text"><span class="area"><span class="text2">상품문의</span></span></a>
-                <a class="menu9" href="<%=url%>/cs.do?cate=4" designElement="text"><span class="area"><span class="text2">쿠폰내역</span></span></a>
-                <a class="menu10" href="<%=url%>/cs.do?cate=5" designElement="text"><span class="area"><span class="text2">마일리지내역</span></span></a>
-                <a class="menu5" href="<%=url%>/cs.do?cate=6" designElement="text"><span class="area"><span class="text2">자주묻는질문</span></span></a>
+                <a class="menu2" href="<%=url%>/cs?cate=1" designElement="text"><span class="area"><span class="text2">배송문의</span></span></a>
+                <a class="menu3" href="<%=url%>/cs?cate=2" designElement="text"><span class="area"><span class="text2">반품/교환문의</span></span></a>
+                <a class="menu1" href="<%=url%>/cs?cate=3" designElement="text"><span class="area"><span class="text2">상품문의</span></span></a>
+                <a class="menu9" href="<%=url%>/cs?cate=4" designElement="text"><span class="area"><span class="text2">쿠폰내역</span></span></a>
+                <a class="menu10" href="<%=url%>/cs?cate=5" designElement="text"><span class="area"><span class="text2">마일리지내역</span></span></a>
+                <a class="menu5" href="<%=url%>/cs?cate=6" designElement="text"><span class="area"><span class="text2">자주묻는질문</span></span></a>
             </div>
             <!-- 타이틀 -->
             <div class="title_container2">
