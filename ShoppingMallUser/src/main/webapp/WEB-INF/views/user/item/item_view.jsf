@@ -1,21 +1,16 @@
 <%@page import="java.text.DecimalFormat"%>
-<%@page import="com.tj.shopping.item_dao"%>
 <%@page import="java.util.*"%>
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-ItemDTO list = (ItemDTO)request.getAttribute("list");
-String url = request.getRealPath("");
-%>
 <div class="detail_title_area">
-	<h3 class="name" ><%=list.getProduct_name() %></h3>
-	<p class="summary">
-		<%=list.getProduct_addexplain() %>
-		<span class="detail_icons">
+	<h3 class="name" >${list.product_name}</h3>
+	<p class="summary">	${list.product_addexplain}<span class="detail_icons">
 		</span>
 	</p>
-	<p class="seq_num Hide">상품번호 : <%=list.getProduct_code() %></p>
+	<p class="seq_num Hide">상품번호 : ${list.product_code} 
+	</p>
 </div>
 
 <div id="goods_view">
@@ -27,7 +22,7 @@ String url = request.getRealPath("");
 		<div id="goods_thumbs">
 			<div class="slides_container hide" style="position:relative;">
 					<div class="viewImgWrap">
-							<img src="<%=list.getProduct_img1() %>" title="<%=list.getProduct_name() %>" alt="상품이미지"/>
+							<img src="${list.product_img1 }" title="${list.product_name }" alt="상품이미지"/>
 					</div>
 			</div>
 
@@ -78,25 +73,26 @@ String url = request.getRealPath("");
 				<li class="deatil_price_area">
 						<div class="deatil_sale_rate">
 							<p class="inner">
-								<span class="num"><%=list.getProduct_discount() %></span>%
+								<span class="num">
+								${list.product_discount}
+								</span>%
 							</p>
 						</div>
 						<p class="org_price">
-							<span class="dst_th_size"><s><span class="num"><fm:formatNumber value="<%=list.getProduct_price() %>"/></span></s>&#x20a9;</span>
+							<span class="dst_th_size"><s><span class="num"><fm:formatNumber value="${list.product_price }"/></span></s>&#x20a9;</span>
 						</p>
 						<p class="sale_price">
-								<span class="num"><fm:formatNumber value="<%=list.getProduct_disprice() %>"/></span><span class='price_won'>&#x20a9;</span>
+								<span class="num"><fm:formatNumber value="${list.product_disprice }"/></span><span class='price_won'>&#x20a9;</span>
 						</p>
 
 					<!--<button type="button" class="btn_open_small btn_resp B" onclick="detail_contents_toggle(this,'priceDetail')"><span designElement="text">할인금액</span></button>//-->
-					
                     <button type="button" class="btn_open_small btn_resp B"><span designElement="text" textIndex="5" >할인금액</span></button>
                     
                     <div id="priceDetail" class="detail_option_list hide">
 						<ul>
 							<li>
 								<span class="title">이벤트</span>
-								<span class="detail" id="price_detail" name="price_detail" value="<%=list.getProduct_disprice()%>"><fm:formatNumber value="<%=list.getProduct_disprice() %>"/>&#x20a9;</span>
+								<span class="detail" id="price_detail" name="price_detail" value="${list.product_disprice }"><fm:formatNumber value="${list.product_disprice }"/>&#x20a9;</span>
 							</li>
 						</ul>
 					</div>
@@ -107,7 +103,9 @@ String url = request.getRealPath("");
 				<li class="goods_spec_number hide">
 					<ul class="detail_spec_table">
 						<li class="th"><span designElement="text" textIndex="6" >상품번호</span></li>
-						<li class="td"><%=list.getProduct_code() %></li>
+						<li class="td">
+						${list.product_code }
+						</li>
 					</ul>
 				</li>
 				<!-- ~~~~~ //상품번호 ~~~~~ -->
@@ -122,8 +120,8 @@ String url = request.getRealPath("");
 						<li class="th"><span designElement="text" textIndex="44" >적립혜택</span></li>
 						<li>
 							<span designElement="text" textIndex="45" >구매</span>
-							<%int point = (int)Math.ceil(Integer.parseInt(list.getProduct_disprice())*0.01); %>
-							<fm:formatNumber value="<%=point%>"/>&#x20a9;
+<%-- 							<%int point = (int)Math.ceil(Integer.parseInt(list.getProduct_disprice())*0.01); %> --%>
+							<fm:formatNumber value="${list.product_disprice*0.01}"/>&#x20a9;
 
 						</li>
 					</ul>
@@ -282,10 +280,9 @@ String url = request.getRealPath("");
 			<td colspan="2">
 				<span class="optionTitle hide">수량</span>
 				<select id="product_num" onchange="price_cal();">
-				<%int w=1; 
-					while(w<=Integer.parseInt(list.getProduct_stock())){%>
-					<option value="<%=w%>" ><%=w %></option>
-                    <%w++;}; %>
+				<z:forEach var="size" begin="1" end="${list.product_stock}">
+				<option value="${size}">${size}</option>
+				</z:forEach>
 				</select>
 			</td>
 		</tr>
@@ -312,11 +309,8 @@ String url = request.getRealPath("");
 						<!-- 단일옵션일 경우 수량 -->
 						<td class="total_goods_price">
 							<span class="total_goods_tit" designElement="text">총 상품금액</span>
-							<%
-							DecimalFormat df = new DecimalFormat("#,###");
-							int goods_price = Integer.parseInt(list.getProduct_disprice()); %>
-							<span id="total_goods_price" value="<%=goods_price%>">
-							<%=df.format(goods_price)%>
+							<span id="total_goods_price" value="${list.product_disprice }">
+							<fm:formatNumber value="${list.product_disprice }"/>
 							</span> &#x20a9;
 						</td>
 					</tr>
@@ -324,7 +318,7 @@ String url = request.getRealPath("");
 				</div>
 				<script>
 				function price_cal(){					
-				var detail_price = '<%=list.getProduct_disprice()%>';
+				var detail_price = '${list.product_disprice}';
 				var num = document.getElementById("product_num").value;
 				var total_price = num * detail_price;
 				document.getElementById("total_goods_price").innerText = total_price.toLocaleString();
@@ -426,7 +420,7 @@ String url = request.getRealPath("");
             }
             </style>
 			<div class="goods_description_images goods_view_contents">
-				<%=list.getProduct_explain() %>
+			${list.product_explain }
                <!-- 상세설명 출력 부분 해당 부분에 상세정보 이미지가 추가 되어야 합니다.-->
 			</div>
 		</div>
