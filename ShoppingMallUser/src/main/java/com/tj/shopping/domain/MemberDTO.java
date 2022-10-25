@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberDTO {
+	private int midx;
 	private String mid;
 	private String mpassword;
 	private String mname;
@@ -18,6 +19,7 @@ public class MemberDTO {
 	private String mpost;
 	private String maddress1;
 	private String maddress2;
-	private String mindate;
-	private String moutdate;
+	private String regdate;
+	private String outdate;
+	private String idsave;
 }

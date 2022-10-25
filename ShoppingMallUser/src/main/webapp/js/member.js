@@ -1,3 +1,28 @@
+var check = false;
+function idcheck(){
+	var mids = frm.mid.value;
+	$.ajax({
+		url:"./member",
+		data:{mid:mids},
+		cache:false,
+		method:"POST",
+		datatype:"text",
+		enctype:"application/x-www-form-urlencoded",
+		success: function(data){ 
+			alert(url);
+			if(data=="false"){
+				document.getElementById("id_info").innerText="사용불가능한 아이디입니다.";
+			}
+			else{
+				document.getElementById("id_info").innerText="사용가능한 아이디입니다.";
+				check = true;
+			}
+		},
+		error: function(){
+			alert("중복체크 오류");
+		}
+	});
+}
 function email3(find_email){
 	var email2 = document.getElementById("memail2");
 	var find_email = document.getElementById("find_email");
@@ -10,6 +35,31 @@ $(function(){
 		insertAddress : "#maddress1",
 		hideOldAddresses : false
 	});	
+	$("#checkId").click(function(){
+		var $mid = $("#mid").val();
+		var $json = {mid:$mid};
+		$.ajax({
+			method:"GET",
+			url:"./idcheck",
+			data:$json,
+			cache:false,
+			datatype:"json",
+			contentType:"application/json; charset=UTF-8",
+			success: function(data){ 
+				if(data["sign"]==true){
+					document.getElementById("id_info").innerText="사용가능한 아이디입니다.";
+					check = true;
+				}
+				else if(data["sign"]==false){
+					document.getElementById("id_info").innerText="사용불가능한 아이디입니다.";
+				}
+			},
+			error: function(){
+				alert("중복체크 오류");
+			}
+		});
+	});
+	
 });
 function allcheck(){
 	var code= /[^a-z|A-Z|0-9]/g;
@@ -18,8 +68,7 @@ function allcheck(){
 	var idcheck= frm.mid.value.match(code);
 	var passcheck = frm.mpassword.value.match(code3);
 	var nameck = /[^a-zA-Z가-힣]/g;
-	frm.memail.value = frm.memail.value+"@"+frm.memail2.value;
-	alert(frm.memail.value);
+	frm.memail.value = frm.memail1.value+"@"+frm.memail2.value;
 	var emailck =/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/g;
 	var telck = /[^0-9]/;
 	var telck2 = /[^0-9]\d{2,3}/;
@@ -49,6 +98,7 @@ function allcheck(){
 		return false;
 	}
 	else if(emailck.test(frm.memail.value)==false){
+		alert(frm.memail.value);
 		alert("올바른 이메일 형식을 입력하셔야 합니다.");
 		frm.memail1.focus();
 		return false;
@@ -63,36 +113,14 @@ function allcheck(){
 		frm.mtel2.focus();
 		return false;
 	}
-	else if(telck3.test(frm.mtel3.value)==true){
+	else if(telck2.test(frm.mtel3.value)==true){
 		alert("연락처는 숫자만 입력하셔야 합니다.");
 		frm.mtel3.focus();
 		return false;
 	}
 	else{		
 	frm.mtel.value = frm.mtel1.value+frm.mtel2.value+frm.mtel3.value;
-	var mid = frm.mid.value;
-	$.ajax({
-		url:"./membercheck",
-		data:{mid:mid},
-		cache:false,
-		method:"post",
-		datatype:"text",
-		enctype:"application/x-www-form-urlencoded",
-		success: function(data){
-			if(data=="false"){
-				frm.id_info.innerText="사용불가능한 아이디입니다.";
-				return false;
-			}
-			else{
-				frm.id_info.innerText="사용가능한 아이디입니다.";
-				return true;
-			}
-		},
-		error: function(){
-			alert("중복체크 오류");
-			return false;
-		}
-	});
+	return true;
 	}
 }
 function write_fin(){
@@ -141,8 +169,9 @@ function write_fin(){
 		if(allcheck()==false){
 			
 		}
-		else{			
+		else{
 		frm.method="post";
+		frm.enctype="application/x-www-form-urlencoded";
 		frm.action="./member";
 		frm.submit();
 		}

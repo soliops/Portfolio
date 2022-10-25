@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>    
-<form name="frm" id="frm" enctype="application/x-www-form-urlencoded">
+<form name="frm" id="frm" >
 <div class="title_container">
 	<h2><span designElement="text" textIndex="1">회원정보 입력</span></h2>
 </div>
@@ -16,7 +16,8 @@
 				<li class="th "><p designElement="text" textIndex="8" >아이디</p></li>
 				<li class="td">
 						<input type="text" name="mid" id="mid" autocapitalize="off" value="" class="eng_only" placeholder="공백 없는 영문/숫자 포함 6~20자" />
-						<p name="id_info" id="id_info" class="guide_text"></p>
+	`					<input type="button" id="checkId" value="중복체크" class="btn_resp size_b color4">
+						<div name="id_info" id="id_info" class="guide_text"></div>
 				</li>
 			</ul>
 				<ul class="required">
@@ -41,8 +42,8 @@
 				<li class="th "><p designElement="text" textIndex="14" >이메일</p></li>
 				<li class="td">
 					<input type="hidden" name="memail" id="memail" value="">
-					<input type="email" name="memail1" id="memail1" value="" class="size_mail1" /> @
-					<input type="email" name="memail2" id="memail2" value=""class="size_mail2" />
+					<input type="text" name="memail1" id="memail1" value="" class="size_mail1" /> @
+					<input type="text" name="memail2" id="memail2" value=""class="size_mail2" />
 					<select name="find_email" id="find_email" onchange="email3();">
 						<option name="memail3" value="" >직접입력</option>
 							<option name="memail3" value="naver.com">naver.com</option>
@@ -75,7 +76,7 @@
 				<li class="td">
 					<input type="hidden" value=""/>
 					<input type="tel" name="mpost" id="mpost" value="" class="size_zip_all" readonly />
-					<button type="button" id="" class="btn_resp size_b color4"><span designElement="text" textIndex="23" >주소찾기</span></button>
+					<button type="button" id="search_post" class="btn_resp size_b color4"><span designElement="text" textIndex="23" >주소찾기</span></button>
 					<div class="address_area">
 						<input type="text"name="maddress1" id="maddress1" value="" class="address size_full " readonly />
 						<input type="text" id="maddress1"  value="" class="address_street size_full hide" readonly />
@@ -135,9 +136,7 @@
 	<!-- ------- //회원가입 입력폼 ------- -->
 
 	<div id="btn_register" class="btn_area_c">
-		<button type="submit" onclick="write_fin();" class="btn_resp size_c color2 Wmax">
-		<span designElement="text">입력 완료</span>
-		</button>
+		<input type="button" onclick="write_fin();" value="입력 완료"class="btn_resp size_c color2 Wmax">
 	</div>
 </div>
 </form>
