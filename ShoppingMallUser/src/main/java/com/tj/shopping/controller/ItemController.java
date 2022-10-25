@@ -24,8 +24,7 @@ public class ItemController {
 			@RequestParam(name = "num", defaultValue = "1") Integer num,
 			Model model,
 			HttpServletRequest req
-			) {
-		
+			) {		
 		ItemDTO list = itemService.getItem(num);
 		model.addAttribute("list",list);
 		return "user/item/item";

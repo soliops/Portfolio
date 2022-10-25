@@ -9,46 +9,59 @@ $(function (){
 	$("#buy_btn").click(function(){ //모바일용 구매하기 버튼
 		if(confirm("비회원으로 구매 진행하시겠습니까?")){
 			alert("테스트");
-			frm.method="POST";
-			frm.enctype="application/x-www-form-urlencoded";
-			frm.action="./order";
-			frm.submit();
+			this.form.method="POST";
+			this.form.enctype="application/x-www-form-urlencoded";
+			this.form.action="./order";
+			this.form.submit();
 		}
 		
 	});
 	$("#buy_btn2").click(function(){ //PC용 구매하기 버튼
-		if(confirm("비회원으로 구매 진행하시겠습니까?")){
-			frm.method="POST";
-			frm.enctype="application/x-www-form-urlencoded";
-			frm.action="./order";
-			frm.submit();
+		document.getElementById("product_price").value ='${list.product_price}';	
+		document.getElementById("product_code").value ='${list.product_code}';			
+		if(confirm("비회원으로 구매 진행하시겠습니까?")){			
+			this.form.method="POST";
+			this.form.enctype="application/x-www-form-urlencoded";
+			this.form.action="./order";
+			this.form.submit();
 		}		
 	});
 	$("#buy_basket").click(function(){ //장바구니 버튼
 		
 	});
 	//상품수량 변경
-	$("#product_ea").click(function(){
-		var $ori = $("#price").val();
-		var $ea = $(this).val();
-		var $total = $ori*$ea;
-		$("#total_goods_price").text($total.toLocaleString());
-		$("#total").val($total);
-	});
+// 	$("#product_ea").click(function(){
+// 		var $ori = $("#price").val();
+// 		var $ea = $(this).val();
+// 		var $total = $ori*$ea;
+// 		$("#total_goods_price").text($total.toLocaleString());
+// 		$("#total").val($total);
+// 	});
 });
+
 function price_cal(){					
 	var detail_price = '${list.product_disprice}';
 	var num = document.getElementById("product_ea").value;
 	var total_price = num * detail_price;
 	document.getElementById("total_goods_price").innerText = total_price.toLocaleString();
+	document.getElementById("product_total").value =total_price;	
+	document.getElementById("product_point").value = total_price*0.01;
 	}
+	
+// function buy_product2(){
+// 	itemFrm.method="POST";
+// 	itemFrm.enctype="application/x-www-form-urlencoded";
+// 	itemFrm.action="./order";
+// 	itemFrm.submit();
+// }
 </script>
-<form name="frm" id="frm">
+<form name="itemFrm" id="itemFrm">
 <input type="hidden" name="product_nm" value="${list.product_name}">
-<input type="hidden" name="product_nm" value="${list.product_addexplain}">
-<input type="hidden" name="price" id="price" value="${list.product_disprice}">
-<input type="hidden" name="point" id="point" vlaue="71280">
-<input type="hidden" name="total" id="total" vlaue="7128000">
+<input type="hidden" name="product_dtc" value="${list.product_addexplain}">
+<input type="hidden" name="product_price" id="product_price" value="${list.product_price}">
+<input type="hidden" name="product_point" id="product_point" value="${list.product_disprice*0.01}">
+<input type="hidden" name="product_total" id="product_total" value="${list.product_disprice }">
+<input type="hidden" name="product_code" id="product_code" value="${list.product_code}">
 <div class="detail_title_area">
 	<h3 class="name" >${list.product_name}</h3>
 	<p class="summary">	${list.product_addexplain}<span class="detail_icons">
@@ -67,7 +80,7 @@ function price_cal(){
 		<div id="goods_thumbs">
 			<div class="slides_container hide" style="position:relative;">
 					<div class="viewImgWrap">
-							<img src="${list.product_img1 }" title="${list.product_name }" alt="상품이미지"/>
+							<img src="${list.product_img1}" title="${list.product_name}" alt="상품이미지"/>
 					</div>
 			</div>
 
@@ -165,7 +178,7 @@ function price_cal(){
 						<li class="th"><span designElement="text" textIndex="44" >적립혜택</span></li>
 						<li >
 							<span designElement="text" textIndex="45" >구매</span>
-							<span name="buy_point1" id="buy_point1"><fm:formatNumber value="${list.product_disprice*0.01}"/></span>&#x20a9;
+							<span  id="buy_point1"><fm:formatNumber value="${list.product_disprice*0.01}"/></span>&#x20a9;
 
 						</li>
 					</ul>
@@ -293,8 +306,7 @@ function price_cal(){
 				<ul class="goods_buttons_section">
 					<li>
 						<ul class="basic_btn_area">
-	
-							<li><button type="button" id="buy_btn" class="btn_resp size_c color2"><span designElement="text" >구매하기</span></button></li>
+							<li><button type="button" id="buy_btn" value="구매하기" class="btn_resp size_c color2"><span designElement="text" >구매하기</span></button></li>
 						</ul>
 					</li>
 
