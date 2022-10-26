@@ -3,6 +3,21 @@
 <%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>    
 <meta charset="utf-8">
+<script>
+document.getElementById("current"+${code}).className="current";
+var list = null;
+function current(val){
+	for(var w=1; w<4; w++){
+		if(w != val){
+		document.getElementById("current"+w).className = "";
+		}
+		else{
+			document.getElementById("current"+val).className = "current";			
+		}
+	}
+	location.href="./?cate="+val;
+}
+</script>
 <form name="cFrm" id="cFrm">
 <div class="title_group1">
     <h3 class="title1"><span designElement="text" textIndex="1"  textTemplatePath="cmVzcG9uc2l2ZV93cmlzdHdhdGNoX2NsYXNzaWNfZ2wvbWFpbi9pbmRleC5odG1s" >Celebrity Collection</span></h3>
@@ -13,33 +28,20 @@
 </style>
 <div id='designDisplay_633b83b7559e9' class='designDisplay' designElement='display' templatePath='main/index.html' displaySeq='10344' page='' perpage='' category='' displayStyle='responsible'>
 <ul class="displayTabContainer displayTabType1">
-        <li name="code" id="current1" class="current" style="width:33.3%" value="1" onclick="current(this.value);">서랍장</li>
-        <li name="code" id="current2" class="" style="width:33.4%" value="2" onclick="current(this.value);">소파</li>
-        <li name="code" id="current3" class="" style="width:33.3%" value="3" onclick="current(this.value);">침대/매트리스</li>
+        <li name="code1" id="current1" class="" style="width:33.3%" value="1" onclick="current(this.value);">서랍장</li>
+        <li name="code2" id="current2" class="" style="width:33.4%" value="2" onclick="current(this.value);">소파</li>
+        <li name="code3" id="current3" class="" style="width:33.3%" value="3" onclick="current(this.value);">침대/매트리스</li>
 <!--         <li style="width:25%">쿠션/조명</li> -->
 </ul>
 </div>
-<script>
-function current(val){
-	for(var w=1; w<4; w++){
-		if(w != val){
-		document.getElementById("current"+w).className = "";
-		}
-		else{
-			document.getElementById("current"+val).className = "current";			
-		}
-	}
-	cFrm.method="GET";
-	cFrm.action="./index";
-	cFrm.submit();
-}
-</script>
 <div class="designDisplay_633b83b7559e9 display_responsible_class displayTabContentsContainer displayTabContentsContainerBox" style="display: block;">
 <style>
     .designDisplay_633b83b7559e9.goods_list li.gl_item{ width:300px; }
 </style>
 <ul class="goods_list designDisplay_633b83b7559e9 goods_info_style_2">
 <!--Celebrity Collection 상품출력 반복코드 -->
+<z:if test="{list != null} && ${item}=={response}"></z:if>
+<z:if test="${response != null}"><script>alert("하이");</script></z:if>
   <z:forEach var="ItemDTO" items="${item}" varStatus="status">
 <li class="gl_item">
 <div class="gl_inner_item_wrap">
@@ -71,20 +73,20 @@ function current(val){
 
             <!-- 상품명-->
             <div class="goodS_info displaY_goods_name">
-                <span class="areA"><a href="/item?product=${item.product_name}">${item.product_name }</a></span>
+                <span class="areA"><a href="./item?product=${ItemDTO.product_name}">${ItemDTO.product_name}</a></span>
             </div>
         </div>
 
         <!-- 짧은 설명 -->
         <div class="goodS_info displaY_goods_short_desc">
-            <span class="areA">${item.product_addexplain}</span>
+            <span class="areA">${ItemDTO.product_addexplain}</span>
         </div>
 
         <div class="infO_group">
             <!-- (할인혜택)판매가 -->
             <div class="goodS_info displaY_sales_price">
                 <span class="areA">
-                    <span class="nuM"><fm:formatNumber value="${item.product_disprice}" /></span>&#x20a9;
+                    <span class="nuM"><fm:formatNumber value="${ItemDTO.product_disprice}" /></span> &#x20a9;
                 </span>
             </div>
         </div>

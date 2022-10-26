@@ -1,28 +1,4 @@
 var check = false;
-function idcheck(){
-	var mids = frm.mid.value;
-	$.ajax({
-		url:"./member",
-		data:{mid:mids},
-		cache:false,
-		method:"POST",
-		datatype:"text",
-		enctype:"application/x-www-form-urlencoded",
-		success: function(data){ 
-			alert(url);
-			if(data=="false"){
-				document.getElementById("id_info").innerText="사용불가능한 아이디입니다.";
-			}
-			else{
-				document.getElementById("id_info").innerText="사용가능한 아이디입니다.";
-				check = true;
-			}
-		},
-		error: function(){
-			alert("중복체크 오류");
-		}
-	});
-}
 function email3(find_email){
 	var email2 = document.getElementById("memail2");
 	var find_email = document.getElementById("find_email");
@@ -166,7 +142,11 @@ function write_fin(){
 		frm.maddress2.focus();
 	}
 	else{
-		if(allcheck()==false){
+		if(check==false){
+			alert("중복 체크를 먼저 진행해 주세요.");
+			frm.mid.focus();
+		}
+		else if(allcheck()==false){
 			
 		}
 		else{

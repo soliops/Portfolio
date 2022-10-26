@@ -38,12 +38,6 @@ public class MemberConroller {
 		resp.setContentType("text/html; charset=UTF-8");
 		try {
 			this.pr = resp.getWriter();
-//			MemberDTO check = memberService.selectId(memberDTO);
-//			System.out.println("test");
-//			System.out.println("아이디 있나요?"+check.getMid());
-//			if(check!=null) {
-//				pr.print("false");
-//			}
 			String pass = memberService.Hashing(memberDTO.getMpassword()); 
 			memberDTO.setMpassword(pass);
 			memberService.createMember(memberDTO);			
@@ -63,11 +57,6 @@ public class MemberConroller {
 			)throws Exception{
 		Boolean check = memberService.selectId(mid)!=null ? false : true;		
 		Map<String,Boolean> map = new HashMap<String, Boolean>();
-//		System.out.println("아이디 있나요?"+check.getMid());
-//		String result = "ok";
-//		if(check != null) {
-//			result="false";
-//		}
 		map.put("sign",check);
 		return map;
 	}

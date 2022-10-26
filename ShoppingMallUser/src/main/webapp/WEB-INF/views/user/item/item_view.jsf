@@ -8,7 +8,6 @@
 $(function (){
 	$("#buy_btn").click(function(){ //모바일용 구매하기 버튼
 		if(confirm("비회원으로 구매 진행하시겠습니까?")){
-			alert("테스트");
 			this.form.method="POST";
 			this.form.enctype="application/x-www-form-urlencoded";
 			this.form.action="./order";
@@ -27,7 +26,12 @@ $(function (){
 		}		
 	});
 	$("#buy_basket").click(function(){ //장바구니 버튼
-		
+		if(confirm("장바구니에 담으시겠습니까?")){
+			this.form.method="POST";
+			this.form.enctype="application/x-www-form-urlencoded";
+			this.form.action="./cart";
+			this.form.submit();
+		}
 	});
 	//상품수량 변경
 // 	$("#product_ea").click(function(){
