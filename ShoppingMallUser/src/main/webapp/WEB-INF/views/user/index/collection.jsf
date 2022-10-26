@@ -4,8 +4,6 @@
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>    
 <meta charset="utf-8">
 <script>
-document.getElementById("current"+${code}).className="current";
-var list = null;
 function current(val){
 	for(var w=1; w<4; w++){
 		if(w != val){
@@ -31,7 +29,6 @@ function current(val){
         <li name="code1" id="current1" class="" style="width:33.3%" value="1" onclick="current(this.value);">서랍장</li>
         <li name="code2" id="current2" class="" style="width:33.4%" value="2" onclick="current(this.value);">소파</li>
         <li name="code3" id="current3" class="" style="width:33.3%" value="3" onclick="current(this.value);">침대/매트리스</li>
-<!--         <li style="width:25%">쿠션/조명</li> -->
 </ul>
 </div>
 <div class="designDisplay_633b83b7559e9 display_responsible_class displayTabContentsContainer displayTabContentsContainerBox" style="display: block;">
@@ -40,8 +37,6 @@ function current(val){
 </style>
 <ul class="goods_list designDisplay_633b83b7559e9 goods_info_style_2">
 <!--Celebrity Collection 상품출력 반복코드 -->
-<z:if test="{list != null} && ${item}=={response}"></z:if>
-<z:if test="${response != null}"><script>alert("하이");</script></z:if>
   <z:forEach var="ItemDTO" items="${item}" varStatus="status">
 <li class="gl_item">
 <div class="gl_inner_item_wrap">
@@ -96,5 +91,6 @@ function current(val){
 <!--Celebrity Collection 상품출력 반복코드 끝 -->
 </z:forEach>
 </ul>
+</div>
 </div>
 </form>
