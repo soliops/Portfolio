@@ -22,11 +22,17 @@ public class ItemController {
 	public String ItemPage(
 			@RequestParam(name = "cate",defaultValue = "1") String cate,
 			@RequestParam(name = "num", defaultValue = "1") Integer num,
+			@RequestParam(name ="product", defaultValue = "") String product ,
 			Model model,
 			HttpServletRequest req
-			) {
-		
-		ItemDTO list = itemService.getItem(num);
+			) {		
+		ItemDTO list = null;
+		if(product == "") {
+			list = itemService.getItem(num);						
+		}
+		else {
+			list = itemService.getProduct(product);
+		}
 		model.addAttribute("list",list);
 		return "user/item/item";
 	}
