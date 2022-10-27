@@ -42,7 +42,7 @@ function current(val){
 <div class="gl_inner_item_wrap">
     <!--상품이미지-->
     <div class="gli_image goodsDisplayImageWrap">
-        <a href="javascript:void(0);" class="respItemImageArea" onclick="display_goods_view('767','',this,'goods_view')">
+        <a href="./item?product=${ItemDTO.product_name}" class="respItemImageArea" onclick="display_goods_view('767','',this,'goods_view')">
             <img src="${ItemDTO.product_img1 }" data-src="${ItemDTO.product_img1 }" class="goodsDisplayImage lazyload" onerror="this.src='./images/noimage.gif'" alt="${ItemDTO.product_name}"/>
         </a>
         <div class="respGoodsZzim">

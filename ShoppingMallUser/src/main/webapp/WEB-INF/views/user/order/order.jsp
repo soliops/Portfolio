@@ -46,6 +46,7 @@
 <script src="./js/slick.min.js"></script>
 <script src="./js/jquery.event.swipe.js"></script>
 <script src="./js/swiper.js"></script>
+<script src="./js/order.js"></script>
 <body>
 <style>
         #layout_body { background-color:#ffffff; }

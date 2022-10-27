@@ -39,6 +39,34 @@ $(function(){
 		orderFrm.submit();
 	});
 });
+function change(){
+	var ck = document.getElementsByName("agree");
+	var all_ck = document.getElementById("all_agree");
+	var w = true;
+	var count = 0;
+	for(var p=0;p<ck.length;p++){
+	if(ck[p].checked==false){
+		all_ck.checked=false;
+		w=false;
+		break;
+	}	
+	else{
+		count++;
+	}
+	}
+	if(count==ck.length){
+		all_ck.checked=true;
+	}
+}
+function paycheck(){
+	var pays = orderFrm.payment;
+	if(pays.value=="bank"){
+		document.getElementById("pay_bank").className="list_01 v2 bank";
+	}
+	else{
+		document.getElementById("pay_bank").className="list_01 v2 bank hide";
+	}
+}
 </script>
 <form name="orderFrm" id="orderFrm" method="post" action="./order" enctype="application/x-www-form-urlencoded" target="actionFrame">
 <!-- 결제 부분 -->
@@ -116,7 +144,7 @@ $(function(){
                                     <div class="block block1">
                                         <ul>
                                             <li class="img_area">
-                                                <a href="#"><img src="" title="${item.product_img1}" alt="상품이미지" /></a>
+                                                <a href="#"><img src="${item.product_img1}" title="${item.product_name}" alt="상품이미지" /></a>
                                             </li>
                                             <li class="option_area">
     
@@ -286,13 +314,13 @@ $(function(){
                             <h3 class="title3"><span designElement="text" textIndex="17"   >결제 수단</span></h3>
                             <ul class="payment_method_select clearbox" id="payment_type">     
                                 <li>
-                                    <label><input type="radio" name="payment" value="bank"/>무통장입금</label>
+                                    <label><input type="radio" name="payment" value="bank" onclick="paycheck();"/>무통장입금</label>
                                 </li>                 
                                 <li>
-                                    <label><input type="radio" name="payment" value="CARD" checked />신용카드</label>
+                                    <label><input type="radio" name="payment" value="CARD" checked onclick="paycheck();"/>신용카드</label>
                                 </li>
                                 <li>
-                                        <label><input type="radio" name="payment" value="escrow_virtual" />가상계좌</label>                                
+                                        <label><input type="radio" name="payment" value="escrow_virtual" onclick="paycheck();"/>가상계좌</label>                                
                                 </li>
                             
                             </ul>
@@ -302,7 +330,7 @@ $(function(){
                             </ul>
 
                             <!--무통장입금 - 상세 -->
-                            <ul class="list_01 v2 bank hide">
+                            <ul id="pay_bank" class="list_01 v2 bank hide">
                                 <li>
                                     <input type="text" name="depositor" value="" title="입금자명" />
                                 </li>
@@ -384,23 +412,23 @@ $(function(){
                             <!-- ++++++++++++++++++++ 약관 동의 :: START ++++++++++++++++++++ -->
                             <h3 class="title3">약관 동의</h3>
                             <div class="mem_agree_area">
-                                <label class="pilsu_agree_all2"><input type="checkbox" name="allck" id="allck" value="Y" /> 전체동의</label>
+                                <label class="pilsu_agree_all2"><input type="checkbox" name="allck" id="all_agree" value="Y" /> 전체동의</label>
                                 <ul id="odAgreeList" class="agree_list2">
                                     <li>
                                         <a class="agree_view" href="./agreement">보기</a>
-                                        <label><input type="checkbox" class="agree_chk" name="agree1" id="agree1" value="Y" /> <span class="title">쇼핑몰 이용 약관</span> <span class="desc pointcolor imp">(필수)</span></label>
+                                        <label><input type="checkbox" class="agree_chk" name="agree" id="agree1" value="Y" onclick="change();"/> <span class="title">쇼핑몰 이용 약관</span> <span class="desc pointcolor imp">(필수)</span></label>
                                     </li>
                                     <li>
                                         <a class="agree_view" href="./privacy">보기</a>
-                                        <label><input type="checkbox" class="agree_chk" name="agree2" id="agree2" value="Y" /> <span class="title">개인정보 수집 및 이용</span> <span class="desc pointcolor imp">(필수)</span></label>
+                                        <label><input type="checkbox" class="agree_chk" name="agree" id="agree2" value="Y"  onclick="change();"/> <span class="title">개인정보 수집 및 이용</span> <span class="desc pointcolor imp">(필수)</span></label>
                                     </li>
                                     <li>
                                         <a class="agree_view" href="./privacy">보기</a>
-                                        <label><input type="checkbox" class="agree_chk" name="agree3" id="agree3" value="Y" /> <span class="title">개인정보 제3자 제공 동의</span> <span class="desc pointcolor imp">(필수)</span></label>
+                                        <label><input type="checkbox" class="agree_chk" name="agree" id="agree3" value="Y"  onclick="change();"/> <span class="title">개인정보 제3자 제공 동의</span> <span class="desc pointcolor imp">(필수)</span></label>
                                     </li>
                                     <li>
                                         <a class="agree_view" href="./privacy">보기</a>
-                                        <label><input type="checkbox" class="agree_chk" name="policy_delegation" id="agree4" value="Y" /> <span class="title">개인정보 취급위탁에 대한 동의</span> <span class="desc pointcolor imp">(필수)</span></label>
+                                        <label><input type="checkbox" class="agree_chk" name="agree" id="agree4" value="Y"  onclick="change();"/> <span class="title">개인정보 취급위탁에 대한 동의</span> <span class="desc pointcolor imp">(필수)</span></label>
                                     </li>
                                 </ul>
                             </div>
