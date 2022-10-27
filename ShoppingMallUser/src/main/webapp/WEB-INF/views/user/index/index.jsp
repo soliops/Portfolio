@@ -58,10 +58,10 @@ background-color:#ffffff;}
 
 <div id="wrap">
 <div id="layout_wrap" class="layout_wrap">
-    <%@ include file="./top.html" %>
+    <%@ include file="./top.jsf" %>
 </div>
 <div class="sliderA wide_visual_slider">
-    <%@ include file="./banner.html" %>
+    <%@ include file="./banner.jsf" %>
 </div>
 
 <div class="resp_wrap display_wrap">
@@ -71,19 +71,19 @@ background-color:#ffffff;}
 <br/>
 <br/>
 <div class="full_bnr">
-    <%@ include file="./av.html" %>    
+    <%@ include file="./av.jsf" %>    
 </div>
 <div class="full_bnr2">
-    <%@ include file="./av2.html" %>
+    <%@ include file="./av2.jsf" %>
 </div>
 <div class="resp_wrap display_wrap">
-    <%@ include file="./newproduct.html" %>
+    <%@ include file="./newproduct.jsf" %>
 </div>
 <div class="resp_wrap display_wrap">
-    <%@ include file="./bestproduct.html" %>
+    <%@ include file="./bestproduct.jsf" %>
 </div>
 <div id="layout_footer" class="layout_footer">
-    <%@ include file="./footer.html" %>
+    <%@ include file="./footer.jsf" %>
 </div>
 </div>
 <script type="text/javascript">

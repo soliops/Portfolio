@@ -57,14 +57,14 @@
 
 <div id="wrap">
 <div id="layout_wrap" class="layout_wrap">
-    <%@ include file="../index/top.html" %>
+    <%@ include file="../index/top.jsf" %>
 </div>
 	
 <div class="resp_wrap display_wrap">
     <%@ include file="orderview.jsf" %>
 </div>
 <div id="layout_footer" class="layout_footer">
-    <%@ include file="../index/footer.html" %>
+    <%@ include file="../index/footer.jsf" %>
 </div>
 
 </div>
