@@ -43,7 +43,6 @@ public class OrderController {
 //		orderDTO.setProduct_price(dcf.format(Integer.parseInt(orderDTO.getProduct_price())));
 //		System.out.println(orderDTO.getProduct_price());
 		String code = orderDTO.getProduct_code();
-		System.out.println(code);
 		ItemDTO item = orderService.getProduct(code);
 		model.addAttribute("list",orderDTO);
 		model.addAttribute("item",item);

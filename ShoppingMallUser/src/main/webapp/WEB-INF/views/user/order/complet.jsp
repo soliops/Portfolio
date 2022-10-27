@@ -85,7 +85,6 @@
 </div>
 		
 <div class="resp_wrap display_wrap">
-    <!--complet_view.html-->
  <%@ include file ="complet_view.jsf" %>
 </div>
 
