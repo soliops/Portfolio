@@ -42,14 +42,14 @@ $(function() {
 <ul class="bbs_top_wrap">
     <li class="left">
         <select name="category" id="searchcategory">
-            <option value="0" selected="selected">- 전체 -</option>
-            <option value="공지" >공지</option>
-            <option value="긴급공지" >긴급공지</option>
+            <option value="0" selected="selected" <z:if test="${map.cate eq '0'}">selected</z:if>>- 전체 -</option>
+            <option value="공지" <z:if test="${map.cate eq '공지'}">selected</z:if>>공지</option>
+            <option value="긴급공지" <z:if test="${map.cate eq '긴급공지'}">selected</z:if>>긴급공지</option>
         </select>
     </li>
     <li class="right2">
         <span class="searchform">
-            <input type="text" name="search_text" id="search_text" class="res_bbs_search_input" value="" title="제목, 내용" />
+            <input type="text" name="search_text" id="search_text" class="res_bbs_search_input" value="${map.search}" title="제목, 내용" />
             <input type="hidden" name="p_check" value="N">
             <input type="submit" class="btn_resp size_b" value="검색" onclick="search();">
             <input type="button" class="btn_resp size_b" value="초기화" onclick="search_reset();">
@@ -76,7 +76,7 @@ $(function() {
 <li style="width:84px;"><span designElement="text">등록일</span></li>
 </ul>
 <!--반복구간 사항-->
-<z:if test="${map.cate != '공지' && map.check !='N'}">
+<z:if test="${map.cate != '공지'}">
 <z:forEach var="NoticeDTO" items="${NoticeList}" varStatus="status">
 <ul class="tbody">
 <li class="mo_hide">

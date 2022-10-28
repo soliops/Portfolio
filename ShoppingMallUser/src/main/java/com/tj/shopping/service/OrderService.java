@@ -5,4 +5,6 @@ import com.tj.shopping.domain.ItemDTO;
 public interface OrderService {
 	
 	public ItemDTO getProduct(String product_code);
+	public String getNumber();
+	public String getDate();
 }

@@ -85,9 +85,10 @@ function price_cal(){
 			<div class="slides_container hide" style="position:relative;">
 					<div class="viewImgWrap">
 							<img src="${list.product_img1}" title="${list.product_name}" alt="상품이미지"/>
+							<input type="hidden" name="product_idx" value="${list.pidx}">
 					</div>
 			</div>
-
+			
 			<script type="text/javascript">
 				//$("#goods_thumbs .pagination").hide().width('540').show();
 				var setGoodsThumbsPaginationScroll = function(){

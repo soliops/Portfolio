@@ -10,7 +10,7 @@ import com.tj.shopping.domain.MemberDTO;
 public interface MemberMapper {
 
 	@Insert("insert into member"
-			+ " values(#{midx},#{mid},#{mpassword},#{mname},"
+			+ " values(#{mid},#{mpassword},#{mname},"
 			+ "#{memail},#{mtel},#{mpost},#{maddress1},#{maddress2},#{regdate},#{outdate},#{idsave})")
 	public void insertMember(MemberDTO memberDTO); 
 	@Select("select mid from member where mid=#{mid}")

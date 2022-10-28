@@ -12,6 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class OrderDTO {
+	private int product_idx;
 	private String product_nm;
 	private String product_dtc;
 	private String product_price;

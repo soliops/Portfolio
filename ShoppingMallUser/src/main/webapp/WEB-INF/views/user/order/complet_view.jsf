@@ -1,20 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
-<script language="javascript" type="text/javascript" src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js" charset="UTF-8"></script>
-<script>
-	function payment(){
-		INIStdPay.pay('pay');	
-	}
-</script>         
+<%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>          
 <form name="frm" id="frm">
 <input type="hidden" name="version" value="1.0">
+
 <input type="hidden" name="gopaymethod" value="CARD"> <!-- 결제수단 -->
 <input type="hidden" name="mid" value=""><!--  이니시스 제공 -->
 <input type="hidden" name="oid" value="">
 <input type="hidden" name="price" value=""><!-- 최종 결제 금액 -->
 <input type="hidden" name="timestamp" value="">
-<input type="hidden" name="signature" value="">
-<input type="hidden" name="mKey" value="">
+<input type="hidden" name="signature" value="${signature }">
+<input type="hidden" name="mKey" value="${mKey}">
 <input type="hidden" name="currency" value="${version }"> <!-- 결제통화수단(WON) -->
 <!-- 결제자 정보 -->
 <input type="hidden" name="buyername" value=""> <!-- 결제자명 -->   
@@ -34,7 +31,7 @@
                 <h2><span designElement="text">주문완료</span></h2>
             </div>
             <div class="mypage_greeting">
-                <span class="username">홍길동</span>님의 주문이 정상적으로 처리되었습니다.
+                <span class="username">${list.cname}</span>님의 주문이 정상적으로 처리되었습니다.
             </div>
         </div>
     </div>
@@ -48,8 +45,15 @@
                             <ul class="detail">
                                 <li class="th">배송 :</li>
                                 <li class="silmul">
-                                    <span>직접배송</span>
-                                        <strong>무료</strong>
+                                    <span>${list.ship }</span>
+                                    <z:if test="${list.ship eq '직접배송'}">
+                                     <strong>무료</strong>
+                                    </z:if>
+                                  <z:if test="${list.ship eq '선불'}">
+                                     <strong>
+                                     <fm:formatNumber value="${list.ship_pay }"/>&#x20a9;
+                                     </strong>
+                                    </z:if>                                
                                 </li>
                             </ul>
                         </li>
@@ -60,17 +64,19 @@
                                     <div class="block block1">
                                         <ul>
                                             <li class="img_area">
-                                                <a href="#"><img src="" class="goods_thumb" alt="상품이미지" /></a>
+                                                <a href="./item?product=${item.product_name}"><img src="${item.product_img1}" class="goods_thumb" alt="상품이미지" /></a>
                                             </li>
                                             <li class="option_area">
                                                 <div class="goods_name v2 d2">
-                                                    <a href="#">상품명</a>
+                                                    <a href="./item?product=${item.product_name}">상품명</a>
                                                 </div>		
                                                 <ul class="cart_option">
-                                                    <li><span class="xtle">색상</span> 블루</li>
+                                                    <li><span class="xtle">색상</span> 선택불가능</li>
                                                 </ul>
                                                 <div class="cart_quantity">
-                                                    <span class="xtle">수량</span> 1개												<span class="add_txt">(8,910,000&#x20a9;)</span>
+                                                    <span class="xtle">수량</span> ${list.product_ea}개<span class="add_txt">
+                                                    (<fm:formatNumber value="${list.product_total}"/>&#x20a9;)
+                                                    </span>
                                                 </div>
                                             </li>
                                         </ul>
@@ -90,12 +96,12 @@
                 <h3 class="title3"><span>주문자</span></h3>
                 <ul class="list_01 v2">
                     <li>
-                        <span class="name1 pointcolor2 imp">홍길동</span>
+                        <span class="name1 pointcolor2 imp">${list.cname }</span>
                     </li>
                     <li>
-                        <span class="phone1">010-1234-5678</span>
+                        <span class="phone1">${list.chp.substring(0,3)}-${list.chp.substring(3,7)}-${list.chp.substring(7,11)}</span>
                     </li>
-                    <li><span class="email1">hong@nate.com</span></li>
+                    <li><span class="email1">${list.cemail}</span></li>
                     <li class="desc">
                         주문자 정보로 주문 관련 정보가 문자와 이메일로 발송됩니다.<br />
                         비회원은 이메일과 주문번호로 주문조회가 가능합니다.<br />
@@ -105,21 +111,21 @@
                 <h3 class="title3"><span>배송지</span></h3>
                 <ul class="list_01 v2">
                     <li>
-                        <span class="name1 pointcolor imp">홍길동</span>
-                        <span class="gray_06">(대한민국)</span>
+                        <span class="name1 pointcolor imp">${list.person_nm }</span>
+                        <span class="gray_06">(대한민국)</span> ※대한민국 이외의 나라는 배송이 불가합니다.
                     </li>
                     <li>
-                        [ 12345 ]
-                        서울특별시 마포구 신촌로 25-4<br/>
+                        [ ${list.person_post } ]
+                        ${list.person_addr} <br/>
                         <span class="desc">
-                        (25-4)
+                        (${list.person_addrdtc})
                         </span>
                     </li>
                     <li>
-                        010-1234-5678
+                       ${list.person_hp.substring(0,3)}-${list.person_hp.substring(3,7)}-${list.person_hp.substring(7,11)}
                     </li>
                     <li>
-                        배송 전에 미리 연락해 주세요.
+                        ${list.ship_memo}
                     </li>
                 </ul>
             </div>
@@ -132,20 +138,26 @@
                 <div class="order_price_total">
                     <ul>
                         <li class="th"><strong><span>상품금액</span></strong></li>
-                        <li class="td">8,910,000&#x20a9;</li>
+                        <li class="td">
+                   <fm:formatNumber value="${list.product_total}"/>
+                        &#x20a9;</li>
                     </ul>
                     <ul>
                         <li class="th">
                             <span>배송비</span>&nbsp;
                         </li>
                         <li class="td">
-                            (+) 0&#x20a9;
+                            (+) 
+                            <z:if test="${list.ship_pay eq 0}">0</z:if>
+                            <fm:formatNumber value="${list.ship_pay}"/>&#x20a9;
                         </li>
                     </ul>
                     <ul class="total">
                         <li class="th"><span>총 결제금액</span></li>
                         <li class="td">
-                            <span class="price"><span class="settle_price">8,910,000</span>&#x20a9;</span>
+                            <span class="price"><span class="settle_price">
+                            <fm:formatNumber value="${list.product_total+list.ship_pay}"/>
+                            </span>&#x20a9;</span>
                         </li>
                     </ul>
                 </div>		
@@ -156,8 +168,8 @@
                         <tr>
                             <th scope="row"><p>주문번호</p></th>
                             <td>
-                                123456789 &nbsp;
-                                <span class="Dib desc">(2022-10-25 14:26)</span>
+                                ${list.order_code } &nbsp;
+                                <span class="Dib desc">(${list.regDate.substring(0,16) })</span>
                             </td>
                         </tr>
                         <tr>
@@ -173,22 +185,28 @@
                         <tr>
                             <th scope="row"><p>결제방식</p></th>
                             <td>
-                                신용카드
+                            <z:if test="${list.payment eq 'bank'}">무통장 입금</z:if>
+                            <z:if test="${list.payment eq 'CARD'}">카드 결제</z:if>                            
+                            <z:if test="${list.payment eq 'escrow_virtual'}">가상계좌 입금</z:if>                            
                             </td>
                         </tr>
+                        <z:if test="${list.payment eq 'bank' }">
                         <!--무통장 일 경우-->
-                        <tr class="hide">
+                        <tr class="">
                             <th scope="row"><p>입금계좌</p></th>
-                            <td>신한은행 100-033-123456 예금주:주식회사 더조은</td>
+                            <td>${list.bank_list}</td>
                         </tr>
-                        <tr class="hide">
+                        <tr class="">
                             <th scope="row"><p>입금기간</p></th>
-                            <td>2022년 11월 07일까지 (이후 입금되지 않았을 경우 자동으로 주문무효 처리)</td>
+                            <td>${payDate.substring(0,4)}년 ${payDate.substring(5,7)}월 ${payDate.substring(8,10)}일까지 (이후 입금되지 않았을 경우 자동으로 주문무효 처리)</td>
                         </tr>
+                        </z:if>
                         <!--무통장 일 경우-->
                         <tr>
                             <th scope="row"><p>결제금액</p></th>
-                            <td><strong>8,910,000&#x20a9;</strong></td>
+                            <td><strong>
+                            <fm:formatNumber value="${list.product_total+list.ship_pay}" />
+                            &#x20a9;</strong></td>
                         </tr>
                     </tbody>
                 </table>
@@ -197,7 +215,7 @@
     </div>
     
     <div class="Pb60 C">
-        <a href="#" class="btn_resp size_c color2"><span>주문취소</span></a>
+        <a href="javascript:void cancel()" class="btn_resp size_c color2"><span>주문취소</span></a>
         <a href="javascript:void payment()" class="btn_resp size_c color5"><span>결제하기</span></a>
     </div>
     
