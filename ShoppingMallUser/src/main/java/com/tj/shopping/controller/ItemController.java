@@ -27,7 +27,6 @@ public class ItemController {
 			HttpServletRequest req
 			) {		
 		ItemDTO list = null;
-		System.out.println(product);
 		if(product != "") {
 			list = itemService.getProduct(product);
 		}

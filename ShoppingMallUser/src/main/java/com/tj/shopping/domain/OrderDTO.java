@@ -19,4 +19,5 @@ public class OrderDTO {
 	private String product_total;
 	private String product_code;
 	private String product_ea; 
+	private String ship_pay;
 }
