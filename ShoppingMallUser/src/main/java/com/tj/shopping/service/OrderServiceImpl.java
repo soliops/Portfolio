@@ -1,6 +1,7 @@
 package com.tj.shopping.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,13 +51,12 @@ public class OrderServiceImpl implements OrderService {
 		list.put("product_ea",dto.getProduct_ea());
 		
 		for(int e=0;e<ea.length;e++) {
-			sumPrice +=  Integer.parseInt(price[e]) * Integer.parseInt(ea[e]);
+			sumPrice +=  Integer.parseInt(price[e]);
 			sumShip +=  Integer.parseInt(ship[e]);
 			
 		}
 		list.put("sumPrice", Integer.toString(sumPrice));
 		list.put("sumShip", Integer.toString(sumShip));
-
 		String signKey			    = "SU5JTElURV9UUklQTEVERVNfS0VZU1RS";	// 웹 결제 signkey
 		String mKey = SignatureUtil.hash(signKey, "SHA-256");
 		
