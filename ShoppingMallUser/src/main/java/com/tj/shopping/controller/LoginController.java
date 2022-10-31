@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,16 +31,30 @@ public class LoginController {
 		LoginDTO loginDTO,
 		@RequestParam("order_number") String number,
 		@RequestParam("order_email") String email,
+		@RequestParam(name="idsave") String idsave, 
 		HttpServletResponse resp
 			)throws Exception{
 		resp.setContentType("text/html; charset=UTF-8");
 		try {
+		System.out.println("저장유무"+idsave);
 		String id = loginDTO.getMid();
 		this.pr = resp.getWriter();
 		LoginDTO check = loginService.getId(loginDTO);
+		System.out.println("??"+check);
 		String result = check==null  ? "false" : check.getMid();
 		if(id.equals(result)) {
-			this.pr.write("<script>alert('로그인되었습니다.'); location.href='./index';</script>");
+			if(idsave.equals("Y")) {	
+			this.pr.write("<script>alert('로그인되었습니다.'); "
+					+ "var datas = ["+check.getMid()+","+check.getMemail()+"];"
+					+ "localStorage.setItem('data',JSON.stringify(datas));"
+					+ "sessionStorage.setItem('mname',"+check.getMname()+");"
+					+ "sessionStorage.setItem('mpw',"+check.getMpassword()+");"
+					+ "sessionStorage.setItem('mtel',"+check.getMtel()+");"
+					+ "location.href='./index';</script>");
+			}
+			else {
+				this.pr.write("<script>alert('로그인되었습니다.');location.href='./index';</script>");
+			}
 		}
 		else {
 			this.pr.write("<script>alert('로그인을 실패했습니다.');location.href='./login';</script>");

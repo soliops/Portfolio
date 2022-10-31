@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>    
+<script>
+request.setContentType("UTF-8");
+var datas = JSON.parse(localStorage.getItem("datas"));
+var mname = "";
+mname=sessionStorage.getItem("mname");
+var mpw = sessionStorage.getItem("mpw");
+var mtel = sessionStorage.getItem("mtel");
+console.log(mname);
+</script>
 <meta charset="utf-8">
     <div class='designPopupBand' style='background-color:#fff;'>
     <div class='designPopupBody'>
@@ -26,13 +36,23 @@
 
             <!-- 상단 유틸메뉴 -->
             <ul class="util_wrap_menu2">
+<%--      			<% --%>
+<!-- //      			if(mname==""){ -->
+<%--      			%> --%>
                 <li><a href="./login" designElement="text" textIndex="4" target="_self">로그인</a></li>
+<%-- 				<% --%>
+<!-- //      			}else{ -->
+<%--      				%> --%>
+<%--      				<li><%=mname %>님 환영합니다.</li> --%>
+<%--      				<% --%>
+<!-- //      			} -->
+<%-- 				%> --%>
 				<li>
 					<a href="./member" designElement="text" textIndex="5" target="_self">회원가입</a>
 				</li>
-                <!-- <li><a href="/service/cs" designElement="text">CS CENTER</a></li> -->
+                <li><a href="/cs" designElement="text">CS CENTER</a></li>
                 <li class="respCartArea"><a href="./cart"><em designElement="text" textIndex="6">CART</em></a></li>
-				<li class="respMypage"><a href="#" designElement="text" textIndex="7"><em>MY SHOPPING</em></a></li>
+				<li class="respMypage"><a href="./cart" designElement="text" textIndex="7"><em>MY SHOPPING</em></a></li>
 			</ul>
 
 			<!-- 햄버거 버튼 -->
@@ -78,17 +98,18 @@
 
 
 	<!-- +++++++++++ 카테고리 메뉴( 카테고리 메뉴를 미노출 하실 분은 style="display:none;" 처리 하세요. ex) id="cateSwiper" class="nav_wrap" style="display:none;" ) +++++++++++ -->
-	<div id="cateSwiper" class="nav_wrap">
+	<div id="cateSwiper" class="nav_wrap" style="">
 		<div class="resp_wrap">
 			<div class="nav_category_area">
 				<div class="designCategoryNavigation">
 					<ul class="respCategoryList">
                        				
 						<li class="nav_category_all ">
-							<a class="categoryAllBtn" designElement="text" textIndex="8" href="#none" target="_self">PRODUCT<br>
-                            </a>
+<!-- 							<a class="categoryAllBtn" designElement="text" textIndex="8" href="./" target="_self">PRODUCT<br> -->
+<!--                             </a> -->
                         <div class="categoryAllSub">
                      <ul>         
+	<!--
 	<li class="categoryDepth1">
 		<a class="categoryDepthLink designElement" designelement="category" href="#">
         <em>거실가구</em>
@@ -190,7 +211,7 @@
 	<li class="categoryDepth1">
 		<a class="categoryDepthLink designElement" designelement="category" href="/goods/catalog?code=0007"><em>DEZ ITALIA</em></a>
 	</li>
-
+ -->
                                     <!-- //카테고리 네비게이션 -->
                                 </ul>
                             </div>
@@ -205,15 +226,15 @@
 						<li class="custom_nav_link">
 							<a class="categoryDepthLink" designElement="text" href="/goods/brand_main" target="_self"><em>Brand</em></a>
                         </li> //-->
-						<li class="custom_nav_link">
-							<a class="categoryDepthLink" designElement="text" textIndex="9" href="/promotion/event" target="_self">PROMOTION</a>
-						</li>
+<!-- 						<li class="custom_nav_link"> -->
+<!-- 							<a class="categoryDepthLink" designElement="text" textIndex="9" href="/promotion/event" target="_self">PROMOTION</a> -->
+<!-- 						</li> -->
 						<!--<li class="custom_nav_link">
 							<a class="categoryDepthLink" designElement="text" href="/board/?id=custom_bbs2" target="_self">Contract</a>
                         </li> //-->
                         
                          <li class="custom_nav_link">
-							<a class="categoryDepthLink" designElement="text" textIndex="10" href="./company" target="_self">STORE</a>
+							<a class="categoryDepthLink" designElement="text" textIndex="10" href="./company" target="_self">COMPANY</a>
 						</li>	
                         
 						<li class="custom_nav_link">

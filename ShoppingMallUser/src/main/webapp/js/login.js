@@ -8,9 +8,19 @@ function login(){
 		frm.mpassword.focus();
 	}
 	else{
-		frm.method="post";
-		frm.enctype="application/x-www-form-urlencoded";
-		frm.action="./login";
-		frm.submit();
+		if(frm.idsave.checked == true){
+			frm.idsave.value="Y";
+			frm.method="post";
+			frm.enctype="application/x-www-form-urlencoded";
+			frm.action="./login";
+			frm.submit();
+		}
+		else{
+			frm.idsave.value="N";
+			frm.method="post";
+			frm.enctype="application/x-www-form-urlencoded";
+			frm.action="./login";
+			frm.submit();
+		}
 	}
 }

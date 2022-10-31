@@ -18,6 +18,12 @@ public interface CartMapper {
 	@Select("select * from cart")
 	public List<CartDTO> getCartList();
 	
+	@Select("select * from cart where product_idx=#{product_idx}")
+	public List<CartDTO> selectCartList(String product_idx);
+	
+	@Select("select * from cart where product_idx=#{product_idx}")
+	public CartDTO selectCart(String product_idx);
+	
 	@Insert("insert into cart values (#{product_idx},"
 			+ "#{product_nm},#{product_dtc},#{product_price},"
 			+ "#{product_disprice},#{product_point},#{product_total},"
@@ -26,5 +32,6 @@ public interface CartMapper {
 	
 	@Delete("delete from cart where product_idx=#{product_idx}")
 	public void deleteCart(String idx);
+	
 	
 }

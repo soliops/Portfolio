@@ -87,7 +87,13 @@
 					<p id="address_view" style="padding-top:5px; display:none;"></p>
 				</li>
 			</ul>
-
+			
+			<input type="hidden" name="idsave" value="N">
+			<input type="hidden" name="regdate" value="0001-01-01 01:00:00">
+			<input type="hidden" name="outdate" value="0001-01-01 01:00:00">
+			<input type="hidden" name="mpoint" value="0">
+			<input type="hidden" name="level" value="1">
+			<input type="hidden" name="mcount" value="0">
 	</div>
 </div>
 <script type="text/javascript">

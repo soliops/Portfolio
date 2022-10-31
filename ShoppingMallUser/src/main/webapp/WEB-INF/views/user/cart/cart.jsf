@@ -3,8 +3,6 @@
 <%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <script>
-// document.getElementsByName();
-var price = 0;
 $(function(){
 	function all_sum(){
 		var pd_price = document.getElementsByName("pd_price");
@@ -13,7 +11,6 @@ $(function(){
 		
 		var pd_ea = document.getElementsByName("pd_ea");
 		var EtoN =0;
-		
 		var pd_dis = document.getElementsByName("pd_dis");
 		var DistoNum = 0;
 		var sum_dis = 0;
@@ -40,56 +37,64 @@ $(function(){
 			EtoN = Number(EtoN);
 		
 			PricetoNum = pd_price[d].value;
-			PricetoNum = Number(PricetoNum);
+			PricetoNum = Number(PricetoNum) * EtoN;
 			sum_price+= PricetoNum;
-
+			
 			DistoNum = pd_dis[d].value;
-			DistoNum = Number(DistoNum);
+			DistoNum = Number(DistoNum * EtoN);
 			sum_dis += DistoNum;
 			
 			TotaltoNum = pd_total[d].value;
-			TotaltoNum = Number(TotaltoNum);
+			TotaltoNum = Number(TotaltoNum) * EtoN;
 			sum_total += TotaltoNum+ sum_ship;
 		}
 		document.getElementById("product_price").innerHTML=sum_price.toLocaleString();		
 		document.getElementById("product_dis").innerHTML=sum_dis.toLocaleString();		
 		document.getElementById("product_total2").value=sum_total;
 		cartFrm.product_total.value=sum_total;
+		document.getElementById("product_point").value=sum_total * 0.01;		
 		document.getElementById("product_total2").innerHTML=sum_total.toLocaleString();		
 		document.getElementById("product_ship").innerHTML= ship_cal.toLocaleString();
 	}
-$(".change_opt").click(function(){
-	var $count = $("#statusCount").val();
-	var $toNum = 0;
-	if(this.value==$count){
-	var $change_ea = document.getElementById("product_ea"+$count).value;
-	$toNum = Number($change_ea);
-	document.getElementById("pd_ea"+$count).value = $toNum;
-	var $change_price = document.getElementById("pd_price"+$count).value;
-	var $PtoNum = 0;
-	$PtoNum = Number($change_price);
-	$PtoNum *= $toNum;
-	document.getElementById("pd_price"+$count).value = $PtoNum;
-	cartFrm.product_price.value=$PtoNum;
-	var $change_dis = document.getElementById("pd_dis"+$count).value;
-	var $DtoNum = 0;
-	$DtoNum = Number($change_dis);
-	$DtoNum *= $toNum;
-	document.getElementById("pd_dis"+$count).value = $DtoNum;
-	var $change_total = document.getElementById("pd_total"+$count).value;
-	var $TtoNum = 0;
-	$TtoNum = Number($change_total);
-	$TtoNum *= $toNum;
-	document.getElementById("pd_total"+$count).value = $TtoNum;
-	
-	$("#Cea").html($toNum);
-	$("#Cea2").html($toNum);
-	$("#Cprice").html($PtoNum.toLocaleString());
-	$("#Cprice2").html($PtoNum.toLocaleString());	
-	$("#Cdis").html($DtoNum.toLocaleString());
-	$("#Ctotal").html($TtoNum.toLocaleString());
-	}	
+$("#deleteCart").click(function(){
+	var $CartCheck  = "";
+	var $list = [];
+	var $C = 1;
+	$('input:checkbox[name="agree"]').each(function() {
+		if($("#agrees"+$C).is(":checked") == true){
+			$list.push($("#agrees"+$C).val());
+		}
+		$C++;
+	});
+	var $checklist = JSON.stringify({
+		"check": $list
+	}); 
+	if(confirm("선택한 상품들을 정말로 삭제하시겠습니까?")){
+		$.ajax({
+			type:"post",
+			url:"./del",
+			cache:false,
+			contentType:"application/json; charset=utf-8;",
+			data: $checklist,
+			success:function(data){
+				if(data["result"]=="success"){
+					alert("정상적으로 삭제되었습니다.");
+					location.href="./";
+				}
+				else{
+					alert("삭제하지 못했습니다.");
+				}
+			},
+			error:function(){
+				console.log();
+				alert("삭제 오류가 발생했습니다.");
+				location.reload();
+			}
+		})
+	}
 });
+	
+	
 	
 $("#all_agree").click(function(){
 	var $ck = $(this).is(":checked");
@@ -103,12 +108,41 @@ $("#all_agree").click(function(){
 		cartFrm.product_total.value=0;
 		document.getElementById("product_price").innerHTML=0;
 		document.getElementById("product_dis").innerHTML=0;
+		document.getElementById("product_point").value=0;	
 		document.getElementById("product_total2").innerHTML=0;
 		document.getElementById("product_ship").innerHTML=0;
 	}
 	$(".agree_chk").prop("checked",$allck);
 });
 })
+function ChangeEa(val){
+	alert(val);
+	var toNum = 0;
+	var change_ea = document.getElementById("product_ea"+val).value;
+	toNum = Number(change_ea);
+	document.getElementById("pd_ea"+val).value = toNum;
+	var change_price = document.getElementById("pd_price"+val).value;
+	var PtoNum = 0;
+	PtoNum = Number(change_price);
+	PtoNum *= toNum;
+	cartFrm.product_price.value=PtoNum;
+	var change_dis = document.getElementById("pd_dis"+val).value;
+	var DtoNum = 0;
+	DtoNum = Number(change_dis);
+	DtoNum *= toNum;
+	var change_total = document.getElementById("pd_total"+val).value;
+	var TtoNum = 0;
+	TtoNum = Number(change_total);
+	TtoNum *= toNum;
+		
+	document.getElementById("Cea"+val).innerHTML=toNum;
+	document.getElementById("Cea2"+val).innerHTML=toNum;
+	document.getElementById("Cprice"+val).innerHTML=PtoNum.toLocaleString();
+	document.getElementById("Cprice2"+val).innerHTML=PtoNum.toLocaleString();
+	document.getElementById("Cdis"+val).innerHTML=DtoNum.toLocaleString();
+	document.getElementById("Ctotal"+val).innerHTML=TtoNum.toLocaleString();
+
+}
 function change(){
 	var ck = document.getElementsByName("agree");
 	var all_ck = document.getElementById("all_agree");
@@ -176,6 +210,7 @@ function change(){
 		document.getElementById("product_dis").innerHTML=sum_dis.toLocaleString();		
 		document.getElementById("product_total2").value=sum_total;
 		cartFrm.product_total.value=sum_total;		
+		document.getElementById("product_point").value=sum_total * 0.01;			
 		document.getElementById("product_total2").innerHTML=sum_total.toLocaleString();		
 		document.getElementById("product_ship").innerHTML= ship_cal.toLocaleString();
 }
@@ -199,7 +234,6 @@ function ship_check(){
 	document.getElementById("ship_total").value=ship_cal;
 	total.innerHTML = total_cal.toLocaleString();
 }
-
 function allPay(){
 	cartFrm.method="post";
 	cartFrm.action = "./order";
@@ -260,10 +294,11 @@ function nowPay(){
                             <div class="cgd_top">
                                 <label>
                                     <input type="hidden" name="ship_possible[987]" value="Y"/>
-                                    <input type="checkbox" class="agree_chk" name="agree" value="987" stat="Y" rel="775" onclick="change();"/>
+                                    <input type="checkbox" class="agree_chk" name="agree"  id="agrees${status.count}" value="${CartDTO.product_code }" stat="Y" rel="775" onclick="change();"/>
                                     <span class="goods_name">${CartDTO.product_nm }</span>
+                               <input type="hidden" name="product_idx" value=${CartDTO.product_idx }>                              
                                <input type="hidden" name="product_nm" value="${CartDTO.product_nm}">
-                               <input type="hidden" name="product_dtc" value="${CartDTO.product_dtc}">                               
+                               <input type="hidden" name="product_dtc" value="${CartDTO.product_dtc}"> 
                                 </label>
                             </div>
                             
@@ -276,11 +311,11 @@ function nowPay(){
                                         <li class="option_area">
     
                                             <ul class="cart_option">
-                                                <li><span class="xtle">구성</span> ${CartDTO.product_nm }  <span id="Cea2">${CartDTO.product_ea}</span>SET</li>
+                                                <li><span class="xtle">구성</span> ${CartDTO.product_nm }  <span id="Cea2${status.count }">${CartDTO.product_ea}</span>SET</li>
                                             </ul>
                                             <div class="cart_quantity"><span class="xtle">수량</span> 
-                                             <span id="Cea">${CartDTO.product_ea}</span>개<span class="add_txt">(
-                                             <span id="Cprice">
+                                             <span id="Cea${status.count }">${CartDTO.product_ea}</span>개<span class="add_txt">(
+                                             <span id="Cprice${status.count }">
                                              <fm:formatNumber value="${CartDTO.product_price}"/>
                                              </span>
                                              &#x20a9;)</span>
@@ -292,7 +327,7 @@ function nowPay(){
     
                                 <ul class="block block2" id="mobile_cart_sale_tr_987">
                                     <li class="price_a">
-                                        <span class="ptitle">상품금액</span> <span id="Cprice2"> <fm:formatNumber value="${CartDTO.product_price}"/></span>&#x20a9;
+                                        <span class="ptitle">상품금액</span> <span id="Cprice2${status.count }"> <fm:formatNumber value="${CartDTO.product_price}"/></span>&#x20a9;
                                         <input type="hidden" name="pd_price" id="pd_price${status.count }" value="${CartDTO.product_price }"/>
                                         <input type="hidden" name="product_price" value="${CartDTO.product_price }">
                                     </li>
@@ -301,7 +336,7 @@ function nowPay(){
                                             할인금액 
                                         </span>
                                         (-) <span id="mobile_cart_sale_987">
-                                        <span id="Cdis">
+                                        <span id="Cdis${status.count }">
 									<fm:formatNumber value="${CartDTO.product_price-CartDTO.product_disprice}"/>
                                         </span>
 									&#x20a9;</span>
@@ -312,10 +347,10 @@ function nowPay(){
                                      <input type="hidden" name="pd_total" id="pd_total${status.count }" value="${CartDTO.product_total}">
                                     </li>
                                     <li>
-                                        <span class="total_p" id="option_suboption_price_sum_987"><span class="num" id="Ctotal">
+                                        <span class="total_p" id="option_suboption_price_sum_987"><span class="num" id="Ctotal${status.count }">
                                         <fm:formatNumber value="${CartDTO.product_total}"/>
                                         </span>&#x20a9;</span>       
-                                        <input type="hidden" name="product_point" value="">                             
+                                        <input type="hidden" name="product_point" id="product_point" value="">                             
                                     </li>
                                 </ul>
     
@@ -327,7 +362,7 @@ function nowPay(){
 									</z:forEach>
 									</select>
 									<input type="hidden" id="statusCount" value="${status.count }">
-                                    <button type="button" class="change_opt" id="change_opt" value="${status.count }" >옵션/수량변경</button></li>
+                                    <button type="button" class="change_opt" id="change_opt" value="${status.count }" onclick="ChangeEa(this.value);">옵션/수량변경</button></li>
                                     <li><button type="button" class="btn_direct_buy btn_resp color2" onclick="nowPay();">바로구매</button></li>
                                 </ul>
     
@@ -343,8 +378,8 @@ function nowPay(){
             <div class="selected_btn_groups">
 <!--                 <label class="checkbox_allselect"><input type="checkbox" class="btn_select_all" /> <span class="txt">전체선택</span></label> -->
                 <div class="btns">
-                    <button type="button" class="btn_resp size_b color2 btn_selected_order">선택상품 주문하기</button>
-                    <button type="button" class="btn_resp size_b gray_05 btn_select_del">선택상품 삭제</button>
+                    <button type="button" class="btn_resp size_b color2 btn_selected_order" onclick="nowPay();">선택상품 주문하기</button>
+                    <button type="button" class="btn_resp size_b gray_05 btn_select_del" id="deleteCart">선택상품 삭제</button>
                 </div>
             </div>
         </li>

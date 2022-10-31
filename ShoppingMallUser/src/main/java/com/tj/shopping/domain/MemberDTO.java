@@ -21,4 +21,7 @@ public class MemberDTO {
 	private String regdate;
 	private String outdate;
 	private String idsave;
+	private String mpoint;
+	private String level;
+	private String mcount;
 }

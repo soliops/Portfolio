@@ -55,9 +55,14 @@ public class MemberConroller {
 	public Map<String,Boolean> membercheck(
 			@RequestParam("mid") String mid
 			)throws Exception{
-		Boolean check = memberService.selectId(mid)!=null ? false : true;		
 		Map<String,Boolean> map = new HashMap<String, Boolean>();
+		if(mid.equals("admin")||mid.equals("master")) {
+			map.put("sign",false);
+			return map;
+		}else {			
+		Boolean check = memberService.selectId(mid)!=null ? false : true;		
 		map.put("sign",check);
 		return map;
+		}
 	}
 }

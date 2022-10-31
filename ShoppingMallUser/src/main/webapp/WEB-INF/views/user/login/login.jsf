@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <form name="frm" id="frm">
+<input type="hidden" name="mname" value="test">
+<input type="hidden" name="memail" value="test">
+<input type="hidden" name="mtel" value="test">
 <div class="title_container" style="display:none;">
 	<h2><span designElement="text" textIndex="3">로그인</span></h2>
 </div>
@@ -25,7 +29,8 @@
 				</li>
 				<li>
 					<label class="id_save">
-                    <input type="checkbox" name="idsave" id="idsave" value="N"> 
+                    <input type="checkbox" name="save" id="save" value="N"> 
+                    <input type="hidden" name="idsave" id="idsave" value="">
                     <span designElement="text" textIndex="6">아이디 저장</span></label>
 				</li>
 				<li>

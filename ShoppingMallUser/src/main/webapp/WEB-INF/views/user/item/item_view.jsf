@@ -51,13 +51,6 @@ function price_cal(){
 	document.getElementById("product_total").value =total_price;	
 	document.getElementById("product_point").value = total_price*0.01;
 	}
-	
-// function buy_product2(){
-// 	itemFrm.method="POST";
-// 	itemFrm.enctype="application/x-www-form-urlencoded";
-// 	itemFrm.action="./order";
-// 	itemFrm.submit();
-// }
 </script>
 <form name="itemFrm" id="itemFrm">
 <input type="hidden" name="product_nm" value="${list.product_name}">
@@ -66,6 +59,9 @@ function price_cal(){
 <input type="hidden" name="product_point" id="product_point" value="${list.product_disprice*0.01}">
 <input type="hidden" name="product_total" id="product_total" value="${list.product_disprice }">
 <input type="hidden" name="product_code" id="product_code" value="${list.product_code}">
+<input type="hidden" name="ship_pay" id="ship_pay" value="0">
+<input type="hidden" name="ship_total" id="ship_total" value="0">
+<input type="hidden" name="agree" id="agree" value="0">
 <div class="detail_title_area">
 	<h3 class="name" >${list.product_name}</h3>
 	<p class="summary">	${list.product_addexplain}<span class="detail_icons">

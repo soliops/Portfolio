@@ -2,6 +2,10 @@ package com.tj.shopping.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.inicis.std.util.SignatureUtil;
 import com.tj.shopping.domain.CartDTO;
+import com.tj.shopping.domain.ItemDTO;
 import com.tj.shopping.domain.OrderDTO;
 import com.tj.shopping.persistence.OrderMapper;
 
@@ -88,6 +93,38 @@ public class OrderServiceImpl implements OrderService {
 		LocalDateTime datetime = LocalDateTime.now();
 		DateTimeFormatter dateFormat= DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		return datetime.format(dateFormat);
+	}
+
+	@Override
+	public List<CartDTO> selectCart(String idx) {
+		return orderMapper.getList(idx);
+	}
+
+	@Override
+	public void InsertCart(OrderDTO orderDTO,String check) {
+		
+		ItemDTO item = orderMapper.getItem(Integer.toString(orderDTO.getProduct_idx())); 
+		LocalDateTime datetime = LocalDateTime.now();
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		int point = (int) (Integer.parseInt(item.getProduct_disprice())*0.01);
+		CartDTO cartDTO = new CartDTO();
+		cartDTO.setProduct_idx(orderDTO.getProduct_idx());
+		cartDTO.setProduct_nm(orderDTO.getProduct_nm());
+		cartDTO.setProduct_dtc(orderDTO.getProduct_dtc());
+		cartDTO.setProduct_price(orderDTO.getProduct_price());
+		cartDTO.setProduct_disprice(item.getProduct_disprice());		
+		cartDTO.setProduct_point(Integer.toString(point));
+		cartDTO.setProduct_total(orderDTO.getProduct_total());
+		cartDTO.setProduct_code(orderDTO.getProduct_code());
+		cartDTO.setProduct_ea(orderDTO.getProduct_ea());
+		cartDTO.setProduct_stock(item.getProduct_stock());
+		cartDTO.setProduct_check(check);
+		cartDTO.setProduct_img1(item.getProduct_img1());
+		cartDTO.setIndate(datetime.format(dateFormat));
+		cartDTO.setId_use("N");
+		cartDTO.setShip_pay(orderDTO.getShip_pay());
+		
+		orderMapper.InsertCart(cartDTO);
 	}
 
 }

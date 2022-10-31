@@ -1,10 +1,6 @@
 package com.tj.shopping.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class IndexController {
 	
 	private final ItemService itemService;
+	
 	@RequestMapping(value= {"/","/index","/index.do","/index.html"})
 	public String IndexPage(
 			@RequestParam(name="cate",defaultValue = "1") String cate,

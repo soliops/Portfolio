@@ -34,6 +34,9 @@ public class MemberServiceImpl implements MemberService {
 		dto.setRegdate(datetime.format(dateFormat));
 		dto.setOutdate(datetime.format(dateFormat));
 		dto.setIdsave("N");
+		dto.setMpoint("0");
+		dto.setLevel("1");
+		dto.setMcount("0");
 		memberMapper.insertMember(dto);
 	}
 

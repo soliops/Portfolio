@@ -484,7 +484,7 @@ function payment(){
     
                 <!-- 배송 메세지 -->
                 <div id="shipMessage" class="ship_message">
-                    <input type="text" class="ship_message_txt" name="ship_memo" id="ship_memo" title="배송 메세지 입력" placeholder="부재시 연락하거나 문 앞에 놔두시기 바랍니다." autocomplete="off" />
+                    <input type="text" class="ship_message_txt" name="ship_memo" id="ship_memo" title="배송 메세지 입력" placeholder="베송 메세지 입력" value="부재시 연락하거나 문 앞에 놔두시기 바랍니다." autocomplete="off" />
                 </div>    
             </div>
         </div>   

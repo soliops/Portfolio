@@ -19,12 +19,14 @@ public class LoginServiceImpl implements LoginService {
 	public LoginDTO getId(LoginDTO loginDTO) throws Exception{
 		String pass = Hashing(loginDTO.getMpassword());
 		loginDTO.setMpassword(pass);
-		return loginMapper.getId(loginDTO);
+		System.out.println(loginDTO);
+		return  loginMapper.getId(loginDTO);
 	}
 
 	@Override
 	public String Hashing(String password) throws Exception {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		System.out.println("비번"+md);
 		md.update(password.getBytes());
 		password = md.digest().toString();
 		return password;
