@@ -8,4 +8,8 @@ public interface ItemService {
 	public ItemDTO getItem(Integer num);
 	public List<ItemDTO> getList(String cate);
 	public ItemDTO getProduct(String product);
+	public List<ItemDTO> getNewList();
+	public List<ItemDTO> getBestList();
+
+	
 }

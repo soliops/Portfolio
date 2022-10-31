@@ -34,4 +34,14 @@ public class ItemServiceImpl implements ItemService {
 	}
 
 	
+	@Override
+	public List<ItemDTO> getNewList() {
+		return itemMapper.getNewItemList();
+	}
+
+	@Override
+	public List<ItemDTO> getBestList() {
+		return itemMapper.getBestItemList();
+	}
+
 }

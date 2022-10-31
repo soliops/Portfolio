@@ -18,4 +18,10 @@ public interface ItemMapper {
 	
 	@Select("select * from product where product_name=#{product}")
 	public ItemDTO getProduct(String product);
+	
+	@Select("select * from product order by product_date desc limit 0,12")
+	public List<ItemDTO> getNewItemList();
+	
+	@Select("select * from product order by total_sales desc limit 0,12")
+	public List<ItemDTO> getBestItemList();
 }

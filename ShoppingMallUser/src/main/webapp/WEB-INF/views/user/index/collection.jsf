@@ -15,8 +15,47 @@ function current(val){
 	}
 	location.href="./?cate="+val;
 }
+function zzim(check){
+	var zzim_normal = document.getElementById("zzims"+check);
+	var zzim_msg = "해당 상품을 찜하시겠습니까?";
+	var zzim_ck = 1;
+	if(zzim_normal.className!="zzimImage normal"){	
+	zzim_msg="찜을 취소하시겠습니까?";
+	zzim_ck=2;
+	}
+	if(confirm(zzim_msg)){		
+	$.ajax({
+		type:"post",
+		url:"./zzim",
+		cache:false,
+		contentType:"application/x-www-form-urlencoded",
+		data:{"check":check,"type":zzim_ck},
+		success:function(data){
+		console.log(data);
+		if(data=="success"){			
+		alert("해당 상품을 찜했습니다.");
+		cFrm.value=check;
+		document.getElementById("zzims"+check).className="zzimImage normal hide";
+		document.getElementById("zzim_check"+check).className="zzimImage active";
+		}
+		else if(data=="delete"){			
+		alert("찜을 취소했습니다.");
+		cFrm.value="";
+		document.getElementById("zzims"+check).className="zzimImage normal";		
+		document.getElementById("zzim_check"+check).className="zzimImage active hide";
+		}
+		}
+		,
+		error:function(){
+			alert("찜할 수 없습니다.");
+			location.reload();
+		}
+	});
+	}
+
+}
 </script>
-<form name="cFrm" id="cFrm">
+<form name="cFrm" id="cFrm" >
 <div class="title_group1">
     <h3 class="title1"><span designElement="text" textIndex="1"  textTemplatePath="cmVzcG9uc2l2ZV93cmlzdHdhdGNoX2NsYXNzaWNfZ2wvbWFpbi9pbmRleC5odG1s" >Celebrity Collection</span></h3>
 </div>
@@ -38,6 +77,7 @@ function current(val){
 <ul class="goods_list designDisplay_633b83b7559e9 goods_info_style_2">
 <!--Celebrity Collection 상품출력 반복코드 -->
   <z:forEach var="ItemDTO" items="${item}" varStatus="status">
+<input type ="hidden" name="zzim_cart" value="">
 <li class="gl_item">
 <div class="gl_inner_item_wrap">
     <!--상품이미지-->
@@ -46,10 +86,10 @@ function current(val){
             <img src="${ItemDTO.product_img1 }" data-src="${ItemDTO.product_img1 }" class="goodsDisplayImage lazyload" onerror="this.src='./images/noimage.gif'" alt="${ItemDTO.product_name}"/>
         </a>
         <div class="respGoodsZzim">
-            <a class="zzimArea" href="javascript:void(0)" onclick="display_goods_zzim(this, 767)">
-                <img src="./images/icon_zzim.png" class="zzimImage normal " alt="찜하기" title="찜하기" />
-                <img src="./images/icon_zzim_on.png" class="zzimImage active hide" alt="찜한 상품" title="찜한 상품" />
-            </a>
+            <button type="button" class="zzimArea" onclick="zzim(${ItemDTO.pidx});">
+                <img src="./images/icon_zzim.png" id="zzims${ItemDTO.pidx}" class="zzimImage normal" alt="찜하기" title="찜하기" />
+                <img src="./images/icon_zzim_on.png" name="zzim_list" id="zzim_check${ItemDTO.pidx}" class="zzimImage active hide" alt="찜한 상품" title="찜한 상품" />
+            </button>
         </div>
     </div>
 

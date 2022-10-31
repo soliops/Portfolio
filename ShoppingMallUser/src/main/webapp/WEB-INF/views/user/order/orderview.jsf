@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>    
+<%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fm" uri="http://java.sun.com/jsp/jstl/fmt"%>   
+<script language="javascript" type="text/javascript" src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js" charset="UTF-8"></script>
     <!-- 도로명 주소 API -->
 <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 <script language="javascript" type="text/javascript" src="https://stgstdpay.inicis.com/stdjs/INIStdPay.js" charset="UTF-8"></script>
@@ -58,7 +60,7 @@ function change(){
 	}
 }
 function paycheck(){
-	var pays = orderFrm.payment;
+	var pays = orderFrm.paymethod;
 	if(pays.value=="bank"){
 		document.getElementById("pay_bank").className="list_01 v2 bank";
 	}
@@ -70,12 +72,12 @@ function ship_check(){
 	if(orderFrm.ship.value=="선불"){
 		orderFrm.ship_pay.value="5000";		
 		document.getElementById("ship_sum").innerHTML="<fm:formatNumber value='5000'/>";
-		document.getElementById("total_sum").innerHTML="<fm:formatNumber value='${list.product_total+5000}'/>"
+		document.getElementById("total_sum").innerHTML="<fm:formatNumber value='${list.total+5000}'/>"
 	}
 	else{
 		orderFrm.ship_pay.value="0";
 		document.getElementById("ship_sum").innerHTML="<fm:formatNumber value='0'/>";
-		document.getElementById("total_sum").innerHTML="<fm:formatNumber value='${list.product_total}'/>"
+		document.getElementById("total_sum").innerHTML="<fm:formatNumber value='${list.total}'/>"
 	}
 }
 function all_check(){
@@ -143,17 +145,17 @@ function all_check(){
 		orderFrm.person_hp3.focus();
 		return false;
 	}
-	else if(orderFrm.person_htel1.value!=""&&(number_check.test(orderFrm.person_htel1.value)==true || orderFrm.person_htel1.value.length<3 || orderFrm.person_htel1.value=="0")){
+	else if(number_check.test(orderFrm.person_htel1.value)==true || orderFrm.person_htel1.value.length<3 || orderFrm.person_htel1.value=="0"){
 		alert("전화 번호는 3자리 이상의 숫자만 입력하셔야 합니다.");
 		orderFrm.person_htel1.focus();
 		return false
 	}
-	else if(orderFrm.person_htel2.value!=""&&(number_check2.test(orderFrm.person_htel2.value)==true || orderFrm.person_htel2.value.length<3 || orderFrm.person_htel2.value=="0")){
+	else if(number_check2.test(orderFrm.person_htel2.value)==true || orderFrm.person_htel2.value.length<3 || orderFrm.person_htel2.value=="0"){
 		alert("전화 번호는 3자리 이상의 숫자만 입력하셔야 합니다.");
 		orderFrm.person_htel2.focus();
 		return false
 	}
-	else if(orderFrm.person_htel3.value!=""&&(number_check2.test(orderFrm.person_htel3.value)==true || orderFrm.person_htel3.value.length<3 || orderFrm.person_htel3.value=="0")){
+	else if(number_check2.test(orderFrm.person_htel3.value)==true || orderFrm.person_htel3.value.length<3 || orderFrm.person_htel3.value=="0"){
 		alert("전화 번호는 3자리 이상의 숫자만 입력하셔야 합니다.");
 		orderFrm.person_htel3.focus();
 		return false
@@ -163,7 +165,7 @@ function all_check(){
 		orderFrm.ctel.value = orderFrm.ctel1.value+orderFrm.ctel2.value+orderFrm.ctel3.value;
 		orderFrm.person_hp.value = orderFrm.person_hp1.value+orderFrm.person_hp2.value+orderFrm.person_hp3.value;
 		orderFrm.person_htel.value = orderFrm.person_htel1.value+orderFrm.person_htel2.value+orderFrm.person_htel3.value;
-		if(orderFrm.payment.value=="bank"){
+		if(orderFrm.paymethod.value=="bank"){
 			if(orderFrm.depositor.value==""){
 				alert("입금자명을 입력해 주세요.");
 				orderFrm.depositor.focus();
@@ -185,6 +187,10 @@ function all_check(){
 			}
 		}
 		else{
+			orderFrm.buyername.value=orderFrm.cname.value;
+			orderFrm.buyertel.value = orderFrm.chp1.value+orderFrm.chp2.value+orderFrm.chp3.value;
+			orderFrm.buyeremail.value=orderFrm.cemail.value;
+			
 			return true;
 		}
 	}
@@ -246,38 +252,35 @@ function order_fin(){
 		if(all_check()==false){
 			
 		}
-		else{			
-	orderFrm.method="POST";
-	orderFrm.enctype="application/x-www-form-urlencoded";
-	orderFrm.action="./complet";
-	orderFrm.submit();
+		else{	
+	orderFrm.gopaymethod.value=orderFrm.paymethod.value;
+	payment();
+// 	orderFrm.method="POST";
+// 	orderFrm.enctype="application/x-www-form-urlencoded";
+// 	orderFrm.action="./complet";
+// 	orderFrm.submit();
 		}
 	}
 }
+function payment(){
+	INIStdPay.pay('orderFrm');	
+}
 </script>
 <form name="orderFrm" id="orderFrm" >
-<!-- PG사에 제동되는 hidden값들 -->
-<input type="hidden" name="version" value="1.0">
-<input type="hidden" name="mid" value="">
-<input type="hidden" name="oid" value="">
-<!--결제 금액 -->
-<input type="hidden" name="price" value="${list.product_total}">
-<input type="hidden" name="timestamp" value="">
-<input type="hidden" name="currency" value="WON">
-<!-- 상품명 -->
-<input type="hidden" name="goodname" value="<%=pd_name%>">
-<input type="hidden" name="buyername" value="<%=mname2%>">
-<input type="hidden" name="buyertel" value="<%=mtel3%>">
-<input type="hidden" name="buyeremail" value="<%=memail4%>">
-<input type="hidden" name="buyerid" value="<%=mid1 %>">
-<input type="hidden" name="goodcode" value="<%=pd_code%>">
-<input type="hidden" name="goodea" value="<%=pd_ea%>">
-
 <input type="hidden" name="chp" value="">
 <input type="hidden" name="ctel" value="">
 <input type="hidden" name="person_hp" value="">
 <input type="hidden" name="person_htel" value="">
+<input type="hidden" name="mid" value="${list.mid }">
+<input type="hidden" name="oid" value="${list.oid }">
 <!-- 결제 부분 -->
+<input type="hidden" name="gopaymethod" value="">
+<input type="hidden" name="version" value="1.0">
+<input type="hidden" name="price" value="${list.total}">
+<input type="hidden" name="timestamp" value="${list.timestamp }">
+<input type="hidden" name="signature" value="${list.signature }">
+<input type="hidden" name="mKey" value="${list.mKey }">
+<input type="hidden" name="currency" value="WON">
 <input type="hidden" name="order_code" value="${orderNumber}">
 <input type="hidden" name="product_idx" value="${list.product_idx}">
 <input type="hidden" name="product_price" value="${list.product_price}">
@@ -289,6 +292,17 @@ function order_fin(){
 <input type="hidden" name="product_nm"value="${list.product_nm}">
 <input type="hidden" name="product_code" value="${list.product_code }"> <!-- 상품코드번호 -->
 <input type="hidden" name="product_ea"value="${list.product_ea}">
+<input type="hidden" name="goodname"value="${list.product_nm}">
+<input type="hidden" name="goodcode" value="${list.product_code }"> <!-- 상품코드번호 -->
+<input type="hidden" name="goodea"value="${list.product_ea}">
+<input type="hidden" name="buyername" value="">
+<input type="hidden" name="buyertel" value="">
+<input type="hidden" name="buyeremail" value="">
+<input type="hidden" name="buyerid" value="test">
+
+<input type="hidden" name="returnUrl" value="http://opete95.cafe24.com/shopping/pay">
+<input type="hidden" name="closeUrl" value="http://opete95.cafe24.com/shopping/close">
+
 <div id="layout_body" class="layout_body">
     <style type="text/css">
     .resp_layer_pop .btn_view_coupons { position:absolute; right:60px; top:22px; } 
@@ -323,6 +337,7 @@ function order_fin(){
     <div id="orderPaymentLayout" class="subpage_wrap order_payment" data-ezmark="undo">
         <div class="subpage_container v2 Pt0 order_payment_left">
             <!-- 주문상품 :: START -->
+            <z:forEach var="cart" items="${cart}" varStatus="status">
             <h2 class="title_od1 Pt15"><span designElement="text" textIndex="2"   >주문상품 정보</span></h2>
             <div class="cart_contents">
                 <div class="cart_list">
@@ -350,13 +365,13 @@ function order_fin(){
                                     <div class="block block1">
                                         <ul>
                                             <li class="img_area">
-                                                <a href="#"><img src="${item.product_img1}" title="${item.product_name}" alt="상품이미지" /></a>
+                                                <a href="./item?product=${cart.product_nm}"><img src="${cart.product_img1}" title="${cart.product_nm}" alt="상품이미지" /></a>
                                             </li>
                                             <li class="option_area">
     
     
                                                 <div class="goods_name v2">
-                                                    <a href="">${item.product_name }</a>
+                                                    <a href="./item?product=${cart.product_nm}">${cart.product_nm }</a>
                                                 </div>
     
     
@@ -365,8 +380,8 @@ function order_fin(){
                                                 </ul>
 
                                                 <div class="cart_quantity">
-                                                    <span class="xtle">수량</span> ${list.product_ea}개
-                                                    <span class="add_txt">(<span class="cart_price_num"><fm:formatNumber value="${list.product_price*list.product_ea}"/></span>&#x20a9;)</span>
+                                                    <span class="xtle">수량</span> ${cart.product_ea}개
+                                                    <span class="add_txt">(<span class="cart_price_num"><fm:formatNumber value="${cart.product_price*cart.product_ea}"/></span>&#x20a9;)</span>
                                                 </div>
     
     
@@ -376,17 +391,17 @@ function order_fin(){
     
                                     <ul class="block block2 x1" id="mobile_cart_sale_tr_989">
                                         <li class="price_a">
-                                            <span class="ptitle">상품금액</span> <fm:formatNumber value="${list.product_price*list.product_ea}"/>&#x20a9;
+                                            <span class="ptitle">상품금액</span> <fm:formatNumber value="${cart.product_price*cart.product_ea}"/>&#x20a9;
                                         </li>
                                         <li id="cart_sale_tr_989" class="price_b">
                                             <span class="ptitle">할인금액</span>
                                             <div id="cart_option_sale_total_989">
-                                                - <fm:formatNumber value="${list.product_price*list.product_ea-(list.product_total)}" />&#x20a9;
+                                                - <fm:formatNumber value="${cart.product_price*cart.product_ea-(cart.product_total*cart.product_ea)}" />
                                             </div>    
                                         </li>
                                         <li class="price_c">
                                             <span class="ptitle">할인적용금액</span>
-                                            <span class="total_p"><span id="option_suboption_price_sum_989"><fm:formatNumber value="${list.product_total}" /></span>&#x20a9;</span>
+                                            <span class="total_p"><span id="option_suboption_price_sum_989"><fm:formatNumber value="${cart.product_total*cart.product_ea}" /></span>&#x20a9;</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -395,7 +410,7 @@ function order_fin(){
                     </ul>
                 </div>
             </div>
-  
+              </z:forEach>
             <div id="facebook_mgs"><div style="padding:10px"></div></div>
     
     
@@ -469,7 +484,7 @@ function order_fin(){
     
                 <!-- 배송 메세지 -->
                 <div id="shipMessage" class="ship_message">
-                    <input type="text" class="ship_message_txt" name="ship_memo" id="ship_memo" value="부재 시에는 문 앞에 두고 가주세요." title="배송 메세지 입력" placeholder="배송 메세지 입력" autocomplete="off" />
+                    <input type="text" class="ship_message_txt" name="ship_memo" id="ship_memo" title="배송 메세지 입력" placeholder="부재시 연락하거나 문 앞에 놔두시기 바랍니다." autocomplete="off" />
                 </div>    
             </div>
         </div>   
@@ -483,7 +498,9 @@ function order_fin(){
                             <div class="order_price_total">
                                 <ul>
                                     <li class="th"><span class="gray_01 Fs17" designElement="text" textIndex="7"   >상품금액</span></li>
-                                    <li class="td"><span id="total_goods_price" class="v2 gray_01"><fm:formatNumber value="${list.product_price*list.product_ea}"/></span>&#x20a9;</li>
+                                    <li class="td"><span id="total_goods_price" class="v2 gray_01">
+                                    <fm:formatNumber value="${list.sumPrice}"/>
+                                    </span>&#x20a9;</li>
                                 </ul>
                                 <ul>
                                     <li class="th">
@@ -491,7 +508,7 @@ function order_fin(){
                                         <button type="button" class="btn_resp size_a gray_05" onclick="showCenterLayer('#besongDetailList')"><span designElement="text" textIndex="9"   >내역</span></button>
                                     </li>
                                     <li class="td">
-                                        (+) <span class="total_delivery_shipping_price" name="ship_sum" id="ship_sum">0</span>&#x20a9;
+                                        (+) <span class="total_delivery_shipping_price" name="ship_sum" id="ship_sum">${list.sumShip }</span>&#x20a9;
                                     </li>
                                 </ul>
                                 <ul>
@@ -501,13 +518,15 @@ function order_fin(){
                                     </li>
                                     <li class="td pointcolor3">
                                         <span>(-)</span>
-                                        <span class="total_sales_price" name="dispirce_sum" id="disprice_sum"><fm:formatNumber value="${list.product_price*list.product_ea-(list.product_total)}"/></span>&#x20a9;
+                                        <span class="total_sales_price" name="dispirce_sum" id="disprice_sum">
+                                        <fm:formatNumber value="${list.sumPrice-list.total}"/>
+                                        </span>&#x20a9;
                                     </li>
                                 </ul>
                                 <ul class="total">
                                     <li class="th"><span designElement="text" textIndex="14"   >최종 결제금액</span></li>
                                     <li class="td">
-                                        <span class="price"><span class="settle_price" name="total_sum" id="total_sum" ><fm:formatNumber value="${list.product_total }"/></span>&#x20a9;</span>
+                                        <span class="price"><span class="settle_price" name="total_sum" id="total_sum" ><fm:formatNumber value="${list.total}"/></span>&#x20a9;</span>
                                     </li>
                                 </ul>
                             </div>
@@ -520,13 +539,13 @@ function order_fin(){
                             <h3 class="title3"><span designElement="text" textIndex="17"   >결제 수단</span></h3>
                             <ul class="payment_method_select clearbox" id="payment_type">     
                                 <li>
-                                    <label><input type="radio" name="payment" value="bank" onclick="paycheck();"/>무통장입금</label>
+                                    <label><input type="radio" name="paymethod" value="bank" onclick="paycheck();"/>무통장입금</label>
                                 </li>                 
                                 <li>
-                                    <label><input type="radio" name="payment" value="CARD" checked onclick="paycheck();"/>신용카드</label>
+                                    <label><input type="radio" name="paymethod" value="CARD" checked onclick="paycheck();"/>신용카드</label>
                                 </li>
                                 <li>
-                                        <label><input type="radio" name="payment" value="escrow_virtual" onclick="paycheck();"/>가상계좌</label>                                
+                                        <label><input type="radio" name="paymethod" value="vbank" onclick="paycheck();"/>가상계좌</label>                                
                                 </li>
                             
                             </ul>

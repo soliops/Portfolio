@@ -30,4 +30,5 @@ public class ItemDTO {
 	private String product_img3;
 	private String product_explain;
 	private String product_date;
+	private String total_sales;
 }

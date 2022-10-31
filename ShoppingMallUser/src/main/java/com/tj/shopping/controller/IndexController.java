@@ -1,6 +1,5 @@
 package com.tj.shopping.controller;
 
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,18 +21,16 @@ import lombok.RequiredArgsConstructor;
 public class IndexController {
 	
 	private final ItemService itemService;
-	
 	@RequestMapping(value= {"/","/index","/index.do","/index.html"})
 	public String IndexPage(
 			@RequestParam(name="cate",defaultValue = "1") String cate,
-			Model m, HttpServletResponse resp) throws Exception{
-		resp.setContentType("text/html; charset=UTF-8");
+			Model m) throws Exception{
 		List<ItemDTO> item = itemService.getList(cate);
-		PrintWriter pr = resp.getWriter();		
+		List<ItemDTO> newItem = itemService.getNewList();
+		List<ItemDTO> bestItem = itemService.getBestList();
 		m.addAttribute("item",item);
-		Map<String,List<ItemDTO>> map = new HashMap<String,List<ItemDTO>>();
-		map.put("item", item);
-		pr.print("ok");
+		m.addAttribute("newItem",newItem);
+		m.addAttribute("bestItem",bestItem);
 		m.addAttribute("code",cate);
 		return "user/index/index";
 	}

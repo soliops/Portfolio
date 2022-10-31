@@ -1,10 +1,15 @@
 package com.tj.shopping.service;
 
-import com.tj.shopping.domain.ItemDTO;
+import java.util.List;
+import java.util.Map;
+
+import com.tj.shopping.domain.CartDTO;
+import com.tj.shopping.domain.OrderDTO;
 
 public interface OrderService {
 	
-	public ItemDTO getProduct(String product_code);
-	public String getNumber();
+	public List<CartDTO> getProduct(String product_code,String ship_pay,String product_ea);
+	public Map<String,String> getlist(OrderDTO dto,String orderNumber)throws Exception;
+	public String orderNumber(String mid)
 	public String getDate();
 }
