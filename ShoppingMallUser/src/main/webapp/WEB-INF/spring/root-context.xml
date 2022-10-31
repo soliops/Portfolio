@@ -8,7 +8,21 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 <bean id="dataSource"
 class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<property name="driverClassName">
+<value>com.mysql.jdbc.Driver</value>
+</property>
+<property name="url">
+<value>jdbc:mysql://umj7-009.cafe24.com:3306/opete95?serverTimezone=UTC</value>
+<!-- <value>jdbc:mysql://localhost:3306/opete95?serverTimezone=UTC</value> -->
+</property>
+<property name="username">
+<value>opete95</value>
+</property>
+<property name="password">
+<value>
 
+</value>
+</property>
 </bean>		
 
 <bean id="sqlSessionFactory"

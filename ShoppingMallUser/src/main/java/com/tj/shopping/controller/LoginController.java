@@ -26,6 +26,7 @@ public class LoginController {
 		
 		return "user/login/member_login";
 	}
+	
 	@RequestMapping(value="login", method=RequestMethod.POST)
 	public void postLoginPage(
 		LoginDTO loginDTO,
@@ -34,29 +35,39 @@ public class LoginController {
 		@RequestParam(name="idsave") String idsave, 
 		HttpServletResponse resp
 			)throws Exception{
-		resp.setContentType("text/html; charset=UTF-8");
 		try {
-		System.out.println("저장유무"+idsave);
+			resp.setContentType("text/html; charset=UTF-8");
 		String id = loginDTO.getMid();
-		this.pr = resp.getWriter();
 		LoginDTO check = loginService.getId(loginDTO);
-		System.out.println("??"+check);
 		String result = check==null  ? "false" : check.getMid();
 		if(id.equals(result)) {
-			if(idsave.equals("Y")) {	
-			this.pr.write("<script>alert('로그인되었습니다.'); "
-					+ "var datas = ["+check.getMid()+","+check.getMemail()+"];"
-					+ "localStorage.setItem('data',JSON.stringify(datas));"
-					+ "sessionStorage.setItem('mname',"+check.getMname()+");"
-					+ "sessionStorage.setItem('mpw',"+check.getMpassword()+");"
-					+ "sessionStorage.setItem('mtel',"+check.getMtel()+");"
-					+ "location.href='./index';</script>");
+			if(idsave.equals("Y")) {
+				this.pr = resp.getWriter();
+				this.pr.write("<script>"
+						+ "alert('로그인되었습니다.');"
+						+ "var datas= ['"+check.getMid()+"','"+check.getMemail()+"','"+idsave+"'];"
+						+ "localStorage.setItem('data',JSON.stringify(datas));"
+						+ "sessionStorage.setItem('mname','"+check.getMname()+"');"
+						+ "sessionStorage.setItem('mpw','"+check.getMpassword()+"');"
+						+ "sessionStorage.setItem('mtel','"+check.getMtel()+"');"
+						+ "location.href='./index';"
+						+ "</script>");
 			}
 			else {
-				this.pr.write("<script>alert('로그인되었습니다.');location.href='./index';</script>");
+				this.pr = resp.getWriter();
+				this.pr.write("<script>"
+						+ "alert('로그인되었습니다.');"
+						+ "var datas= ['"+check.getMid()+"','"+check.getMemail()+"'];"
+						+ "localStorage.setItem('data',JSON.stringify(datas));"
+						+ "sessionStorage.setItem('mname','"+check.getMname()+"');"
+						+ "sessionStorage.setItem('mpw','"+check.getMpassword()+"');"
+						+ "sessionStorage.setItem('mtel','"+check.getMtel()+"');"
+						+ "location.href='./index';"
+						+ "</script>");
 			}
 		}
 		else {
+			this.pr = resp.getWriter();
 			this.pr.write("<script>alert('로그인을 실패했습니다.');location.href='./login';</script>");
 		}
 		}catch(Exception e) {
