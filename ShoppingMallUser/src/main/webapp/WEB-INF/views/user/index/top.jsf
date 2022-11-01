@@ -2,23 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>    
 <script>
-var datas = JSON.parse(localStorage.getItem("datas"));
-var mname = "";
-mname=sessionStorage.getItem("mname");
-console.log(mname);
+var mdata = JSON.parse(localStorage.getItem("data"));
+console.log(mdata);
+var mname=sessionStorage.getItem("mname");
+// var sign = localStorage.setItem("sign","ok");
+
 var mpw = sessionStorage.getItem("mpw");
 var mtel = sessionStorage.getItem("mtel");
-
-// if(mname!=""){
-// 	log.innerHTML= ""+mname+"님 환영합니다.";
-// }
-console.log(mname);
-console.log(mtel);
 </script>
 <meta charset="utf-8">
     <div class='designPopupBand' style='background-color:#fff;'>
     <div class='designPopupBody'>
-    <a href='#' target='_self'>
+    <a href='./' target='_self'>
     <img src='./images/popup_16327281123906.jpg' />
     </a>
     </div>
@@ -40,10 +35,8 @@ console.log(mtel);
 			</h1>
 
             <!-- 상단 유틸메뉴 -->
-            <ul class="util_wrap_menu2">
-                <li>
-                <a href="./login" designElement="text" textIndex="4" target="_self">로그인</a>
-                </li>
+            <ul class="util_wrap_menu2" id="">
+                <li id="log_sign"><a href="./login" designElement="text" textIndex="4" target="_self">로그인</a></li>
 				<li>
 					<a href="./member" designElement="text" textIndex="5" target="_self">회원가입</a>
 				</li>
@@ -54,22 +47,22 @@ console.log(mtel);
 
 			<!-- 햄버거 버튼 -->
 			<div class="resp_top_hamburger">
-				<a href="#"><b>aside menu</b></a>
+				<a href="./"><b>aside menu</b></a>
 			</div>
 
 			<!-- 장바구니( 1023px 이하에서 노출됨 ) -->
 			<a href="./cart" class="resp_top_cart"><span class="cart_cnt2">0</span></a>
-
+	
 			<!-- 슬라이드 배너 영역 (light_style_1_2) :: START -->
 			<div class="gnb_bnr_slide gnb_bnr_slide_02 slider_before_loading" style="display:none; position:absolute; right:40px; top:0px; width:220px; height:148px;">
 				<div class="slider_gon">
 					<!-- 슬라이드 배너 데이터 영역 :: START -->	
                     <div class="light_style_1_2 designBanner" designElement="banner" templatePath="main/index.html" bannerSeq="2">
                     <div class="sslide">
-                    <a class="slink" href="#" target="_self">
+                    <a class="slink" href="./" target="_self">
                     <img class="simg" src="./banner/images_1.png" /></a>
                     </div>
-                    <div class="sslide"><a class="slink" href="" target="_self">
+                    <div class="sslide"><a class="slink" href="./" target="_self">
                     <img class="simg" src="./banner/images_2.png" /></a>
                     </div>	
                 
@@ -77,6 +70,18 @@ console.log(mtel);
 				</div>
 			</div>
 			<script type="text/javascript">
+			function logout(){
+				sign="";
+				alert("로그아웃되었습니다.");
+				location.href="./";
+			}
+			if(mname==""||mname==null||mname=="null"){				
+				document.getElementById("log_sign").innerHTML="<a href='./login' designElement='text' textIndex='4' target='_self'>로그인</a>";				
+			}
+			else{
+			document.getElementById("log_sign").innerHTML=mname+"님<button onclick='logout();''>로그아웃</button>";
+			}
+			
 				$(function() {
 				
                     $('.light_style_1_2').slick({
@@ -263,6 +268,7 @@ console.log(mtel);
 </div>
 <!-- 상단영역 : 끝 -->
 <script type="text/javascript">
+
     /* 카테고리 메뉴 */
     $(function(){
         $(".nav_category_all").on("mouseenter", function(){

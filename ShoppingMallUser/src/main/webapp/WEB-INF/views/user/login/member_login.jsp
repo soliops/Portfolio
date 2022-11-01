@@ -46,7 +46,7 @@
 <script src="./js/slick.min.js"></script>
 <script src="./js/jquery.event.swipe.js"></script>
 <script src="./js/swiper.js"></script>
-<script src="./js/login.js?v=2"></script>
+<script src="./js/login.js?v=1"></script>
 <body>
 <style>
         #layout_body { background-color:#ffffff; }

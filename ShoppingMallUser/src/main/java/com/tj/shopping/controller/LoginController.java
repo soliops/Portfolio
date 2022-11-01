@@ -32,10 +32,11 @@ public class LoginController {
 		LoginDTO loginDTO,
 		@RequestParam("order_number") String number,
 		@RequestParam("order_email") String email,
-		@RequestParam(name="idsave") String idsave, 
+		@RequestParam(name="save") String idsave, 
 		HttpServletResponse resp
 			)throws Exception{
 		try {
+			System.out.println(idsave);
 			resp.setContentType("text/html; charset=UTF-8");
 		String id = loginDTO.getMid();
 		LoginDTO check = loginService.getId(loginDTO);
@@ -45,7 +46,6 @@ public class LoginController {
 			loginService.insertHistory(id);
 			System.out.println("???");
 			if(idsave.equals("Y")) {
-				
 				this.pr = resp.getWriter();
 				this.pr.write("<script>"
 						+ "alert('로그인되었습니다.');"

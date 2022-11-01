@@ -8,15 +8,16 @@ function login(){
 		frm.mpassword.focus();
 	}
 	else{
-		if(frm.idsave.checked == true){
-			frm.idsave.value="Y";
+		var check = document.getElementById("save");
+		if(check.checked == true){
+			frm.save.value="Y";
 			frm.method="post";
 			frm.enctype="application/x-www-form-urlencoded";
 			frm.action="./login";
 			frm.submit();
 		}
 		else{
-			frm.idsave.value="N";
+			frm.save.value="N";
 			frm.method="post";
 			frm.enctype="application/x-www-form-urlencoded";
 			frm.action="./login";

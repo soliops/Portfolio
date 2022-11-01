@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <form name="frm" id="frm">
 <input type="hidden" name="mname" value="test">
 <input type="hidden" name="memail" value="test">
@@ -30,7 +29,6 @@
 				<li>
 					<label class="id_save">
                     <input type="checkbox" name="save" id="save" value="N"> 
-                    <input type="hidden" name="idsave" id="idsave" value="">
                     <span designElement="text" textIndex="6">아이디 저장</span></label>
 				</li>
 				<li>
@@ -70,6 +68,8 @@
 		</ul>
 </div>
 <script>
+document.getElementById("mid").value=localStorage.getItem("mname");
+document.getElementById("mpassword").value=localStorage.getItem("mpw");
 	$(document).ready(function() {
 	$("form[name='loginForm'] input[name='userid']").focus();
 	$('#loginTab a').on('click', function() {
