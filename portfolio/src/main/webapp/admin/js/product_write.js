@@ -9,6 +9,11 @@ function code_check(){
 		frm.product_code.focus();
 		return false;
 	}
+	else if(frm.product_code.value=="000000"||frm.cbcate_code.value<0||frm.product_code.value=="0"){
+		alert("상품코드는 0보다 큰 숫자를 입력하셔야 합니다.");
+		frm.product_code.focus();		
+		return false;
+	}
 	else if(frm.product_code.value.length!=6){
 		alert("상품코드는 6자리를 입력하셔야 합니다.");
 		frm.product_code.focus();		
@@ -63,6 +68,11 @@ function all_check(){
 		frm.cbcate_code.focus();
 		return false;
 	}
+	else if(frm.cbcate_code.value=="00"||frm.cbcate_code.value<0){
+		alert("대메뉴 카테고리는 0보다 큰 숫자를 입력하셔야 합니다.");
+		frm.cbcate_code.focus();
+		return false;
+	}
 	else if(frm.cbcate_code.value.length!=2){
 		alert("대메뉴 카테고리는 2자리 숫자를 입력하셔야 합니다.");
 		frm.cbcate_code.focus();
@@ -70,6 +80,11 @@ function all_check(){
 	}
 	else if(num_ck.test(frm.cscate_code.value)==true){
 		alert("소메뉴 카테고리는 숫자만 입력하셔야 합니다.");
+		frm.cscate_code.focus();
+		return false;
+	}
+	else if(frm.cscate_code.value=="00" || frm.cscate_code.value<0){
+		alert("소메뉴 카테고리는 0보다 큰 숫자를 입력하셔야 합니다.");
 		frm.cscate_code.focus();
 		return false;
 	}
@@ -154,7 +169,6 @@ function product_add(){
 				if(property!="jpg" && property!="jpeg" && property!="bmp" && property!="gif" && property!="png" && property!="webp"){
 					alert("파일첨부에는 이미지 파일만 사용하시길 바랍니다.");
 					document.getElementById("product_img"+w).value ="";
-				
 				}
 				else{
 					ct++;

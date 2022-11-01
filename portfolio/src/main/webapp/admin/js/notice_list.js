@@ -16,15 +16,19 @@ function notice_delete(){
 function view_allchange(){ 
 	var view_ck = document.getElementsByName("view_check");
 	var all_ch=document.getElementById("view_allcheck");
+	var w = true;
+	var count = 0;
 	for(var p=0;p<view_ck.length;p++){
-		if(view_ck[p].ckecked==false){
-			all_ch.checked=view_ck.checked;
+		if(view_ck[p].checked==false){
+			all_ch.checked=false;
 			break;
 		}
 		else{
-			all_ch.checked=view_ck.checked;
-			break;
+			count++;
 		}
+	}
+	if(count==view_ck.length){
+		all_ch.checked=true;
 	}
 }
 function notice_write(){

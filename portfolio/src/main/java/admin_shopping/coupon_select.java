@@ -1,5 +1,6 @@
 package admin_shopping;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import admin_configure.dbconfig;
+import admin_configure.timer;
 
 public class coupon_select {
 	ArrayList<Map<String,Object>> ar =null;
@@ -60,10 +62,48 @@ public class coupon_select {
 				m.put("coupon_discount",rs.getString("coupon_discount"));
 				m.put("minimum_price",rs.getString("minimum_price"));
 				m.put("coupon_img",rs.getString("coupon_img"));
+				m.put("coupon_img_name",rs.getString("coupon_img_name"));
 				this.ar.add(m);
 			}
+			ct.close();
 		} catch (Exception e) {
 			e.getMessage();
+		}
+	}
+	public void check(String realpath) {
+		Connection ct = null;
+		try {
+			timer time = new timer();
+			String now = time.now_datetime();
+			dbconfig db = new dbconfig();
+			ct = db.cafe24();
+			String findSql = "select cidx,coupon_img_name from coupon where coupon_expiration_date < '"+now+"'";
+			PreparedStatement findps = ct.prepareStatement(findSql);
+			ResultSet findrs = findps.executeQuery();
+			ArrayList<Map<String,Object>> ar = new ArrayList<Map<String,Object>>();
+			while(findrs.next()) {
+				Map<String,Object> m = new HashMap<String, Object>();
+				m.put("cidx",findrs.getString("cidx"));
+				m.put("fileName",findrs.getString("cidx"));				
+				ar.add(m);
+			}
+			File fe = null; 
+			PreparedStatement ps=null;
+			if(ar.size()!=0) {
+			for(int w=0; w<ar.size();w++) {
+				String delete = "delete from coupon where cidx='"+ar.get(w).get("cidx")+"'";
+				ps = ct.prepareStatement(delete);
+				int n=0;
+				n= ps.executeUpdate();
+				if(n==0||n<0) {
+					throw new Exception();
+				}
+				fe = new File(realpath+ar.get(w).get("fileName"));
+				if(fe.exists()) {fe.delete();}
+			}
+			}
+		} catch (Exception e) {
+		 e.getMessage();
 		}
 	}
 	public ArrayList<Map<String,Object>> list (){

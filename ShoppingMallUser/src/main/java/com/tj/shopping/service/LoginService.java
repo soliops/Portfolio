@@ -6,5 +6,5 @@ public interface LoginService {
 
 	public LoginDTO getId(LoginDTO loginDTO)throws Exception;
 	public String Hashing(String password) throws Exception;
-
+	public void insertHistory(String mid);
 }

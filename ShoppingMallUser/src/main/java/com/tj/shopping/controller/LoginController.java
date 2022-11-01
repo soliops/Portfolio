@@ -41,7 +41,11 @@ public class LoginController {
 		LoginDTO check = loginService.getId(loginDTO);
 		String result = check==null  ? "false" : check.getMid();
 		if(id.equals(result)) {
+			System.out.println("!!!!");
+			loginService.insertHistory(id);
+			System.out.println("???");
 			if(idsave.equals("Y")) {
+				
 				this.pr = resp.getWriter();
 				this.pr.write("<script>"
 						+ "alert('로그인되었습니다.');"
@@ -52,6 +56,7 @@ public class LoginController {
 						+ "sessionStorage.setItem('mtel','"+check.getMtel()+"');"
 						+ "location.href='./index';"
 						+ "</script>");
+				System.out.println("1");
 			}
 			else {
 				this.pr = resp.getWriter();
@@ -60,10 +65,10 @@ public class LoginController {
 						+ "var datas= ['"+check.getMid()+"','"+check.getMemail()+"'];"
 						+ "localStorage.setItem('data',JSON.stringify(datas));"
 						+ "sessionStorage.setItem('mname','"+check.getMname()+"');"
-						+ "sessionStorage.setItem('mpw','"+check.getMpassword()+"');"
 						+ "sessionStorage.setItem('mtel','"+check.getMtel()+"');"
 						+ "location.href='./index';"
 						+ "</script>");
+				System.out.println("2");
 			}
 		}
 		else {

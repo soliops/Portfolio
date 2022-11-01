@@ -29,7 +29,8 @@ public class admin_notice_view_delok extends HttpServlet {
 		String idx = request.getParameter("idx");
 		try {
 		admin_notice_view_delete anvd = new admin_notice_view_delete();
-		anvd.view_delete(idx);
+		String realpath = request.getServletContext().getRealPath("")+"notice_img/";
+		anvd.view_delete(idx,realpath);
 		this.pr = response.getWriter();
 		String msg = anvd.call_sign().intern();
 		if(msg=="success") {

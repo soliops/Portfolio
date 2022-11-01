@@ -14,7 +14,13 @@ public class admin_notice_view_select {
 		try {
 			dbconfig db =new dbconfig();
 			ct = db.cafe24();
-			String sql = "select * from admin_notice where idx='"+idx+"'";
+			String updateSql = "update admin_notice as a join"
+					+ "(select max(notice_count)+1 as hit from admin_notice where idx="+idx+") as b "
+					+ "set a.notice_count=b.hit where a.idx="+idx;
+			PreparedStatement ps2 = ct.prepareStatement(updateSql);
+			int n=0;
+			n = ps2.executeUpdate();
+			String sql ="select * from admin_notice where idx='"+idx+"'";
 			PreparedStatement ps = ct.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			this.ar = new ArrayList<Map<String,Object>>();
@@ -25,8 +31,10 @@ public class admin_notice_view_select {
 				m.put("notice_title", rs.getString("notice_title"));
 				m.put("notice_writer", rs.getString("notice_writer"));
 				m.put("notice_file", rs.getString("notice_file"));
+				m.put("notice_file_name", rs.getString("notice_file_name"));
 				m.put("notice_text", rs.getString("notice_text"));
 				m.put("notice_date", rs.getString("notice_date"));
+				m.put("notice_count", rs.getString("notice_count"));
 				this.ar.add(m);
 			}
 			ct.close();

@@ -19,9 +19,7 @@ class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 <value>opete95</value>
 </property>
 <property name="password">
-<value>
-
-</value>
+<value>soli5857!@</value>
 </property>
 </bean>		
 

@@ -20,10 +20,9 @@ function notice_save(){
 	else{
 		frm.notice_print.value="N";
 		frm.method="post";
-		frm.action="../notice_writeok.do"
-		frm.enctype="application/x-www-form-urlencoded";
+		frm.enctype="multipart/form-data";
+		frm.action="../notice_writeok.do";
 		frm.submit();
 		
 	}
 }
-CKEDITOR.replace("notice_text");

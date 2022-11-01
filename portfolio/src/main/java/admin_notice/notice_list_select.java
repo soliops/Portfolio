@@ -13,7 +13,7 @@ public class notice_list_select {
 		try {
 			dbconfig db = new dbconfig();
 			ct = db.cafe24();
-			String sql = "select * from admin_notice where notice_print='Y'order by idx desc;";
+			String sql = "select * from admin_notice where notice_print='Y'order by notice_date desc;";
 			PreparedStatement ps = ct.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			this.al = new ArrayList<>();
@@ -24,8 +24,10 @@ public class notice_list_select {
 				m.put("notice_title", rs.getString("notice_title"));
 				m.put("notice_writer", rs.getString("notice_writer"));
 				m.put("notice_file", rs.getString("notice_file"));
+				m.put("notice_file_name", rs.getString("notice_file_name"));				
 				m.put("notice_text", rs.getString("notice_text"));
 				m.put("notice_date", rs.getString("notice_date"));
+				m.put("notice_count", rs.getString("notice_count"));
 				this.al.add(m);
 			}
 			ct.close();
@@ -62,12 +64,15 @@ public class notice_list_select {
 			}else {
 				pagenumber=(total/pageview)+1;
 			}
+			if(pagenumber==0) {
+				pagenumber=1;
+			}
 			this.pg = new ArrayList<>();
 			this.pg.add(pageview);
 			this.pg.add(startpage);
 			this.pg.add(pagenumber);
 			this.pg.add(total);
-			String sql = "select * from admin_notice where notice_print='N'order by idx desc limit "+startpage+","+pageview+";";
+			String sql = "select * from admin_notice where notice_print='N'order by notice_date desc limit "+startpage+","+pageview+";";
 			PreparedStatement ps = ct.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			this.al = new ArrayList<>();
@@ -78,8 +83,10 @@ public class notice_list_select {
 				m.put("notice_title", rs.getString("notice_title"));
 				m.put("notice_writer", rs.getString("notice_writer"));
 				m.put("notice_file", rs.getString("notice_file"));
+				m.put("notice_file_name", rs.getString("notice_file_name"));
 				m.put("notice_text", rs.getString("notice_text"));
 				m.put("notice_date", rs.getString("notice_date"));
+				m.put("notice_count", rs.getString("notice_count"));
 				this.al.add(m);
 			}
 			ct.close();

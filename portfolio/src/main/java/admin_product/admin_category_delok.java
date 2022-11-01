@@ -30,12 +30,13 @@ public class admin_category_delok extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
     	response.setContentType("text/html;charset=utf-8");
+    	String realpath = request.getServletContext().getRealPath("")+"product_img/";
 		String delck = request.getParameter("cate_delck");
 		String msg = null;
     	pr = response.getWriter(); 
 		if(delck!=null||delck!=""||delck!="null") {
     		admin_category_delete acd = new admin_category_delete();
-    		acd.category_delete(delck);
+    		acd.category_delete(delck,realpath);
     		msg=acd.call_sign().intern();
     	}
     	if(msg=="success") {

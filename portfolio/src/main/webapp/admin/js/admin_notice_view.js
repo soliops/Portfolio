@@ -16,16 +16,16 @@ $(function(){
 		}
 		else{
 			frm.notice_print.value="N";
-			frm.method="POST" 
-			frm.enctype="multipart/form-data"
+			frm.method="POST" ;
+			frm.enctype="multipart/form-data";
 			frm.action="./admin_notice_viewok.do";
 			frm.submit();
 		}
 	})
 	$("#notice_del").click(function(){
 	if(confirm("해당 내용을 정말로 삭제 하시겠습니까?")){
-		frm.method="POST" 
-		frm.enctype="application/x-www-form-urlencoded"
+		frm.method="POST" ;
+		frm.enctype="application/x-www-form-urlencoded";
 		frm.action="./admin_notice_view_delok.do";
 		frm.submit();	
 	}

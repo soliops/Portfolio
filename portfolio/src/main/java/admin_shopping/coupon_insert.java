@@ -28,6 +28,7 @@ public class coupon_insert {
 				ps.setString(t+1, data.get(t));
 				t++;
 			}while(t<data.size());
+			System.out.println(ps);
 			int n = ps.executeUpdate();
 			if(n>0){
 				this.msg = "success";

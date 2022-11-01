@@ -1,6 +1,7 @@
 package admin_shopping;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class admin_shopping extends HttpServlet {
+	PrintWriter pr = null;
 	private static final long serialVersionUID = 1L;
        
  
@@ -24,6 +26,8 @@ public class admin_shopping extends HttpServlet {
     	resp.setContentType("text/html;charset=utf-8");
     	String pgno = req.getParameter("page");
     	coupon_select cs = new coupon_select();
+    	String realpath = req.getServletContext().getRealPath("")+"coupon_img/";
+    	cs.check(realpath);
     	cs.coupon_select(pgno);
     	ArrayList<Map<String,Object>> list = cs.list();
     	ArrayList<Object> page_data = cs.page_data();

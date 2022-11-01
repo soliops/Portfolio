@@ -17,7 +17,7 @@ public class notice_write_insert {
 			int w=1;
 			do {
 				if(w==data.size()-1) {
-					sql+="?);";
+					sql+="?,0);";
 				}
 				else {
 					sql+="?,";

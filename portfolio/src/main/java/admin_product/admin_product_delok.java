@@ -28,11 +28,12 @@ public class admin_product_delok extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
     	response.setContentType("text/html;charset=utf-8");
 		String delck = request.getParameter("product_delck");
+		String realpath = request.getServletContext().getRealPath("")+"product_img/";
 		String msg = null;
     	pr = response.getWriter(); 
 		if(delck!=null||delck!=""||delck!="null") {
     		admin_product_delete apd = new admin_product_delete();
-    		apd.product_delete(delck);
+    		apd.product_delete(delck,realpath);
     		msg=apd.call_sign().intern();
     	}
     	if(msg=="success") {

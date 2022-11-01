@@ -28,7 +28,7 @@ public class admin_notice extends HttpServlet {
     		ArrayList<Map<String,Object>> notice_list = nls.select_list();
     		req.setAttribute("notice_list", notice_list);
 			String pgno = req.getParameter("page");
-    		
+			pgno = pgno==null ? "1" : pgno;
 			nls.nlist_select(pgno);
     		ArrayList<Map<String,Object>> notice_nlist = nls.select_list();
     		req.setAttribute("notice_nlist", notice_nlist);

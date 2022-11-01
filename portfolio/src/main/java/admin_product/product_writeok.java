@@ -26,17 +26,9 @@ public class product_writeok extends HttpServlet {
 	PrintWriter pr = null;
 	private static final long serialVersionUID = 1L;
        
-
-    public product_writeok() {
-
-    }
-
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	}
-
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=utf-8");
@@ -48,7 +40,9 @@ public class product_writeok extends HttpServlet {
 		boolean ck = false;
 		String cate_ck = null;
 		String realpath = request.getServletContext().getRealPath("");
-		String path = realpath+"product_img\\";
+		String projectPath = request.getServletContext().getContextPath();
+		String createFile = "/product_img/";
+		String path = realpath+"product_img/";
 		String check_code = request.getParameter("check_code");
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -61,21 +55,22 @@ public class product_writeok extends HttpServlet {
 			String filecheck  =file.getName();
 			String filetext = request.getParameter(filecheck);
 			if(filecheck.equals("product_img1")||filecheck.equals("product_img2")||filecheck.equals("product_img3")) {
-				String originName = time + file.getSubmittedFileName();
+				String originName = file.getSubmittedFileName();
 				if(originName==null||originName=="") {						
 					filetext="";
 				}
 				else {
-					filetext= path + originName;						
+					filetext= path +time+ originName;						
 					File fe = new File(path);
 					if(!fe.exists()) {fe.mkdir();}
 					file.write(filetext);
-					filetext="./product_img/"+originName;
+					filetext="http://opete95.cafe24.com"+projectPath+createFile+time+originName;
 				}
 			}
 			ar.add(filetext);
 			}
 			ar.add(times);
+			ar.add("0");
 			admin_product_check apcs = new admin_product_check();
 			apcs.catecode_check(ar.get(0), ar.get(1));
 			cate_ck = apcs.call_sign2().intern();

@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Enumeration;
 
 import javax.servlet.ServletException;
@@ -40,6 +42,14 @@ public class coupon_writeok extends HttpServlet {
 		Collection<Part> parts = request.getParts();
 		ArrayList<String> ar = new ArrayList<String>();
 		this.pr = response.getWriter();
+		String realpath= request.getServletContext().getRealPath("");
+		String projectPath = request.getServletContext().getContextPath();
+		String createFile = "/coupon_img/";
+		String path = realpath+ "coupon_img/";
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		String time = sdf.format(date);
+		String originName = "";
 		for(Part part : parts) {
 			String partcheck = part.getName();
 			String parttext = request.getParameter(partcheck);
@@ -50,18 +60,18 @@ public class coupon_writeok extends HttpServlet {
 				parttext = parttext+" 23:59:59";
 			}
 			else if(partcheck.equals("coupon_img")) {
-			String originname = part.getSubmittedFileName();
-			String realpath="C:/portfolio/portfolio/src/main/webapp/admin/coupon_img/";
-			parttext = realpath + originname;
-			File fe = new File(realpath);
-				if(!fe.exists()) {
-					fe.mkdir();
-				}
+			originName = part.getSubmittedFileName();
+			parttext = path+time+originName;
+			File fe = new File(path);
+			if(!fe.exists()) {
+				fe.mkdir();
+			}
 			part.write(parttext);
-			parttext = parttext.replace("C:/portfolio/portfolio/src/main/webapp/admin", ".");
+			parttext="http://opete95.cafe24.com"+projectPath+createFile+time+originName;
 			}
 			ar.add(parttext);
 		}
+		ar.add(time+originName);
 		try {
 			coupon_check cc = new coupon_check();
 			cc.coupon_check(ar.get(0), ar.get(2), ar.get(3));

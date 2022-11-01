@@ -16,7 +16,7 @@
     <link rel="icon" href="./img/logo.png" sizes="32x32">
     <link rel="icon" href="./img/logo.png" sizes="16x16">
     <script src="./js/jquery.js"></script>
-    <script src="./js/notice_list.js"></script>
+    <script src="./js/notice_list.js?v=2"></script>
 </head>
 <%		request.setCharacterEncoding("UTF-8");
 		session.setMaxInactiveInterval(30*60);
@@ -25,7 +25,6 @@
 		if(admin_main_id==null){
 			out.print("<script>location.href='./index.html';</script>");
 		}
-
 		%>
 <body>
 <header class="headercss">
@@ -41,7 +40,7 @@
 </form>
 </section>
 </main>
-<footer class="main_copyright" style="margin-top:250px;">
+<footer class="main_copyright" style="margin-top:500px;">
 <%@ include file="./admin_footer.html" %>
 </footer>
 </body>

@@ -34,10 +34,15 @@ String text = ((String)list.get(0).get("notice_text")).replace("<p>","").replace
 <ul>
     <li>첨부파일</li>
     <li>
-        <input type="file" name="notice_file" id="notice_file" value=""> ※ 새로운 첨부파일 적용시 기본 첨부파일은 삭제 됩니다.
-        <em class="fileview">기존 첨부 파일명 : <%=list.get(0).get("notice_file") %></em>
-        <input type="hidden" name="notice_file_origin" id="notice_file_origin" value="<%=list.get(0).get("notice_file") %>">
+        <input type="file" name="notice_file" id="notice_file"> ※ 새로운 첨부파일 적용시 기본 첨부파일은 삭제 됩니다.
+       	<input type="hidden" name="notice_file_origin" id="notice_file_origin" value="<%=list.get(0).get("notice_file_name") %>">
     </li>
+</ul>
+<ul>
+	<li>기존 첨부파일</li>
+	<li>
+        <em class="fileview">기존 첨부 파일명 : <%=list.get(0).get("notice_file_name") %></em>
+	</li>
 </ul>
 <ul class="ul_height">
     <li>공지내용</li>

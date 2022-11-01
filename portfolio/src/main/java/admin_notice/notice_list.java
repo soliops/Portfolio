@@ -27,9 +27,8 @@ public class notice_list extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter pw = response.getWriter();
 		String del_data = request.getParameter("del");
-		String del_list = del_data.replaceAll(",","");
 		notice_list_delete nld = new notice_list_delete();
-		nld.notice_list(del_list);
+		nld.notice_list(del_data,request.getServletContext().getRealPath("")+"notice_img/");
 		String msg = nld.call_sign();
 		if(msg=="success") {
 			pw.print("<script>alert('선택된 공지 사항이 삭제되었습니다'); location.href='./admin_notice.html';</script>");
