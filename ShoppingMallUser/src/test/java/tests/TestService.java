@@ -199,6 +199,7 @@ public class TestService {
 		dto.setProduct_code("000003");
 		dto.setProduct_ea("1");
 		dto.setShip_pay("0");
+		System.out.println(dto);
 //		orderService.InsertCart(dto,"Y");
 		List<CartDTO> cart = orderService.getProduct(dto.getProduct_code(), dto.getShip_pay(), dto.getProduct_ea());
 		System.out.println(cart);
