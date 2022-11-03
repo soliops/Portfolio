@@ -82,7 +82,7 @@ public class OrderServiceImpl implements OrderService {
 	public String orderNumber(String mid) {
 		String code = "";
 		for(int t=0;t<9;t++) {
-			int random = (int) Math.random()*10;
+			int random = (int) (Math.random()*10);
 			code += random;
 		}
 		return mid+"_"+code;

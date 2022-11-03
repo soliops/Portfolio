@@ -36,15 +36,12 @@ public class LoginController {
 		HttpServletResponse resp
 			)throws Exception{
 		try {
-			System.out.println(idsave);
 			resp.setContentType("text/html; charset=UTF-8");
 		String id = loginDTO.getMid();
 		LoginDTO check = loginService.getId(loginDTO);
 		String result = check==null  ? "false" : check.getMid();
 		if(id.equals(result)) {
-			System.out.println("!!!!");
 			loginService.insertHistory(id);
-			System.out.println("???");
 			if(idsave.equals("Y")) {
 				this.pr = resp.getWriter();
 				this.pr.write("<script>"
@@ -56,7 +53,6 @@ public class LoginController {
 						+ "sessionStorage.setItem('mtel','"+check.getMtel()+"');"
 						+ "location.href='./index';"
 						+ "</script>");
-				System.out.println("1");
 			}
 			else {
 				this.pr = resp.getWriter();
@@ -68,7 +64,6 @@ public class LoginController {
 						+ "sessionStorage.setItem('mtel','"+check.getMtel()+"');"
 						+ "location.href='./index';"
 						+ "</script>");
-				System.out.println("2");
 			}
 		}
 		else {
