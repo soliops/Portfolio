@@ -30,8 +30,6 @@ public class CompletController {
 	public String completPage(
 			Model m,
 			CompletDTO completDTO,
-			@RequestParam("goodcode") String goodcode,
-			@RequestParam("price") String price,
 			HttpServletRequest req,
 			HttpServletResponse resp
 			) throws Exception{
@@ -51,7 +49,6 @@ public class CompletController {
 			System.out.println("paramMap : "+ paramMap.toString());
 			if("0000".equals(paramMap.get("resultCode"))){
 				System.out.println("####인증성공/승인요청####");
-		
 				String mid 		= paramMap.get("mid");
 				String timestamp= SignatureUtil.getTimestamp();
 				String charset 	= "UTF-8";
@@ -67,7 +64,6 @@ public class CompletController {
 				signParam.put("timestamp",	timestamp);		// 필수
 
 				String signature = SignatureUtil.makeSignature(signParam);
-
 				Map<String, String> authMap = new Hashtable<String, String>();
 				authMap.put("mid"			,mid);			// 필수
 				authMap.put("authToken"		,authToken);	// 필수
@@ -88,7 +84,6 @@ public class CompletController {
 					String test = authResultString.replace(",", "&").replace(":", "=").replace("\"", "").replace(" ","").replace("\n", "").replace("}", "").replace("{", "");
 				
 					resultMap = ParseUtil.parseStringToMap(test); //문자열을 MAP형식으로 파싱
-					
 				} catch (Exception ex) {
 					System.out.println(ex);
 					String netcancelResultString = httpUtil.processHTTP(authMap, netCancel);	// 망취소 요청 API url(고정, 임의 세팅 금지)

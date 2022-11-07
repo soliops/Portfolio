@@ -32,7 +32,7 @@ public class LoginController {
 		LoginDTO loginDTO,
 		@RequestParam("order_number") String number,
 		@RequestParam("order_email") String email,
-		@RequestParam(name="save") String idsave, 
+		@RequestParam(name="save",defaultValue = "N") String idsave, 
 		HttpServletResponse resp
 			)throws Exception{
 		try {
@@ -59,7 +59,7 @@ public class LoginController {
 				this.pr.write("<script>"
 						+ "alert('로그인되었습니다.');"
 						+ "var datas= ['"+check.getMid()+"','"+check.getMemail()+"'];"
-						+ "localStorage.setItem('data',JSON.stringify(datas));"
+						+ "sessionStorage.setItem('data',JSON.stringify(datas));"
 						+ "sessionStorage.setItem('mname','"+check.getMname()+"');"
 						+ "sessionStorage.setItem('mtel','"+check.getMtel()+"');"
 						+ "location.href='./index';"

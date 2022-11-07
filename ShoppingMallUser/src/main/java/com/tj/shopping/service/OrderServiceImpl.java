@@ -71,7 +71,6 @@ public class OrderServiceImpl implements OrderService {
 		signParam.put("oid", orderNumber);
 		signParam.put("price", dto.getProduct_total());
 		signParam.put("timestamp", timestamp);
-
 		String signature = SignatureUtil.makeSignature(signParam);
 		list.put("signature",signature);
 		

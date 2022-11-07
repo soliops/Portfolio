@@ -2,11 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="z" uri="http://java.sun.com/jsp/jstl/core" %>    
 <script>
-var mdata = JSON.parse(localStorage.getItem("data"));
-console.log(mdata);
+var mdatas = localStorage.getItem("data");
+if(mdatas == ""||mdatas == null){
+	mdatas = sessionStorage.getItem("data");
+}
+var mdata = JSON.parse(mdatas);
 var mname=sessionStorage.getItem("mname");
-// var sign = localStorage.setItem("sign","ok");
-
 var mpw = sessionStorage.getItem("mpw");
 var mtel = sessionStorage.getItem("mtel");
 </script>
