@@ -165,6 +165,10 @@ function all_check(){
 		orderFrm.ctel.value = orderFrm.ctel1.value+orderFrm.ctel2.value+orderFrm.ctel3.value;
 		orderFrm.person_hp.value = orderFrm.person_hp1.value+orderFrm.person_hp2.value+orderFrm.person_hp3.value;
 		orderFrm.person_htel.value = orderFrm.person_htel1.value+orderFrm.person_htel2.value+orderFrm.person_htel3.value;
+		orderFrm.buyername.value=orderFrm.cname.value;
+		orderFrm.buyertel.value = orderFrm.chp1.value+orderFrm.chp2.value+orderFrm.chp3.value;
+		orderFrm.buyeremail.value=orderFrm.cemail.value;
+		orderFrm.goodcode.value='${list.product_code }';
 		if(orderFrm.paymethod.value=="bank"){
 			if(orderFrm.depositor.value==""){
 				alert("입금자명을 입력해 주세요.");
@@ -187,10 +191,6 @@ function all_check(){
 			}
 		}
 		else{
-			orderFrm.buyername.value=orderFrm.cname.value;
-			orderFrm.buyertel.value = orderFrm.chp1.value+orderFrm.chp2.value+orderFrm.chp3.value;
-			orderFrm.buyeremail.value=orderFrm.cemail.value;
-			orderFrm.goodcode.value='${list.product_code }';
 			return true;
 		}
 	}
@@ -259,10 +259,44 @@ function order_fin(){
 	}
 }
 function payment(){
-	INIStdPay.pay('orderFrm');	
+	var cname = orderfrm.cname.value;
+	var chp = orderfrm.chp.value;	
+	var ctel = orderfrm.ctel.value;
+	var cemail = orderfrm.cemail.value;
+	var person_nm = orderfrm.person_nm.value;
+	var person_post =orderFrm.person_post.value;
+	var cname = orderfrm.cname.value;
+	var cname = orderfrm.cname.value;
+	$.ajax({
+		type:"post",
+		url:"./stock",
+		cache:false,
+		contentType:"application/x-www-form-urlencoded",
+		data:{"cname":cname,"chp":chp,"ctel":ctel,
+			"cemail":cemail,"person_nm":person_nm,"person_post":person_post,
+			"person_addr":orderFrm.person_addr.value,"person_addrdtc":orderFrm.person_addrdtc.value,"person_hp":orderFrm.person_hp.value,
+			"person_htel":orderFrm.person_htel.value,"order_code":orderFrm.order_code.value,"ship":orderFrm.ship.value,
+			"ship_pay":orderFrm.ship_pay.value,"ship_memo":orderFrm.ship_memo.value,"product_idx":orderFrm.product_idx.value,
+			"product_nm":orderFrm.product_nm.value,"product_code":orderFrm.product_code.value,"product_ea":orderFrm.product_ea.value,
+			"product_price":orderFrm.product_price.value,"product_point":orderFrm.product_point.value,"payment":orderFrm.payment.value,
+			"bank_list":orderFrm.bank_list.value,"product_total":orderFrm.product_total.value,"regDate":orderFrm.regDate.value,"modDate":orderFrm.modDate.value},
+		success:function(data){
+		if(data=="success"){			
+			INIStdPay.pay('orderFrm');	
+		}
+		else{
+			alert("해당 상품 재고가 없습니다.");
+		}
+		},
+		error:function(){
+			alert("재고 체크 실패");
+			location.reload();
+		}
+	})
+	
 }
 </script>
-<form name="orderFrm" id="orderFrm" >
+<form name="orderFrm" id="orderFrm">
 <input type="hidden" name="chp" value="">
 <input type="hidden" name="ctel" value="">
 <input type="hidden" name="person_hp" value="">
@@ -295,11 +329,13 @@ function payment(){
 <input type="hidden" name="buyertel" value="">
 <input type="hidden" name="buyeremail" value="">
 <input type="hidden" name="buyerid" value="test">
-
-<input type="hidden" name="returnUrl" value="http://opete95.cafe24.com/shopping/complet">
-<input type="hidden" name="closeUrl" value="http://opete95.cafe24.com/shopping/close">
+<input type="hidden" name="merchantData" value="">
+<!-- <input type="hidden" name="returnUrl" value="http://opete95.cafe24.com/shopping/complet"> -->
+<!-- <input type="hidden" name="closeUrl" value="http://opete95.cafe24.com/shopping/close"> -->
 <!-- <input type="hidden" name="returnUrl" value="http://localhost:8080/shopping/complet"> -->
-<!-- <input type="hidden" name="closeUrl" value="http://localhost:8080/shopping/close"> -->
+<input type="hidden" name="returnUrl" value="http://localhost:8080/shopping/pay">
+<input type="hidden" name="closeUrl" value="http://localhost:8080/shopping/close">
+
 <div id="layout_body" class="layout_body">
     <style type="text/css">
     .resp_layer_pop .btn_view_coupons { position:absolute; right:60px; top:22px; } 
