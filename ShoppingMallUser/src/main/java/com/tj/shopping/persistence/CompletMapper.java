@@ -19,5 +19,8 @@ public interface CompletMapper {
 	
 	@Select("select * from product where product_code=#{code}")
 	public ItemDTO getProduct(String code);
+	
+	@Select("select product_stock from product where product_code=#{code}")
+	public int getProductStock(String code);
 
 }

@@ -149,14 +149,17 @@
                         <li class="td">
                             (+) 
                             <z:if test="${list.ship_pay eq 0}">0</z:if>
-                            <fm:formatNumber value="${list.ship_pay}"/>&#x20a9;
+                            <z:if test="${list.ship_pay ne 0}">
+                            <fm:formatNumber value="${list.ship_sum}"/>
+                            </z:if>
+                            &#x20a9;
                         </li>
                     </ul>
                     <ul class="total">
                         <li class="th"><span>총 결제금액</span></li>
                         <li class="td">
                             <span class="price"><span class="settle_price">
-                            <fm:formatNumber value="${list.product_total+list.ship_pay}"/>
+                            <fm:formatNumber value="${list.product_total+list.ship_sum}"/>
                             </span>&#x20a9;</span>
                         </li>
                     </ul>
@@ -174,12 +177,14 @@
                         </tr>
                         <tr>
                             <th scope="row"><p>주문상태</p></th>
-                            <td>주문접수</td>
+                            <td>주문완료</td>
                         </tr>
                         <tr>
                             <th scope="row"><p>결제일시</p></th>
                             <td>
-                                입금대기
+                               <z:if test="${list.payment eq 'bank'}"> 입금대기</z:if>
+                               <z:if test="${list.payment eq 'CARD'}">${list.regDate.substring(0,16) }</z:if>                            
+                            <z:if test="${list.payment eq 'escrow_virtual'}">${list.regDate.substring(0,16) }</z:if>
                             </td>
                         </tr>
                         <tr>
@@ -215,8 +220,7 @@
     </div>
     
     <div class="Pb60 C">
-        <a href="javascript:void cancel()" class="btn_resp size_c color2"><span>주문취소</span></a>
-        <a href="javascript:void payment()" class="btn_resp size_c color5"><span>결제하기</span></a>
+        <a href="./" class="btn_resp size_c color2"><span>홈으로</span></a>
     </div>
     
     <style type="text/css">

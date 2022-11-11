@@ -27,7 +27,9 @@ public class CompletDTO {
 	private String ship;
 	private String ship_pay;
 	private String ship_memo;
-	private int product_idx;
+	private String ship_sum;
+	
+	private String product_idx;
 	private String product_nm;
 	private String product_code;
 	private String product_ea;

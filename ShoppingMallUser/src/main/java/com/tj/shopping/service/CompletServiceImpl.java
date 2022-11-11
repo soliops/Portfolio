@@ -3,7 +3,6 @@ package com.tj.shopping.service;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -36,14 +35,18 @@ public class CompletServiceImpl implements CompletService {
 		cal.add(Calendar.DATE, 14);
 		return transFormat.format(cal.getTime());
 	}
+
 	@Override
-	public CompletDTO setCompletDTO(Map<String, String> resultMap) {
-		CompletDTO dto = new CompletDTO();
-		dto.setCname(resultMap.get("buyerName"));
-		dto.setChp(resultMap.get("buyerTel"));
-		dto.setCemail(resultMap.get("buyerEmail"));
-		dto.setOrder_code(resultMap.get("MOID").replace("INIpayTest_", ""));
-		dto.setPayment(resultMap.get("payMethod"));
-		return dto;
+	public String checkStock(String code, String ea) {
+		String[] codes = code.split(",");
+		String[] eas = ea.split(",");
+		String msg = "success";
+		for(int Number=0; Number<codes.length; Number++) {
+			int product_ea = completMapper.getProductStock(codes[Number]);
+			if(product_ea<Integer.parseInt(eas[Number])) {
+				msg="fail";
+			}
+		}
+		return msg;
 	}
 }

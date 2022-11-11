@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,96 +33,7 @@ public class CompletController {
 
 	private CompletDTO completDTO;
 	
-	@RequestMapping(value="complet", method = RequestMethod.POST)
-	public String completPage(
-			Model m,
-			@ModelAttribute("list") CompletDTO completDTO,
-			HttpServletRequest req,
-			HttpServletResponse resp
-			) throws Exception{
-		try {
-			System.out.println(completDTO);
-			resp.setContentType("text/html; charset=utf-8");
-			PrintWriter out = resp.getWriter();
-			Map<String, String> resultMap = new HashMap<String, String>();
-			req.setCharacterEncoding("UTF-8");
-			Map<String,String> paramMap = new Hashtable<String,String>();
-			Enumeration elems = req.getParameterNames();
-			String temp = "";
-			while(elems.hasMoreElements())
-			{
-				temp = (String) elems.nextElement();
-				paramMap.put(temp, req.getParameter(temp));
-			}
-//			System.out.println("paramMap : "+ paramMap.toString());
-			if("0000".equals(paramMap.get("resultCode"))){
-				System.out.println("####인증성공/승인요청####");
-				String mid 		= paramMap.get("mid");
-				String timestamp= SignatureUtil.getTimestamp();
-				String charset 	= "UTF-8";
-				String format 	= "JSON";
-				String authToken= paramMap.get("authToken");
-				String authUrl	= paramMap.get("authUrl");
-				String netCancel= paramMap.get("netCancelUrl");	
-				String merchantData = paramMap.get("merchantData");
-				String TotPrice = paramMap.get("TotPrice");
-				String goodName = paramMap.get("goodName");
-				String paymethod = paramMap.get("payMethod");
-				String applDate = paramMap.get("applDate");
-				String applTime = paramMap.get("applTime");
-				
-				String buyerName = paramMap.get("buyerName");
-				String buyerTel = paramMap.get("buyerTel");
-				String buyerEmail = paramMap.get("buyerEmail");
-				
-				Map<String, String> signParam = new HashMap<String, String>();
-
-				signParam.put("authToken",	authToken);		// 필수
-				signParam.put("timestamp",	timestamp);		// 필수
-
-				String signature = SignatureUtil.makeSignature(signParam);
-				Map<String, String> authMap = new Hashtable<String, String>();
-
-				authMap.put("mid"			,mid);			// 필수
-				authMap.put("authToken"		,authToken);	// 필수
-				authMap.put("signature"		,signature);	// 필수
-				authMap.put("timestamp"		,timestamp);	// 필수
-				authMap.put("charset"		,charset);		// default=UTF-8
-				authMap.put("format"		,format);	    // default=XML
-				HttpUtil httpUtil = new HttpUtil();
-				m.addAttribute("list",completDTO);
-				m.addAttribute("payDate",completService.calDate(completDTO.getRegDate()));
-				m.addAttribute("item",completService.getItem(completDTO.getProduct_code()));
-				try{
-
-					String authResultString = "";
-
-					authResultString = httpUtil.processHTTP(authMap, authUrl);
-
-					String test = authResultString.replace(",", "&").replace(":", "=").replace("\"", "").replace(" ","").replace("\n", "").replace("}", "").replace("{", "");
-				
-					resultMap = ParseUtil.parseStringToMap(test); //문자열을 MAP형식으로 파싱
-				} catch (Exception ex) {
-					System.out.println(ex);
-					String netcancelResultString = httpUtil.processHTTP(authMap, netCancel);	// 망취소 요청 API url(고정, 임의 세팅 금지)
-					out.println("## 망취소 API 결과 ##");
-					// 취소 결과 확인
-					out.println("<p>"+netcancelResultString.replaceAll("<", "&lt;").replaceAll(">", "&gt;")+"</p>");
-				}
-
-			}else{
-				
-				resultMap.put("resultCode", paramMap.get("resultCode"));
-				resultMap.put("resultMsg", paramMap.get("resultMsg"));
-			}
-
-		}catch(Exception e){
-			System.out.println(e);
-		}
-
-		return "user/order/complet";
-	}
-	
+	@Transactional
 	@RequestMapping(value="pay", method = RequestMethod.POST)
 	public String payPage(
 			Model m,
@@ -155,6 +67,7 @@ public class CompletController {
 			
 			
 			if("0000".equals(paramMap.get("resultCode"))){
+				// 수신결과를 파싱후 resultCode가 "0000"이면 승인성공 이외 실패
 
 				System.out.println("####인증성공/승인요청####");
 
@@ -170,7 +83,6 @@ public class CompletController {
 				String authUrl	= paramMap.get("authUrl");
 				String netCancel= paramMap.get("netCancelUrl");	
 				String merchantData = paramMap.get("merchantData");
-				System.out.println("제대로 왔나2-----------"+merchantData);
 				//#####################
 				// 2.signature 생성
 				//#####################
@@ -215,10 +127,10 @@ public class CompletController {
 					
 								
 					resultMap = ParseUtil.parseStringToMap(test); //문자열을 MAP형식으로 파싱
-//					System.out.println("결과 : "+resultMap);
-					CompletDTO dto = completService.setCompletDTO(resultMap);
-					System.out.println(dto);
-				  // 수신결과를 파싱후 resultCode가 "0000"이면 승인성공 이외 실패
+					
+					m.addAttribute("list",this.completDTO);
+					m.addAttribute("item",completService.getItem(this.completDTO.getProduct_code()));
+					m.addAttribute("payDate",completService.calDate(this.completDTO.getRegDate()));
 
 				  //throw new Exception("강제 Exception");
 				} catch (Exception ex) {
@@ -263,11 +175,10 @@ public class CompletController {
 	@ResponseBody
 	@PostMapping("/stock")
 	public String checkStock(
-			@RequestBody CompletDTO completDTO
+			CompletDTO completDTO
 			) {
 		this.completDTO = completDTO;
-		System.out.println(this.completDTO);
-		String msg="";
+		String msg= completService.checkStock(completDTO.getProduct_code(), completDTO.getProduct_ea());
 		return msg;
 	}
 }

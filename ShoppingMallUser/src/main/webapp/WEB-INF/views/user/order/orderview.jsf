@@ -259,14 +259,37 @@ function order_fin(){
 	}
 }
 function payment(){
-	var cname = orderfrm.cname.value;
-	var chp = orderfrm.chp.value;	
-	var ctel = orderfrm.ctel.value;
-	var cemail = orderfrm.cemail.value;
-	var person_nm = orderfrm.person_nm.value;
+	var cname = orderFrm.cname.value;
+	var chp = orderFrm.chp.value;	
+	var ctel = orderFrm.ctel.value;
+	var cemail = orderFrm.cemail.value;
+	var person_nm = orderFrm.person_nm.value;
 	var person_post =orderFrm.person_post.value;
-	var cname = orderfrm.cname.value;
-	var cname = orderfrm.cname.value;
+	var person_addr = orderFrm.person_addr.value;
+	var person_addrdtc = orderFrm.person_addrdtc.value;
+	var person_hp = orderFrm.person_hp.value;
+	var person_htel = orderFrm.person_htel.value;
+	var order_code = orderFrm.order_code.value;
+	var ship  = orderFrm.ship.value;
+	var ship_pay  = orderFrm.ship_pay.value;
+	var ship_memo  = orderFrm.ship_memo.value;
+	var ship_sum = '${list.sumShip }';
+	var product_idx  = '${list.product_idx}';
+	var product_nm  = orderFrm.product_nm.value;
+	var product_code  = orderFrm.product_code.value;
+	var product_ea  = orderFrm.product_ea.value;
+	var product_price  = '${list.sumPrice}';
+	var product_point  = Number(product_price)*0.01;
+	var payment  = orderFrm.paymethod.value;
+	var bank_list  = orderFrm.bank_list.value;
+	var product_total  = '${list.total}';
+	if(orderFrm.ship.value=="선불"){
+		ship_sum = Number(ship_sum)+5000;
+		product_total = Number(product_total)+5000;
+	}
+	var regDate  = orderFrm.regDate.value;
+	var modDate  = orderFrm.modDate.value;
+	
 	$.ajax({
 		type:"post",
 		url:"./stock",
@@ -274,12 +297,12 @@ function payment(){
 		contentType:"application/x-www-form-urlencoded",
 		data:{"cname":cname,"chp":chp,"ctel":ctel,
 			"cemail":cemail,"person_nm":person_nm,"person_post":person_post,
-			"person_addr":orderFrm.person_addr.value,"person_addrdtc":orderFrm.person_addrdtc.value,"person_hp":orderFrm.person_hp.value,
-			"person_htel":orderFrm.person_htel.value,"order_code":orderFrm.order_code.value,"ship":orderFrm.ship.value,
-			"ship_pay":orderFrm.ship_pay.value,"ship_memo":orderFrm.ship_memo.value,"product_idx":orderFrm.product_idx.value,
-			"product_nm":orderFrm.product_nm.value,"product_code":orderFrm.product_code.value,"product_ea":orderFrm.product_ea.value,
-			"product_price":orderFrm.product_price.value,"product_point":orderFrm.product_point.value,"payment":orderFrm.payment.value,
-			"bank_list":orderFrm.bank_list.value,"product_total":orderFrm.product_total.value,"regDate":orderFrm.regDate.value,"modDate":orderFrm.modDate.value},
+			"person_addr":person_addr,"person_addrdtc":person_addrdtc,"person_hp":person_hp,
+			"person_htel":person_htel,"order_code":order_code,"ship":ship,
+			"ship_pay":ship_pay,"ship_memo":ship_memo,"ship_sum":ship_sum,"product_idx":product_idx,
+			"product_nm":product_nm,"product_code":product_code,"product_ea": product_ea,
+			"product_price":product_price,"product_point":product_point,"payment":payment,
+			"bank_list":bank_list,"product_total":product_total,"regDate":regDate,"modDate":modDate},
 		success:function(data){
 		if(data=="success"){			
 			INIStdPay.pay('orderFrm');	
