@@ -84,6 +84,10 @@ function goCart(){
 			function logout(){
 				sign="";
 				alert("로그아웃되었습니다.");
+				sessionStorage.removeItem("data");
+				sessionStorage.removeItem("mname");
+				sessionStorage.removeItem("mpw");
+				sessionStorage.removeItem("mtel");
 				location.href="./";
 			}
 			if(mname==""||mname==null||mname=="null"){				
