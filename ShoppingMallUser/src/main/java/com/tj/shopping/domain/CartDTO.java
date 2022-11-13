@@ -25,6 +25,7 @@ public class CartDTO {
 	private String product_check;
 	private String product_img1;
 	private String indate;
+	private String mid;
 	private String id_use;
 	private String ship_pay;
 }

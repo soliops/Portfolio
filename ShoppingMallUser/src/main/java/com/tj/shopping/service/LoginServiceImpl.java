@@ -48,7 +48,6 @@ public class LoginServiceImpl implements LoginService {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		log.setMid(mid);
 		log.setDate(dateFormat.format(now));
-		System.out.println(log);
 		loginMapper.insertHistory(log);
 	}
 	

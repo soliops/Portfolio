@@ -19,13 +19,12 @@ public class CartServiceImpl implements CartService {
 	CartMapper cartMapper;
 	
 	@Override
-	public void deleteCart(String pidx) {
-		cartMapper.deleteCart(pidx);			
+	public void deleteCart(String pidx,String mid) {
+		cartMapper.deleteCart(pidx,mid);			
 	}
 
 	@Override
 	public CartDTO getItem(String pidx) {
-		
 		ItemDTO item = cartMapper.getItem(pidx); 
 		LocalDateTime datetime = LocalDateTime.now();
 		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -54,17 +53,17 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<CartDTO> getCartList() {
-		return cartMapper.getCartList();
+	public List<CartDTO> getCartList(String mid) {
+		return cartMapper.getCartList(mid);
 	}
 
 	@Override
-	public List<CartDTO> getCart(String pidx) {
-		return cartMapper.selectCartList(pidx);
+	public List<CartDTO> getCart(String pidx,String mid) {
+		return cartMapper.selectCartList(pidx,mid);
 	}
 
 	@Override
-	public CartDTO selectCart(String pidx) {
-		return cartMapper.selectCart(pidx);
+	public CartDTO selectCart(String pidx, String mid) {
+		return cartMapper.selectCart(pidx,mid);
 	}
 }

@@ -51,7 +51,7 @@ public class OrderServiceImpl implements OrderService {
 		list.put("product_nm",dto.getProduct_nm());
 		list.put("product_code",dto.getProduct_code());
 		list.put("product_ea",dto.getProduct_ea());
-		
+		list.put("product_idx",String.valueOf(dto.getProduct_idx()));
 		for(int e=0;e<ea.length;e++) {
 			sumPrice +=  Integer.parseInt(price[e]);
 			sumShip +=  Integer.parseInt(ship[e]);

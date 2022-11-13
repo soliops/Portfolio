@@ -24,12 +24,18 @@ function zzim(check){
 	zzim_ck=2;
 	}
 	if(confirm(zzim_msg)){
+		var mdatas = localStorage.getItem("data");
+		if(mdatas == ""||mdatas == null){
+			mdatas = sessionStorage.getItem("data");
+		}
+		var mdata = JSON.parse(mdatas);
+		var mid = mdata[0];
 	$.ajax({
 		type:"post",
 		url:"./zzim",
 		cache:false,
 		contentType:"application/x-www-form-urlencoded",
-		data:{"check":check,"type":zzim_ck},
+		data:{"check":check,"type":zzim_ck,"mid":mid},
 		success:function(data){
 		if(data=="success"){			
 		alert("해당 상품을 찜했습니다.");

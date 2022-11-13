@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,7 +44,6 @@ public class CompletController {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		response.setContentType("text/html;charset=utf-8");
 		try{
-			System.out.println(this.completDTO);
 			PrintWriter out = response.getWriter();
 			//#############################
 			// 인증결과 파라미터 일괄 수신
@@ -128,6 +128,22 @@ public class CompletController {
 								
 					resultMap = ParseUtil.parseStringToMap(test); //문자열을 MAP형식으로 파싱
 					
+					String id ="";
+					if(this.completDTO.getMid()!=null||this.completDTO.getMid()!="") {	
+						completService.updateOrderMember(this.completDTO.getProduct_point(), this.completDTO.getMid());
+					}
+					else{
+						Cookie[] cookie = request.getCookies();
+						for(int i=0; cookie!=null&&i<cookie.length; i++) {			
+							if(cookie[i].getName().equals("mid")) {
+								id = cookie[i].getValue();
+								this.completDTO.setMid(id);
+							}
+						}
+					}					
+					completService.updateProductStock(this.completDTO.getProduct_ea(),this.completDTO.getProduct_code());
+					completService.insertOrder(this.completDTO);
+					completService.deleteCartOrder(this.completDTO.getProduct_code());
 					m.addAttribute("list",this.completDTO);
 					m.addAttribute("item",completService.getItem(this.completDTO.getProduct_code()));
 					m.addAttribute("payDate",completService.calDate(this.completDTO.getRegDate()));
@@ -177,6 +193,9 @@ public class CompletController {
 	public String checkStock(
 			CompletDTO completDTO
 			) {
+		if(completDTO.getShip_pay()==""||completDTO.getShip_pay()==null) {
+			completDTO.setShip_pay("0");
+		}
 		this.completDTO = completDTO;
 		String msg= completService.checkStock(completDTO.getProduct_code(), completDTO.getProduct_ea());
 		return msg;

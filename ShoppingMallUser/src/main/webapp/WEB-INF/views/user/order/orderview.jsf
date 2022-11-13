@@ -289,13 +289,18 @@ function payment(){
 	}
 	var regDate  = orderFrm.regDate.value;
 	var modDate  = orderFrm.modDate.value;
-	
+	var mdatas = localStorage.getItem("data");
+	if(mdatas == ""||mdatas == null){
+		mdatas = sessionStorage.getItem("data");
+	}
+	var mdata = JSON.parse(mdatas);
+	var mid = mdata[0];
 	$.ajax({
 		type:"post",
 		url:"./stock",
 		cache:false,
 		contentType:"application/x-www-form-urlencoded",
-		data:{"cname":cname,"chp":chp,"ctel":ctel,
+		data:{"mid":mid,"cname":cname,"chp":chp,"ctel":ctel,
 			"cemail":cemail,"person_nm":person_nm,"person_post":person_post,
 			"person_addr":person_addr,"person_addrdtc":person_addrdtc,"person_hp":person_hp,
 			"person_htel":person_htel,"order_code":order_code,"ship":ship,
@@ -353,11 +358,10 @@ function payment(){
 <input type="hidden" name="buyeremail" value="">
 <input type="hidden" name="buyerid" value="test">
 <input type="hidden" name="merchantData" value="">
-<!-- <input type="hidden" name="returnUrl" value="http://opete95.cafe24.com/shopping/complet"> -->
-<!-- <input type="hidden" name="closeUrl" value="http://opete95.cafe24.com/shopping/close"> -->
-<!-- <input type="hidden" name="returnUrl" value="http://localhost:8080/shopping/complet"> -->
-<input type="hidden" name="returnUrl" value="http://localhost:8080/shopping/pay">
-<input type="hidden" name="closeUrl" value="http://localhost:8080/shopping/close">
+<input type="hidden" name="returnUrl" value="http://opete95.cafe24.com/shopping/pay">
+<input type="hidden" name="closeUrl" value="http://opete95.cafe24.com/shopping/close">
+<!-- <input type="hidden" name="returnUrl" value="http://localhost:8080/shopping/pay"> -->
+<!-- <input type="hidden" name="closeUrl" value="http://localhost:8080/shopping/close"> -->
 
 <div id="layout_body" class="layout_body">
     <style type="text/css">

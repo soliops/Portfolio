@@ -60,14 +60,20 @@ $("#deleteCart").click(function(){
 	var $CartCheck  = "";
 	var $list = [];
 	var $C = 1;
+		var $mdatas = localStorage.getItem("data");
+		if($mdatas == ""||$mdatas == null){
+			$mdatas = sessionStorage.getItem("data");
+		}
+		var $mdata = JSON.parse($mdatas);
+		var $mid = $mdata[0];
 	$('input:checkbox[name="agree"]').each(function() {
 		if($("#agrees"+$C).is(":checked") == true){
-			$list.push($("#agrees"+$C).val());
+			$list.push($mid+"="+$("#agrees"+$C).val());
 		}
 		$C++;
 	});
 	var $checklist = JSON.stringify({
-		"check": $list
+		"check": $list,
 	}); 
 	if(confirm("선택한 상품들을 정말로 삭제하시겠습니까?")){
 		$.ajax({
@@ -86,7 +92,6 @@ $("#deleteCart").click(function(){
 				}
 			},
 			error:function(){
-				console.log();
 				alert("삭제 오류가 발생했습니다.");
 				location.reload();
 			}

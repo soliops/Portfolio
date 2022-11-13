@@ -12,10 +12,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class CompletDTO {
+	private String order_code;
+	private String mid;
 	private String cname;
 	private String chp;
 	private String ctel;
 	private String cemail;
+	
 	private String person_nm;
 	private String person_post;
 	private String person_addr;
@@ -23,7 +26,6 @@ public class CompletDTO {
 	private String person_hp;
 	private String person_htel;
 	
-	private String order_code;
 	private String ship;
 	private String ship_pay;
 	private String ship_memo;
@@ -35,10 +37,9 @@ public class CompletDTO {
 	private String product_ea;
 	private String product_price;
 	private String product_point;
-	private String payment;
-	private String bank_list;
-	
 	private String product_total;
+	private String payment;
+	private String bank_list;	
 	private String regDate;
 	private String modDate;
 }

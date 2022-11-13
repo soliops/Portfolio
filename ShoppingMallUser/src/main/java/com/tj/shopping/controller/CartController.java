@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +28,21 @@ public class CartController {
 	@Autowired
 	CartService cartService;
 	
-	@GetMapping("cart")
+	@PostMapping("cart")
 	public String getCartPage(
+			@RequestParam(name = "mid",defaultValue = "") String mid,
+			HttpServletRequest req,
 			Model model
-			) {
-		List<CartDTO> list = cartService.getCartList();
+			)throws Exception {
+		Cookie[] cookie = req.getCookies();
+		if(mid==""||mid==null){
+			for(int i=0; cookie!=null&&i<cookie.length; i++) {			
+				if(cookie[i].getName().equals("mid")) {
+					mid = cookie[i].getValue();
+				}
+			}
+		}
+		List<CartDTO> list = cartService.getCartList(mid);
 		model.addAttribute("list",list);
 		return "user/cart/ordercart";
 	}
@@ -39,14 +52,24 @@ public class CartController {
 	@RequestMapping(value="del",method=RequestMethod.POST, consumes="application/json",
 	produces="application/json;charset=UTF-8")
 	public  Map<String,String> postCartPage(
-			@RequestBody Map<String, String[]> check
+			@RequestBody Map<String,String[]> check,
+			HttpServletRequest req
 			) {
 		Map<String, String> list = new HashMap<String, String>();
 		List<CartDTO> checkCart = new ArrayList<CartDTO>(); 
 		boolean ck = false;
+		Cookie[] cookie = req.getCookies();
 		for(int c=0;c<check.get("check").length;c++) {
-			cartService.deleteCart(check.get("check")[c]);
-			checkCart.add(cartService.selectCart(check.get("check")[c]));
+			String[] data = check.get("check")[c].split("=");
+			if(data[0]==""||data[0]==null){
+				for(int i=0; cookie!=null&&i<cookie.length; i++) {			
+					if(cookie[i].getName().equals("mid")) {
+						data[0] = cookie[i].getValue();
+					}
+				}
+			}
+			cartService.deleteCart(data[1],data[0]);
+			checkCart.add(cartService.selectCart(data[1],data[0]));
 			ck = checkCart.get(c) == null ? false : true;
 		}
 		if(ck==false) {
@@ -62,23 +85,38 @@ public class CartController {
 	@ResponseBody
 	@PostMapping("zzim")
 	public String postZzim(
-			@RequestParam String check,
-			@RequestParam Integer type
-			){
+			@RequestParam("check") String check,
+			@RequestParam("type") Integer type,
+			@RequestParam("mid") String mid,
+			HttpServletRequest req
+			)throws Exception{
 		String msg= "";	
-		if(type == 1) {
-			List<CartDTO> list = cartService.getCart(check);
-			if(list.size()>0) {
-				msg="fail";
+		Cookie[] cookie = req.getCookies();
+		boolean idcheck = true;
+		if(mid==""||mid==null){
+			for(int i=0; cookie!=null&&i<cookie.length; i++) {			
+				if(cookie[i].getName().equals("mid")) {
+					mid = cookie[i].getValue();
+					idcheck=false;
+				}
 			}
-			else {
+		}
+		
+		if(type == 1) {
+			List<CartDTO> list = cartService.getCart(check,mid);
+			if(list.size()==0) {
 				CartDTO dto = cartService.getItem(check);
+				if(idcheck==true) {dto.setId_use("Y");}
+				dto.setMid(mid);
 				cartService.InsertCart(dto);
 				msg="success";				
 			}
+			else {
+				msg="fail";
+			}
 		} 
 		else {
-			cartService.deleteCart(check);
+			cartService.deleteCart(check,mid);
 			msg="delete";
 		}
 		return msg;

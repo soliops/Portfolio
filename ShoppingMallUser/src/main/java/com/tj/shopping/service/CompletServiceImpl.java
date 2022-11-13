@@ -49,4 +49,24 @@ public class CompletServiceImpl implements CompletService {
 		}
 		return msg;
 	}
+	@Override
+	public void updateProductStock(String product_ea, String product_code) {
+		String codeData[] = product_code.split(",");
+		String eaData[] = product_ea.split(",");
+		for(int i=0;i<codeData.length;i++) {
+			completMapper.updateProductStock(eaData[i], codeData[i]);
+		}
+	}
+	@Override
+	public void updateOrderMember(String point, String mid) {
+		completMapper.updateOrderMember(point, mid);
+		
+	}
+	@Override
+	public void deleteCartOrder(String product_code) {
+		String codeData[] = product_code.split(",");
+		for(int i=0;i<codeData.length;i++) {
+			completMapper.deleteCartOrder(codeData[i]);
+		}
+	}
 }
