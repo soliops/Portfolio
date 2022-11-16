@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tj.shopping.domain.CompletDTO;
 import com.tj.shopping.domain.ItemDTO;
+import com.tj.shopping.domain.ViewDTO;
 
 @Repository
 public interface CompletMapper {
@@ -36,4 +37,10 @@ public interface CompletMapper {
 	
 	@Delete("delete from cart where product_code=#{product_code}")
 	public void deleteCartOrder(String product_code);
+	
+	@Select("select * from orders where mid=#{mid} order by regDate desc limit 0,1")
+	public ViewDTO getMidOrder(String mid);
+	
+	@Select("select * from orders where order_code=#{orderNumber} and orderer_email=#{orderEmail} order by regDate desc limit 0,1")
+	public ViewDTO getNotIdOrder(@Param("orderNumber") String orderNumber, @Param("orderEmail")String orderEmail);
 }

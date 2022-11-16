@@ -29,7 +29,14 @@ function zzim(check){
 			mdatas = sessionStorage.getItem("data");
 		}
 		var mdata = JSON.parse(mdatas);
-		var mid = mdata[0];
+		var mid = "";
+		if(mdata !=null){
+			mid = mdata[0];		
+		}
+		else{
+			var Cookies = document.cookie;
+			if(Cookies !=null){mid = Cookies.replace("mid=","");}
+		}
 	$.ajax({
 		type:"post",
 		url:"./zzim",

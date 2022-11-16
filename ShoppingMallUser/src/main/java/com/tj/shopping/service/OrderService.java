@@ -12,5 +12,5 @@ public interface OrderService {
 	public Map<String,String> getlist(OrderDTO dto,String orderNumber)throws Exception;
 	public String orderNumber(String mid);
 	public String getDate();
-	public void InsertCart(OrderDTO orderDTO,String check);
+	public void InsertCart(OrderDTO orderDTO,String check,String Mid);
 }

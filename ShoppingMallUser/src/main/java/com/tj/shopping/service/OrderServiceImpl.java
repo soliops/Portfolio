@@ -100,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public void InsertCart(OrderDTO orderDTO,String check) {
+	public void InsertCart(OrderDTO orderDTO,String check, String Mid) {
 		
 		ItemDTO item = orderMapper.getItem(Integer.toString(orderDTO.getProduct_idx())); 
 		LocalDateTime datetime = LocalDateTime.now();
@@ -120,9 +120,9 @@ public class OrderServiceImpl implements OrderService {
 		cartDTO.setProduct_check(check);
 		cartDTO.setProduct_img1(item.getProduct_img1());
 		cartDTO.setIndate(datetime.format(dateFormat));
+		cartDTO.setMid(Mid);
 		cartDTO.setId_use("N");
 		cartDTO.setShip_pay(orderDTO.getShip_pay());
-		
 		orderMapper.InsertCart(cartDTO);
 	}
 

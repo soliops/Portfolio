@@ -33,6 +33,7 @@ public class OrderController {
 			OrderDTO orderDTO,
 			@RequestParam(name="ship_total",defaultValue = "0")  String ship_total,
 			@RequestParam(name="agree",defaultValue = "0") String agree,
+			@RequestParam(name="mid",defaultValue = "") String Mid,
  			Model model
 			) throws Exception{
 		
@@ -44,7 +45,7 @@ public class OrderController {
 		}
 		List<CartDTO> select  = orderService.selectCart(Integer.toString(orderDTO.getProduct_idx()));
 		if(select.size()==0) {
-			orderService.InsertCart(orderDTO,ch);
+			orderService.InsertCart(orderDTO,ch,Mid);
 		}
 		List<CartDTO> cart = orderService.getProduct(orderDTO.getProduct_code(),orderDTO.getShip_pay(),orderDTO.getProduct_ea());		
 		/*결제자 정보

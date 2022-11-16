@@ -1,5 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script>
+function search_order(){
+	if(frm.orderNumber.value==""){
+		alert("주문번호를 입력하세요.");
+		frm.orderNumber.focus();
+	}
+	else if(frm.orderEmail.value==""){
+		alert("주문자 이메일을 입력하세요.");
+		frm.orderEmail.focus();
+	}
+	else{
+		frm.method="post";
+		frm.enctype="application/x-www-form-urlencoded";
+		frm.action="./view";
+		frm.submit();
+	}
+}
+</script>    
 <form name="frm" id="frm">
 <input type="hidden" name="mname" value="test">
 <input type="hidden" name="memail" value="test">
@@ -56,20 +74,24 @@
 	<input type="hidden" name="return_url" value=""/>
 		<ul class="login_real_area">
 			<li class="input_area">
-				<input type="text" name="order_number" value="" class="box_order" placeholder="주문번호" />
-				<input type="text" name="order_email" value="" class="box_order" placeholder="주문자 이메일" />
+				<input type="text" name="orderNumber" value="" class="box_order" placeholder="주문번호" />
+				<input type="text" name="orderEmail" value="" class="box_order" placeholder="주문자 이메일" />
 			</li>
 			<li class="desc_area">
 				<p designElement="text" textIndex="14">비회원은 주문번호와 이메일로 주문을 조회할 수 있습니다.</p>
 			</li>
 			<li>
-				<input type="button" value="주문조회" onclick="search_order" class="btn_resp size_login1">
+				<input type="button" value="주문조회" onclick="search_order();" class="btn_resp size_login1">
 			</li>
 		</ul>
 </div>
 <script>
-document.getElementById("mid").value=localStorage.getItem("mname");
-document.getElementById("mpassword").value=localStorage.getItem("mpw");
+var mdatas = localStorage.getItem("data");
+if(mdatas !=null){
+	var mdata = JSON.parse(mdatas);
+	document.getElementById("mid").value=mdata[0];	
+	document.getElementById("save").checked=true;
+}
 	$(document).ready(function() {
 	$("form[name='loginForm'] input[name='userid']").focus();
 	$('#loginTab a').on('click', function() {

@@ -26,6 +26,7 @@ import com.inicis.std.util.HttpUtil;
 import com.inicis.std.util.ParseUtil;
 import com.inicis.std.util.SignatureUtil;
 import com.tj.shopping.domain.CompletDTO;
+import com.tj.shopping.domain.ViewDTO;
 import com.tj.shopping.service.CompletService;
 @Controller
 public class CompletController {
@@ -199,5 +200,21 @@ public class CompletController {
 		this.completDTO = completDTO;
 		String msg= completService.checkStock(completDTO.getProduct_code(), completDTO.getProduct_ea());
 		return msg;
+	}
+	
+	@PostMapping("/view")
+	public String viewPage(
+			Model m,
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(name="mid",defaultValue = "") String mid,
+			@RequestParam(name="orderNumber", defaultValue="") String orderNumber,
+			@RequestParam(name="orderEmail", defaultValue="") String orderEmail			
+			) throws Exception{	
+		CompletDTO dto = completService.getOrder(mid, orderNumber, orderEmail);
+		m.addAttribute("list",dto);
+		m.addAttribute("item",completService.getItem(dto.getProduct_code()));
+		m.addAttribute("payDate",completService.calDate(dto.getRegDate()));
+		return "user/order/complet";
 	}
 }

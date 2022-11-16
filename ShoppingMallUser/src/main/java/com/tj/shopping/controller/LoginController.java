@@ -30,8 +30,8 @@ public class LoginController {
 	@RequestMapping(value="login", method=RequestMethod.POST)
 	public void postLoginPage(
 		LoginDTO loginDTO,
-		@RequestParam("order_number") String number,
-		@RequestParam("order_email") String email,
+		@RequestParam(name="orderNumber",defaultValue = "") String number,
+		@RequestParam(name="orderEmail",defaultValue = "") String email,
 		@RequestParam(name="save",defaultValue = "N") String idsave, 
 		HttpServletResponse resp
 			)throws Exception{

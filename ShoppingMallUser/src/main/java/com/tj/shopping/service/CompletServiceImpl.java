@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.tj.shopping.domain.CompletDTO;
 import com.tj.shopping.domain.ItemDTO;
+import com.tj.shopping.domain.ViewDTO;
 import com.tj.shopping.persistence.CompletMapper;
 
 @Service
@@ -68,5 +69,46 @@ public class CompletServiceImpl implements CompletService {
 		for(int i=0;i<codeData.length;i++) {
 			completMapper.deleteCartOrder(codeData[i]);
 		}
+	}
+	@Override
+	public CompletDTO getOrder(String Mid, String OrderNumber, String OrderEmail) {
+		ViewDTO dto = null;
+		CompletDTO completDTO = new CompletDTO();
+		if(Mid != "") {
+			dto= completMapper.getMidOrder(Mid);
+		} 
+		else {
+			if(OrderNumber !="" && OrderEmail !="") {
+				dto= completMapper.getNotIdOrder(OrderNumber, OrderEmail);			
+			}			
+		}
+		completDTO.setOrder_code(dto.getOrder_code());
+		completDTO.setMid(dto.getMid());
+		completDTO.setCname(dto.getOrderer());
+		completDTO.setChp(dto.getOrderer_mobile());
+		completDTO.setCtel(dto.getOrderer_tel());
+		completDTO.setCemail(dto.getOrderer_email());
+		completDTO.setPerson_nm(dto.getReceiver());
+		completDTO.setPerson_post(dto.getReceiver_post());
+		completDTO.setPerson_addr(dto.getReceiver_addr());
+		completDTO.setPerson_addrdtc(dto.getReceiver_addrdtc());
+		completDTO.setPerson_hp(dto.getReceiver_mobile());
+		completDTO.setPerson_htel(dto.getReceiver_tel());
+		completDTO.setShip(dto.getShip());
+		completDTO.setShip_pay(dto.getShip_pay());
+		completDTO.setShip_memo(dto.getShip_memo());
+		completDTO.setShip_sum(dto.getShip_sum());
+		completDTO.setProduct_idx(dto.getProduct_idx());
+		completDTO.setProduct_nm(dto.getProduct_nm());
+		completDTO.setProduct_code(dto.getProduct_code());
+		completDTO.setProduct_ea(dto.getProduct_ea());
+		completDTO.setProduct_price(dto.getProduct_price());
+		completDTO.setProduct_point(dto.getProduct_point());
+		completDTO.setProduct_total(dto.getProduct_total());
+		completDTO.setPayment(dto.getPayment());
+		completDTO.setBank_list(dto.getBank_list());
+		completDTO.setRegDate(dto.getRegDate());
+		completDTO.setModDate(dto.getModDate());
+		return completDTO;
 	}
 }

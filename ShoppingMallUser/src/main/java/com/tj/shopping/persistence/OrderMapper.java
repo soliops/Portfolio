@@ -20,7 +20,8 @@ public interface OrderMapper {
 	@Insert("insert into cart values (#{product_idx},"
 			+ "#{product_nm},#{product_dtc},#{product_price},"
 			+ "#{product_disprice},#{product_point},#{product_total},"
-			+ "#{product_code},#{product_ea},#{product_stock},#{product_check},#{product_img1},#{indate},#{id_use},#{ship_pay})")
+			+ "#{product_code},#{product_ea},#{product_stock},#{product_check},"
+			+ "#{product_img1},#{indate},#{mid},#{id_use},#{ship_pay})")
 	public void InsertCart(CartDTO cartDTO);
 	
 	@Select("select * from product where pidx=#{pidx}")

@@ -6,8 +6,27 @@
     pageEncoding="UTF-8"%>
 <script>
 $(function (){
+	var $IdData = localStorage.getItem("data");
+	if($IdData==""||$IdData ==null){
+		$IdData = sessionStorage.getItem("data");
+	}
+	var $MidDatas = JSON.parse($IdData);
+	var $Mid = "";
+	var $Msg = "";
+	if($MidDatas !=null){
+		$Msg = "회원으로 구매 진행하시겠습니까?";
+		$Mid=$MidDatas[0];
+	}
+	else{
+		$Msg="비회원으로 구매 진행하시겠습니까?";
+		var $Cookies = document.cookie;
+		if($Cookies !=null){$Mid = $Cookies.replace("mid=","");}
+	}
+	$("#IdFromItem").val($Mid);
 	$("#buy_btn").click(function(){ //모바일용 구매하기 버튼
-		if(confirm("비회원으로 구매 진행하시겠습니까?")){
+		if(confirm($Msg)){
+			document.getElementById("product_price").value ='${list.product_price}';	
+			document.getElementById("product_code").value ='${list.product_code}';		
 			this.form.method="POST";
 			this.form.enctype="application/x-www-form-urlencoded";
 			this.form.action="./order";
@@ -17,8 +36,8 @@ $(function (){
 	});
 	$("#buy_btn2").click(function(){ //PC용 구매하기 버튼
 		document.getElementById("product_price").value ='${list.product_price}';	
-		document.getElementById("product_code").value ='${list.product_code}';			
-		if(confirm("비회원으로 구매 진행하시겠습니까?")){			
+		document.getElementById("product_code").value ='${list.product_code}';	
+		if(confirm($Msg)){			
 			this.form.method="POST";
 			this.form.enctype="application/x-www-form-urlencoded";
 			this.form.action="./order";
@@ -26,11 +45,43 @@ $(function (){
 		}		
 	});
 	$("#buy_basket").click(function(){ //장바구니 버튼
-		if(confirm("장바구니에 담으시겠습니까?")){
-			this.form.method="POST";
-			this.form.enctype="application/x-www-form-urlencoded";
-			this.form.action="./cart";
-			this.form.submit();
+		var $zzim_msg = "장바구니에 담으시겠습니까?"; 	
+		var $zzim_ck = $("#zzim_ck").val();
+			if($zzim_ck != 1){				
+			$zzim_msg = "해당 상품이 이미 있습니다. 취소하시겠습니까?";
+			}
+		if(confirm($zzim_msg)){
+			var $check= $("#product_idx").val();
+			$.ajax({
+				type:"POST",
+				url:"./zzim",
+				cache:false,
+				contentType:"application/x-www-form-urlencoded",
+				data:{"check":$check,"type":$zzim_ck,"mid":$Mid},
+				success:function(data){
+					if(data=="success"){			
+					alert("해당 상품을 찜했습니다.");
+					$("#zzim_ck").val(2);
+					if(confirm("장바구니 페이지로 이동하시겠습니까?")){
+						location.href="./cart";
+					}
+					}
+					else if(data=="delete"){			
+					alert("찜을 취소했습니다.");
+					$("#zzim_ck").val(1);					
+					}
+					else if(data=="fail"){
+						alert("이미 찜한 상품입니다.");
+						$("#zzim_ck").val(2);
+					}
+					}
+					,
+					error:function(){
+						alert("찜할 수 없습니다.");
+						location.reload();
+					}
+			});
+			
 		}
 	});
 	//상품수량 변경
@@ -62,6 +113,8 @@ function price_cal(){
 <input type="hidden" name="ship_pay" id="ship_pay" value="0">
 <input type="hidden" name="ship_total" id="ship_total" value="0">
 <input type="hidden" name="agree" id="agree" value="0">
+<input type="hidden" name="mid" id="IdFromItem" value="">
+<input type="hidden" id="zzim_ck" value="1">
 <div class="detail_title_area">
 	<h3 class="name" >${list.product_name}</h3>
 	<p class="summary">	${list.product_addexplain}<span class="detail_icons">
@@ -81,7 +134,7 @@ function price_cal(){
 			<div class="slides_container hide" style="position:relative;">
 					<div class="viewImgWrap">
 							<img src="${list.product_img1}" title="${list.product_name}" alt="상품이미지"/>
-							<input type="hidden" name="product_idx" value="${list.pidx}">
+							<input type="hidden" name="product_idx" id="product_idx" value="${list.pidx}">
 					</div>
 			</div>
 			
